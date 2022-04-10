@@ -9,4 +9,9 @@ public class RegisterMessage extends Message {
     public RegisterMessage(){
         uuid = UUID.randomUUID().toString();
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

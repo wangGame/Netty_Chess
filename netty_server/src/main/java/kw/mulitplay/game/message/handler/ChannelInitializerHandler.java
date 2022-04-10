@@ -31,13 +31,14 @@ public class ChannelInitializerHandler extends ChannelInitializer<NioSocketChann
 //        });
 //
         ch.pipeline().addLast(message);
-        ch.pipeline().addLast(new ChannelInboundHandlerAdapter(){
-            @Override
-            public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-                super.channelRead(ctx, msg);
-                System.out.println("--------read");
-            }
-        });
+        ch.pipeline().addLast(registerHandler);
+//        new ChannelInboundHandlerAdapter(){
+//            @Override
+//            public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+//                super.channelRead(ctx, msg);
+//                System.out.println("--------read");
+//            }
+//        }
 
     }
 }
