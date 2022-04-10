@@ -7,8 +7,6 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 import kw.mulitplay.game.message.RegisterMessage;
 import kw.mulitplay.game.message.codec.MessageToMessage;
 import kw.mulitplay.game.message.handler.RegisterHandler;

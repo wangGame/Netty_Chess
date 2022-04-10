@@ -8,8 +8,8 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import kw.mulitplay.game.message.handler.ChannelInitializerHandler;
-import kw.mulitplay.game.message.handler.RegisterHandler;
+import kw.mulitplay.game.netty.handler.ChannelInitializerHandler;
+import kw.mulitplay.game.netty.handler.RegisterHandler;
 
 public class Server {
     public static void main(String[] args) {

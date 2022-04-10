@@ -1,4 +1,4 @@
-package kw.mulitplay.game.message.codec;
+package kw.mulitplay.game.netty.codec;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageCodec;
 import kw.mulitplay.game.Serializer;
-import kw.mulitplay.game.message.RegisterMessage;
-import kw.mulitplay.game.message.base.Message;
+import kw.mulitplay.game.netty.message.base.Message;
+import kw.mulitplay.game.netty.message.manager.MeaageManager;
 
 @ChannelHandler.Sharable
 public class MessageToMessage extends MessageToMessageCodec<ByteBuf, Message> {
@@ -17,14 +17,16 @@ public class MessageToMessage extends MessageToMessageCodec<ByteBuf, Message> {
         /**
          * 魔数  2022
          * version 1
-         * 预留  4
+         * 预留  3
+         * 类型 1
          * 长度  4
          * 内容
          */
         ByteBuf buffer = ctx.alloc().buffer();
         buffer.writeBytes(new byte[]{2,0,2,2});
         buffer.writeByte(1);
-        buffer.writeBytes(new byte[]{-1,-1,-1,-1});
+        buffer.writeBytes(new byte[]{-1,-1,-1});
+        buffer.writeByte((byte)msg.getType());
         byte[] serialize = Serializer.Algorithm.Java.serialize(msg);
         buffer.writeInt(serialize.length);
         buffer.writeBytes(serialize);
@@ -50,15 +52,15 @@ public class MessageToMessage extends MessageToMessageCodec<ByteBuf, Message> {
         System.out.println();
         byte b = msg.readByte();
         System.out.println(b);
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             msg.readByte();
         }
+        byte type = msg.readByte();
+        Class<? extends Message> messageClass = MeaageManager.getMessageClass(type);
         int length = msg.readInt();
         byte[] content = new byte[length];
         msg.readBytes(content, 0, length);
-
-        RegisterMessage deserialize = Serializer.Algorithm.Java.deserialize(RegisterMessage.class, content);
-
+        Message deserialize = Serializer.Algorithm.Java.deserialize(messageClass, content);
         out.add(deserialize);
     }
 }
