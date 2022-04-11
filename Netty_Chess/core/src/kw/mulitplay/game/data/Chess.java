@@ -15,11 +15,14 @@ public class Chess extends Group {
     private int posX;
     private int posY;
     private int player;
+    private char qiziName;
     public Chess(char path){
         if (path>='a'&&path<='z'){
+            qiziName = path;
             image = new Image(Asset.getInstance().getTexture("qizi/b"+path+".png"));
             player = LevelConfig.PLAYER0;
         }else{
+            qiziName = Character.toLowerCase(path);
             image = new Image(Asset.getInstance().getTexture("qizi/b"+path+"2.png"));
             player = LevelConfig.PLAYER1;
         }
@@ -35,7 +38,9 @@ public class Chess extends Group {
                     System.out.println("chess click");
                     LevelConfig.chessSelected = Chess.this;
                     LevelConfig.currentSelected = Chess.this;
+                    LevelConfig.tarGetSelected = null;
                 }else {
+                    LevelConfig.tarGetSelected = Chess.this;
                     LevelConfig.chessSelected = null;
                     LevelConfig.currentSelected = Chess.this;
                 }
@@ -53,8 +58,20 @@ public class Chess extends Group {
         setY(posY*Config.chessSize);
     }
 
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
     @Override
     public void setPosition(float x, float y) {
         super.setPosition(x, y);
+    }
+
+    public char getQiziName() {
+        return qiziName;
     }
 }

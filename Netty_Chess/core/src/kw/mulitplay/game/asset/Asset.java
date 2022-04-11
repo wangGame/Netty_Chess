@@ -14,6 +14,8 @@ public class Asset {
     public static ChessGame ChessGame;
     public int i = 0;
     private static Asset asset;
+
+
     public static Asset getInstance(){
         if (asset == null){
             asset = new Asset();
