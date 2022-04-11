@@ -1,7 +1,6 @@
 package kw.mulitplay.game.service;
 
 import io.netty.channel.Channel;
-import io.netty.channel.socket.nio.NioSocketChannel;
 import kw.mulitplay.game.dao.PlayerDao;
 
 import java.util.ArrayList;
@@ -23,5 +22,10 @@ public class PlayerRegister {
 
     public ArrayList<String> getUserList(){
         return dao.getUserList();
+    }
+
+    public boolean connect(String msg){
+        boolean b = dao.hasUserInfo(msg);
+        return b;
     }
 }

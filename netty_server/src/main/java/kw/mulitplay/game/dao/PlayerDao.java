@@ -29,4 +29,13 @@ public class PlayerDao {
     public ArrayList<String> getUserList(){
         return userList;
     }
+
+    public boolean hasUserInfo(String msg) {
+        Channel channel = hashMap.get(msg);
+        if (channel!=null){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
