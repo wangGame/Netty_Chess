@@ -16,7 +16,6 @@ public class PipeiPlayerHandler extends SimpleChannelInboundHandler<PipeiInfoMes
         String my = msg.getMy();
         String target = msg.getTarget();
         boolean connect = PlayerRegister.playerRegister().connect(target);
-
         if (connect){
             ctx.writeAndFlush(new CommonMassage("匹配成功"));
         }else {

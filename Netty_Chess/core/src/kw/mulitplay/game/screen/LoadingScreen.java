@@ -9,8 +9,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 import kw.mulitplay.game.asset.Asset;
-import kw.mulitplay.game.game.GameConfig;
-import kw.mulitplay.game.light.Position;
 import kw.mulitplay.game.screen.base.BaseScreen;
 
 public class LoadingScreen extends BaseScreen {
@@ -26,11 +24,6 @@ public class LoadingScreen extends BaseScreen {
         };
         image.setDebug(true);
         addActor(image);
-        try (  InputStream is = new FileInputStream(Gdx.files.internal(GameConfig.DAT_ASSETS_PATH).file());){
-            Position.loadBook(is);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
         stage.addAction(Actions.delay(1,Actions.run(
                 ()->{
                     Asset.ChessGame.setScreen(new GameScreen());

@@ -33,15 +33,21 @@ public class Chess extends Group {
         addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+
+
                 if (LevelConfig.currentPlayer == player) {
+                    LevelConfig.clickType = 0;
                     super.clicked(event, x, y);
                     System.out.println("chess click");
                     LevelConfig.chessSelected = Chess.this;
                     LevelConfig.currentSelected = Chess.this;
                     LevelConfig.tarGetSelected = null;
+
+
                 }else {
+                    LevelConfig.clickType = 1;
+
                     LevelConfig.tarGetSelected = Chess.this;
-                    LevelConfig.chessSelected = null;
                     LevelConfig.currentSelected = Chess.this;
                 }
             }
@@ -73,5 +79,11 @@ public class Chess extends Group {
 
     public char getQiziName() {
         return qiziName;
+    }
+
+    public void setPosXY(int xx, int yy) {
+        this.posX = xx;
+        this.posY = yy;
+        setPosition(xx * Config.chessSize, yy * Config.chessSize);
     }
 }

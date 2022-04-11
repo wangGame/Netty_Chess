@@ -13,7 +13,7 @@ public class GameLogic {
         this.qiZi = qiZi;
     }
 
-    public boolean canMove(int startI, int startJ, int endI, int endJ, char name) {
+    public boolean canMove(int startI, int startJ, int endI, int endJ, String name) {
 
         int maxI;
         int minI;
@@ -80,8 +80,8 @@ public class GameLogic {
             this.bing(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
 
         }
-        else if (name=='p')
-//        else if (name.equals("卒"))
+//        else if (name=='p')
+        else if (name.equals("卒"))
         {
             this.zu(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
         }

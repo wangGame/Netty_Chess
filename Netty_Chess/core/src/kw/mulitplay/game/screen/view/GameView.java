@@ -85,30 +85,71 @@ public class GameView extends Group {
                 int yy = (int) (y / Config.chessSize);
                 setCursorPosVisible(LevelConfig.currentPlayer == LevelConfig.PLAYER1);
                 setCursorPos(xx,yy);
-                if (LevelConfig.currentSelected==null) {
-                    if (LevelConfig.chessSelected!=null) {
-
-                        if (logic.canMove(LevelConfig.chessSelected.getPosX(),
-                                LevelConfig.chessSelected.getPosY(),xx,yy,LevelConfig.chessSelected.getQiziName())) {
-                        }
-
-
-                        LevelConfig.chessSelected.setPosition(xx*Config.chessSize,yy*Config.chessSize);
-                        LevelConfig.chessSelected = null;
-                        LevelConfig.tarGetSelected = null;
+                if (LevelConfig.chessSelected!=null) {
+                    if (LevelConfig.clickType == 3) {
+                        chessObject[LevelConfig.chessSelected.getPosX()][LevelConfig.chessSelected.getPosY()] = null;
+                        chessObject[xx][yy] = LevelConfig.chessSelected;
+                        LevelConfig.chessSelected.setPosXY(xx , yy);
+                        LevelConfig.chessSelected=null;
                         LevelConfig.currentPlayer = LevelConfig.currentPlayer == LevelConfig.PLAYER0 ?
-                                LevelConfig.PLAYER1:LevelConfig.PLAYER0;
-                        System.out.println(LevelConfig.currentPlayer);
+                                LevelConfig.PLAYER1 : LevelConfig.PLAYER0;
+
+                    } else if (LevelConfig.clickType==1){
+//                        LevelConfig.chessSelected.setPosition(xx * Config.chessSize, yy * Config.chessSize);
+//                        LevelConfig.chessSelected = null;
+
+                        Chess chess = chessObject[xx][yy];
+                        if (chess!=null){
+                            chess.remove();
+                        }
+                        chessObject[xx][yy] = null;
+//                        LevelConfig.chessSelected.setPosition(xx * Config.chessSize, yy * Config.chessSize);
+                        chessObject[LevelConfig.chessSelected.getPosX()][LevelConfig.chessSelected.getPosY()] = null;
+                        chessObject[xx][yy] = LevelConfig.chessSelected;
+                        LevelConfig.chessSelected.setPosXY(xx , yy);
+
+                        LevelConfig.chessSelected = null;
+                        LevelConfig.currentPlayer = LevelConfig.currentPlayer == LevelConfig.PLAYER0 ?
+                                LevelConfig.PLAYER1 : LevelConfig.PLAYER0;
+
+
+
+
+
+
                     }else {
-                        setCursorPosgone();
-                    }
-                }else {
-                    if (LevelConfig.chessSelected==null){
-                        setCursorPosgone();
+
                     }
                 }
-                LevelConfig.tarGetSelected = null;
+                if (LevelConfig.chessSelected == null){
+                    setCursorPosgone();
+                }
                 LevelConfig.currentSelected= null;
+                LevelConfig.clickType = 3;
+//                if (LevelConfig.currentSelected==null) {
+//                    if (LevelConfig.chessSelected!=null) {
+//
+////                        if (logic.canMove(LevelConfig.chessSelected.getPosX(),
+////                                LevelConfig.chessSelected.getPosY(),xx,yy,LevelConfig.chessSelected.getQiziName())) {
+////                        }
+////
+//
+//                        LevelConfig.chessSelected.setPosition(xx*Config.chessSize,yy*Config.chessSize);
+//                        LevelConfig.chessSelected = null;
+//                        LevelConfig.tarGetSelected = null;
+//                        LevelConfig.currentPlayer = LevelConfig.currentPlayer == LevelConfig.PLAYER0 ?
+//                                LevelConfig.PLAYER1:LevelConfig.PLAYER0;
+//                        System.out.println(LevelConfig.currentPlayer);
+//                    }else {
+//                        setCursorPosgone();
+//                    }
+//                }else {
+//                    if (LevelConfig.chessSelected==null){
+//                        setCursorPosgone();
+//                    }
+//                }
+//                LevelConfig.tarGetSelected = null;
+
             }
         });
     }

@@ -9,4 +9,5 @@ public class LevelConfig {
     public static int PLAYER1 = 0;
     public static int PLAYER0 = 1;
     public static int currentPlayer = PLAYER0;
+    public static int clickType = 0; //0 是点击了自己   1 是点击对方
 }
