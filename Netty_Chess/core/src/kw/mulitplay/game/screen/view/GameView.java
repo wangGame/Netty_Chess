@@ -56,6 +56,8 @@ public class GameView extends Group {
         addActor(chessGroup);
         chessGroup.setDebug(true);
         chessGroup.setSize(Config.chessSize*9,Config.chessSize*10);
+        chessGroup.setOrigin(Align.center);
+        chessGroup.setRotation(180);
         chessGroup.setPosition(getWidth()/2,getHeight()/2,Align.center);
         ChessData data = new ChessData();
         int[][] chessData = data.getData();
@@ -67,6 +69,8 @@ public class GameView extends Group {
                     chess.setPosY(i1);
                     chessObject[i][i1] = chess;
                     chessGroup.addActor(chess);
+                    chess.setOrigin(Align.center);
+                    chess.setRotation(180);
                 }
             }
         }

@@ -1,5 +1,6 @@
 package kw.mulitplay.game.screen.game;
 
+import kw.mulitplay.game.config.LevelConfig;
 import kw.mulitplay.game.data.Chess;
 
 public class GameLogic {
@@ -52,7 +53,11 @@ public class GameLogic {
 //        else if (name.equals("相"))
         else if (name == 'b')
         {
-            this.xiang1(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
+            if (LevelConfig.currentPlayer == LevelConfig.PLAYER0) {
+                this.xiang1(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
+            }else {
+                this.xiang2(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
+            }
         }
 //        else if (name.equals("象"))
 //        else if (name == ("象"))
@@ -63,12 +68,13 @@ public class GameLogic {
         else if (name == ('a'))
         {
             this.shi(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
+
         }
 //        else if (name.equals("帥") || name.equals("將"))
-//        else if (name.equals("帥") || name.equals("將"))
-//        {
-//            this.jiang(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
-//        }
+        else if (name=='k')
+        {
+            this.jiang(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
+        }
 //        else if (name.equals("炮") || name.equals("砲"))
         else if (name == 'c')
         {
@@ -77,8 +83,12 @@ public class GameLogic {
 //        else if (name.equals("兵"))
         else if (name == 'p')
         {
-            this.bing(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
+            if (LevelConfig.currentPlayer == LevelConfig.PLAYER1) {
+                this.zu(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
+            }else {
 
+                this.bing(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
+            }
         }
 //        else if (name=='p')
 //        else if (name.equals("卒"))
