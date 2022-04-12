@@ -13,7 +13,7 @@ public class GameLogic {
         this.qiZi = qiZi;
     }
 
-    public boolean canMove(int startI, int startJ, int endI, int endJ, String name) {
+    public boolean canMove(int startI, int startJ, int endI, int endJ, char name) {
 
         int maxI;
         int minI;
@@ -40,57 +40,58 @@ public class GameLogic {
             minJ = startJ;
         }
 //        if (name.equals("車"))
-        if (name.equals("車"))
+        if (name == 'r')
         {
             this.ju(maxI, minI, maxJ, minJ);
         }
 //        else if (name.equals("馬"))
-        else if (name.equals("馬"))
+        else if (name == 'n')
         {
             this.ma(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
         }
 //        else if (name.equals("相"))
-        else if (name.equals("相"))
+        else if (name == 'b')
         {
             this.xiang1(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
         }
 //        else if (name.equals("象"))
-        else if (name.equals("象"))
-        {
-            this.xiang2(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
-        }
+//        else if (name == ("象"))
+//        {
+//            this.xiang2(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
+//        }
 //        else if (name.equals("士") || name.equals("仕"))
-        else if (name.equals("士") || name.equals("仕"))
+        else if (name == ('a'))
         {
             this.shi(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
         }
 //        else if (name.equals("帥") || name.equals("將"))
-        else if (name.equals("帥") || name.equals("將"))
-        {
-            this.jiang(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
-        }
+//        else if (name.equals("帥") || name.equals("將"))
+//        {
+//            this.jiang(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
+//        }
 //        else if (name.equals("炮") || name.equals("砲"))
-        else if (name.equals("炮") || name.equals("砲"))
+        else if (name == 'c')
         {
             this.pao(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
         }
 //        else if (name.equals("兵"))
-        else if (name.equals("兵"))
+        else if (name == 'p')
         {
             this.bing(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
 
         }
 //        else if (name=='p')
-        else if (name.equals("卒"))
-        {
-            this.zu(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
-        }
+//        else if (name.equals("卒"))
+//        {
+//            this.zu(maxI, minI, maxJ, minJ, startI, startJ, endI, endJ);
+//        }
         return canMove;
     }
 
     public void ju(int maxI, int minI, int maxJ, int minJ) {
         if (maxI == minI)
         {
+            //ju x y 直走
             for (j = minJ + 1; j < maxJ; j++) {
                 if (qiZi[maxI][j] != null)
                 {

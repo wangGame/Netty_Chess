@@ -86,39 +86,38 @@ public class GameView extends Group {
                 setCursorPosVisible(LevelConfig.currentPlayer == LevelConfig.PLAYER1);
                 setCursorPos(xx,yy);
                 if (LevelConfig.chessSelected!=null) {
+                    int startX = LevelConfig.chessSelected.getPosX();
+                    int startY = LevelConfig.chessSelected.getPosY();
                     if (LevelConfig.clickType == 3) {
-                        chessObject[LevelConfig.chessSelected.getPosX()][LevelConfig.chessSelected.getPosY()] = null;
-                        chessObject[xx][yy] = LevelConfig.chessSelected;
-                        LevelConfig.chessSelected.setPosXY(xx , yy);
-                        LevelConfig.chessSelected=null;
-                        LevelConfig.currentPlayer = LevelConfig.currentPlayer == LevelConfig.PLAYER0 ?
-                                LevelConfig.PLAYER1 : LevelConfig.PLAYER0;
-
+                        if (logic.canMove(startX,startY,xx,yy,LevelConfig.chessSelected.getQiziName())) {
+                            chessObject[startX][LevelConfig.chessSelected.getPosY()] = null;
+                            chessObject[xx][yy] = LevelConfig.chessSelected;
+                            LevelConfig.chessSelected.setPosXY(xx, yy);
+                            LevelConfig.chessSelected = null;
+                            LevelConfig.currentPlayer = LevelConfig.currentPlayer == LevelConfig.PLAYER0 ?
+                                    LevelConfig.PLAYER1 : LevelConfig.PLAYER0;
+                        }else {
+                            setCursorPosgone();
+                        }
                     } else if (LevelConfig.clickType==1){
 //                        LevelConfig.chessSelected.setPosition(xx * Config.chessSize, yy * Config.chessSize);
 //                        LevelConfig.chessSelected = null;
-
-                        Chess chess = chessObject[xx][yy];
-                        if (chess!=null){
-                            chess.remove();
-                        }
-                        chessObject[xx][yy] = null;
+                        if (logic.canMove(startX,startY,xx,yy,LevelConfig.chessSelected.getQiziName())) {
+                            Chess chess = chessObject[xx][yy];
+                            if (chess != null) {
+                                chess.remove();
+                            }
+                            chessObject[xx][yy] = null;
 //                        LevelConfig.chessSelected.setPosition(xx * Config.chessSize, yy * Config.chessSize);
-                        chessObject[LevelConfig.chessSelected.getPosX()][LevelConfig.chessSelected.getPosY()] = null;
-                        chessObject[xx][yy] = LevelConfig.chessSelected;
-                        LevelConfig.chessSelected.setPosXY(xx , yy);
+                            chessObject[startX][LevelConfig.chessSelected.getPosY()] = null;
+                            chessObject[xx][yy] = LevelConfig.chessSelected;
+                            LevelConfig.chessSelected.setPosXY(xx, yy);
 
-                        LevelConfig.chessSelected = null;
-                        LevelConfig.currentPlayer = LevelConfig.currentPlayer == LevelConfig.PLAYER0 ?
-                                LevelConfig.PLAYER1 : LevelConfig.PLAYER0;
-
-
-
-
-
-
-                    }else {
-
+                            LevelConfig.chessSelected = null;
+                            LevelConfig.currentPlayer = LevelConfig.currentPlayer == LevelConfig.PLAYER0 ?
+                                    LevelConfig.PLAYER1 : LevelConfig.PLAYER0;
+                        }
+                        setCursorPosgone();
                     }
                 }
                 if (LevelConfig.chessSelected == null){
