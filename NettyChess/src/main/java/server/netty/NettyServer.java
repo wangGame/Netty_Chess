@@ -2,6 +2,8 @@ package server.netty;
 
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -13,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.util.Vector;
 
@@ -171,8 +174,22 @@ public class NettyServer extends JFrame implements ActionListener {
                     .childHandler(new ChannelInitializer<NioSocketChannel>() {
                         @Override
                         protected void initChannel(NioSocketChannel ch) throws Exception {
-                            System.out.println("--------");
-                            addName();
+                            ch.pipeline().addLast(new ChannelInboundHandlerAdapter(){
+                                @Override
+                                public void channelActive(ChannelHandlerContext ctx) throws Exception {
+                                    super.channelActive(ctx);
+                                    ctx.channel().read();
+                                    InetSocketAddress insocket = (InetSocketAddress) ctx.channel().remoteAddress();
+                                    String clientIp = insocket.getAddress().getHostAddress();
+                                    System.out.println("用户ip: " + clientIp + " 连接到了服务器");
+                                    addName();
+                                }
+
+                                @Override
+                                public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+                                    super.channelRead(ctx, msg);
+                                }
+                            });
                         }
                     }).bind(8888).sync().channel().closeFuture();
         } catch (InterruptedException e) {
