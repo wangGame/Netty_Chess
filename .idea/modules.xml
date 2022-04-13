@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Netty_Chess.iml" filepath="$PROJECT_DIR$/.idea/modules/Netty_Chess.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Netty_Chess.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Netty_Chess.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/Netty_Chess.core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/Netty_Chess.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktop/Netty_Chess.desktop.iml" filepath="$PROJECT_DIR$/.idea/modules/desktop/Netty_Chess.desktop.iml" />
+    </modules>
+  </component>
+</project>
