@@ -13,4 +13,10 @@ public class GameScreen  extends BaseScreen {
         gameView = new GameView();
         addActor(gameView);
     }
+
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+
+    }
 }

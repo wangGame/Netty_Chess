@@ -9,6 +9,7 @@ import io.netty.handler.codec.MessageToMessageCodec;
 import kw.mulitplay.game.client.Serializer;
 import kw.mulitplay.game.message.RegisterMessage;
 import kw.mulitplay.game.message.base.Message;
+import kw.mulitplay.game.message.type.MessageType;
 
 
 @ChannelHandler.Sharable
@@ -25,7 +26,8 @@ public class MessageToMessage extends MessageToMessageCodec<ByteBuf, Message> {
         ByteBuf buffer = ctx.alloc().buffer();
         buffer.writeBytes(new byte[]{2,0,2,2});
         buffer.writeByte(1);
-        buffer.writeBytes(new byte[]{-1,-1,-1,-1});
+        buffer.writeBytes(new byte[]{-1,-1,-1});
+        buffer.writeByte(msg.getType());
         byte[] serialize = Serializer.Algorithm.Java.serialize(msg);
         buffer.writeInt(serialize.length);
         buffer.writeBytes(serialize);
@@ -50,13 +52,16 @@ public class MessageToMessage extends MessageToMessageCodec<ByteBuf, Message> {
         System.out.println();
         byte b = msg.readByte();
         System.out.println(b);
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             msg.readByte();
         }
+        //获取类型
+        byte b1 = msg.readByte();
+        Class<? extends Message> aClass = MessageType.getClass(b1);
         int length = msg.readInt();
         byte[] content = new byte[length];
         msg.readBytes(content, 0, length);
-        RegisterMessage deserialize = Serializer.Algorithm.Java.deserialize(RegisterMessage.class, content);
+        Message deserialize = Serializer.Algorithm.Java.deserialize(aClass, content);
         out.add(deserialize);
     }
 }

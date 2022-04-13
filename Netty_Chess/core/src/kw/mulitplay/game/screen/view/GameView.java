@@ -12,6 +12,9 @@ import kw.mulitplay.game.config.Config;
 import kw.mulitplay.game.config.LevelConfig;
 import kw.mulitplay.game.data.Chess;
 import kw.mulitplay.game.data.ChessData;
+import kw.mulitplay.game.message.NNMessage;
+import kw.mulitplay.game.message.base.Message;
+import kw.mulitplay.game.message.type.MessageType;
 import kw.mulitplay.game.screen.GameLogic;
 import kw.mulitplay.game.screen.game.GameGuiZe;
 
@@ -126,5 +129,14 @@ public class GameView extends Group {
     public void setCursorPosgone(){
         cursorRed.setVisible(false);
         cursorBlue.setVisible(false);
+    }
+
+    public void update(){
+        while (NNMessage.queue.size() > 0) {
+            Message remove = NNMessage.queue.remove();
+            if (remove.getType() == MessageType.move){
+//                logic.playerMoveChess(xx,yy,startX,startY);
+            }
+        }
     }
 }
