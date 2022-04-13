@@ -11,8 +11,8 @@ public class DemoApp{
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.x = 0;
         config.y = 0;
-        config.width = 540;
-        config.height = 960;
+        config.width = 360;
+        config.height = 640;
         new LwjglApplication(new ChessGame(), config);
     }
 }

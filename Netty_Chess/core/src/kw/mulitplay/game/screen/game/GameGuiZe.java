@@ -3,14 +3,14 @@ package kw.mulitplay.game.screen.game;
 import kw.mulitplay.game.config.LevelConfig;
 import kw.mulitplay.game.data.Chess;
 
-public class GameLogic {
+public class GameGuiZe {
     Chess[][] qiZi;
     boolean canMove = false;
 
     int i;
     int j;
 
-    public GameLogic(Chess[][] qiZi) {
+    public GameGuiZe(Chess[][] qiZi) {
         this.qiZi = qiZi;
     }
 

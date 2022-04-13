@@ -40,15 +40,15 @@ public class Chess extends Group {
                     super.clicked(event, x, y);
                     System.out.println("chess click");
                     LevelConfig.chessSelected = Chess.this;
-                    LevelConfig.currentSelected = Chess.this;
-                    LevelConfig.tarGetSelected = null;
+
+
 
 
                 }else {
                     LevelConfig.clickType = 1;
 
-                    LevelConfig.tarGetSelected = Chess.this;
-                    LevelConfig.currentSelected = Chess.this;
+
+
                 }
             }
         });

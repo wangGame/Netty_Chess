@@ -15,7 +15,7 @@
 //import com.badlogic.gdx.scenes.scene2d.ui.Image;
 //
 //import kw.mulitplay.game.game.GameConfig;
-//import kw.mulitplay.game.game.GameLogic;
+//import kw.mulitplay.game.game.GameGuiZe;
 //import kw.mulitplay.game.game.IGameView;
 //
 ///**
@@ -30,7 +30,7 @@
 //    private float mCellWidth;
 //    private Image[] mPiecesBitmap;
 ////    private Canvas mCanvas;
-//    private GameLogic mGameLogic;
+//    private GameGuiZe mGameLogic;
 ////    private RectF mPieceDstRectF;
 //
 //    public GameBoardView() {
@@ -38,13 +38,13 @@
 //    }
 //
 //    private void initView() {
-//        mGameLogic = new GameLogic(this);
+//        mGameLogic = new GameGuiZe(this);
 //        mPieceDstRectF = new RectF();
 //        setBackgroundResource(R.drawable.board);
 //        loadBitmapResources();
 //    }
 //
-//    public GameLogic getGameLogic() {
+//    public GameGuiZe getGameLogic() {
 //        return mGameLogic;
 //    }
 //
