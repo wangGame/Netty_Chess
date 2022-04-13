@@ -36,7 +36,6 @@ public class ClientAgentThread extends Thread {
             try {
 
                 String msg = din.readUTF().trim();
-
                 if (msg.startsWith("<#NAME_CHONGMING#>")) {
                     this.name_chongming();
                 } else if (msg.startsWith("<#NICK_LIST#>")) {
