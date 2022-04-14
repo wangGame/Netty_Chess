@@ -1,26 +1,37 @@
 package kw.mulitplay.game.all;
 
 
-import com.hzy.chinese.jchess.R;
-import com.hzy.chinese.jchess.xqwlight.Position;
-import com.hzy.chinese.jchess.xqwlight.Search;
+//import com.hzy.chinese.jchess.R;
+//import com.hzy.chinese.jchess.xqwlight.Position;
+//import com.hzy.chinese.jchess.xqwlight.Search;
+import kw.mulitplay.game.auto.Position;
+import kw.mulitplay.game.auto.Search;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static com.hzy.chinese.jchess.game.GameConfig.RESP_CAPTURE;
-import static com.hzy.chinese.jchess.game.GameConfig.RESP_CAPTURE2;
-import static com.hzy.chinese.jchess.game.GameConfig.RESP_CHECK;
-import static com.hzy.chinese.jchess.game.GameConfig.RESP_CHECK2;
-import static com.hzy.chinese.jchess.game.GameConfig.RESP_CLICK;
-import static com.hzy.chinese.jchess.game.GameConfig.RESP_DRAW;
-import static com.hzy.chinese.jchess.game.GameConfig.RESP_ILLEGAL;
-import static com.hzy.chinese.jchess.game.GameConfig.RESP_LOSS;
-import static com.hzy.chinese.jchess.game.GameConfig.RESP_MOVE;
-import static com.hzy.chinese.jchess.game.GameConfig.RESP_MOVE2;
-import static com.hzy.chinese.jchess.game.GameConfig.RESP_WIN;
+//import static com.hzy.chinese.jchess.game.GameConfig.RESP_CAPTURE;
+//import static com.hzy.chinese.jchess.game.GameConfig.RESP_CAPTURE2;
+//import static com.hzy.chinese.jchess.game.GameConfig.RESP_CHECK;
+//import static com.hzy.chinese.jchess.game.GameConfig.RESP_CHECK2;
+//import static com.hzy.chinese.jchess.game.GameConfig.RESP_CLICK;
+//import static com.hzy.chinese.jchess.game.GameConfig.RESP_DRAW;
+//import static com.hzy.chinese.jchess.game.GameConfig.RESP_ILLEGAL;
+//import static com.hzy.chinese.jchess.game.GameConfig.RESP_LOSS;
+//import static com.hzy.chinese.jchess.game.GameConfig.RESP_MOVE;
+//import static com.hzy.chinese.jchess.game.GameConfig.RESP_MOVE2;
+//import static com.hzy.chinese.jchess.game.GameConfig.RESP_WIN;
+import static kw.mulitplay.game.all.GameConfig.RESP_CAPTURE;
+import static kw.mulitplay.game.all.GameConfig.RESP_CAPTURE2;
+import static kw.mulitplay.game.all.GameConfig.RESP_CHECK;
+import static kw.mulitplay.game.all.GameConfig.RESP_CHECK2;
+import static kw.mulitplay.game.all.GameConfig.RESP_DRAW;
+import static kw.mulitplay.game.all.GameConfig.RESP_LOSS;
+import static kw.mulitplay.game.all.GameConfig.RESP_MOVE;
+import static kw.mulitplay.game.all.GameConfig.RESP_MOVE2;
+import static kw.mulitplay.game.all.GameConfig.RESP_WIN;
 
 public class GameLogic implements Runnable {
 
@@ -154,7 +165,7 @@ public class GameLogic implements Runnable {
             }
             sqSelected = sq;
             drawSquare(sq);
-            playSound(RESP_CLICK);
+
             mGameView.postRepaint();
         } else if (sqSelected > 0) {
             int mv = Position.MOVE(sqSelected, sq);
@@ -162,7 +173,6 @@ public class GameLogic implements Runnable {
                 return;
             }
             if (!pos.makeMove(mv)) {
-                playSound(RESP_ILLEGAL);
                 return;
             }
             int response = pos.inCheck() ? RESP_CHECK :
@@ -245,8 +255,8 @@ public class GameLogic implements Runnable {
     private boolean getResult(int response) {
         if (pos.isMate()) {
             playSound(response < 0 ? RESP_WIN : RESP_LOSS);
-            showMessage(response < 0 ?
-                    R.string.congratulations_you_win : R.string.you_lose_and_try_again);
+//            showMessage(response < 0 ?
+//                    R.string.congratulations_you_win : R.string.you_lose_and_try_again);
             return true;
         }
         int vlRep = pos.repStatus(3);
@@ -254,14 +264,14 @@ public class GameLogic implements Runnable {
             vlRep = (response < 0 ? pos.repValue(vlRep) : -pos.repValue(vlRep));
             playSound(vlRep > Position.WIN_VALUE ? RESP_LOSS :
                     vlRep < -Position.WIN_VALUE ? RESP_WIN : RESP_DRAW);
-            showMessage(vlRep > Position.WIN_VALUE ?
-                    R.string.play_too_long_as_lose : vlRep < -Position.WIN_VALUE ?
-                    R.string.pc_play_too_long_as_lose : R.string.standoff_as_draw);
+//            showMessage(vlRep > Position.WIN_VALUE ?
+//                    R.string.play_too_long_as_lose : vlRep < -Position.WIN_VALUE ?
+//                    R.string.pc_play_too_long_as_lose : R.string.standoff_as_draw);
             return true;
         }
         if (pos.moveNum > 100) {
             playSound(RESP_DRAW);
-            showMessage(R.string.both_too_long_as_draw);
+//            showMessage(R.string.both_too_long_as_draw);
             return true;
         }
         if (response >= 0) {
@@ -281,8 +291,8 @@ public class GameLogic implements Runnable {
 
     private String popHistory() {
         if (mHistoryList.size() == 0) {
-            showMessage(R.string.no_more_histories);
-            playSound(RESP_ILLEGAL);
+//            showMessage(R.string.no_more_histories);
+//            playSound(RESP_ILLEGAL);
             return null;
         }
         playSound(RESP_MOVE2);
