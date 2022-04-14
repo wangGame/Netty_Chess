@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 import kw.mulitplay.game.asset.Asset;
+import kw.mulitplay.game.client.GameClient;
 import kw.mulitplay.game.screen.base.BaseScreen;
 
 public class LoadingScreen extends BaseScreen {
@@ -18,6 +19,7 @@ public class LoadingScreen extends BaseScreen {
         super.show();
         Image image = new Image(new Texture("orange.png"));
         addActor(image);
+        GameClient.run();
 
 //        Texture texture = new Texture("orange.png");
 //        texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.ClampToEdge);
