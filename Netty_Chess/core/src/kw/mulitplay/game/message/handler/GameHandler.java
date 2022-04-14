@@ -11,6 +11,7 @@ public class GameHandler extends ChannelInboundHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         super.channelActive(ctx);
         NNMessage.channel = ctx.channel();
+        NNMessage.register();
     }
 
     @Override

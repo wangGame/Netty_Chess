@@ -11,6 +11,7 @@ public class MessageType {
     public final static byte level = 1;
     public final static byte move = 2;
     public final static byte renshu = 3;
+    public final static byte register = 4;
 
     static {
         hashMap.put(pipei, PipeiMessage.class);

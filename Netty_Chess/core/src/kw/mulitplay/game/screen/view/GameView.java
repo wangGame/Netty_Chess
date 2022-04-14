@@ -12,6 +12,7 @@ import kw.mulitplay.game.config.Config;
 import kw.mulitplay.game.config.LevelConfig;
 import kw.mulitplay.game.data.Chess;
 import kw.mulitplay.game.data.ChessData;
+import kw.mulitplay.game.message.MoveMessage;
 import kw.mulitplay.game.message.NNMessage;
 import kw.mulitplay.game.message.base.Message;
 import kw.mulitplay.game.message.type.MessageType;
@@ -49,6 +50,9 @@ public class GameView extends Group {
 
     public void initView(){
         chessGroup = new Group();
+        if (LevelConfig.play == 0){
+            chessGroup.setRotation(180);
+        }
         Image image = new Image(Asset.getInstance().getTexture("qizi/board.jpg"));
         addActor(image);
         image.setPosition(getWidth()/2,getHeight()/2,Align.center);
@@ -101,6 +105,8 @@ public class GameView extends Group {
                     int startX = LevelConfig.chessSelected.getPosX();
                     int startY = LevelConfig.chessSelected.getPosY();
                     logic.playerMoveChess(xx,yy,startX,startY);
+                    MoveMessage message = new MoveMessage(xx,yy,startX,startY);
+                    NNMessage.move(message);
                 }
                 setStatus();
             }
@@ -111,7 +117,6 @@ public class GameView extends Group {
         if (LevelConfig.chessSelected == null){
             setCursorPosgone();
         }
-
         LevelConfig.clickType = 3;
     }
 
@@ -131,11 +136,24 @@ public class GameView extends Group {
         cursorBlue.setVisible(false);
     }
 
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        update();
+    }
+
     public void update(){
         while (NNMessage.queue.size() > 0) {
             Message remove = NNMessage.queue.remove();
             if (remove.getType() == MessageType.move){
-//                logic.playerMoveChess(xx,yy,startX,startY);
+                int startX = ((MoveMessage) (remove)).getStartX();
+                int startY = ((MoveMessage) (remove)).getStartY();
+                int endX = ((MoveMessage) (remove)).getEndX();
+                int endY = ((MoveMessage) (remove)).getEndY();
+                LevelConfig.clickType = ((MoveMessage)(remove)).getClickType();
+                logic.playerMoveChess(startX,startY,endX,endY);
+                setStatus();
             }
         }
     }

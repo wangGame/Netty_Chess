@@ -31,4 +31,25 @@ public class GameClient {
             e.printStackTrace();
         }
     }
+
+    public static void run(){
+        try {
+            MessageToMessage message = new MessageToMessage();
+
+            new Bootstrap().group(new NioEventLoopGroup())
+                    .channel(NioSocketChannel.class)
+                    .handler(new ChannelInitializer<NioSocketChannel>(){
+                        @Override
+                        protected void initChannel(NioSocketChannel ch) throws Exception {
+                            ch.pipeline().addLast(message);
+                            ch.pipeline().addLast(new GameHandler());
+//                            ch.pipeline().addLast()
+                        }
+                    }).connect("127.0.0.1",8888);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("clcl");
+    }
 }

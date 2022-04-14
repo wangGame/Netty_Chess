@@ -12,6 +12,10 @@ public class Message implements Serializable {
                 '}';
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
     public byte getType() {
         return type;
     }
