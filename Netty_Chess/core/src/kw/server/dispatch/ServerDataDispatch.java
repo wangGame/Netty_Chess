@@ -26,12 +26,12 @@ public class ServerDataDispatch {
                         PipeiMessage message = new PipeiMessage(uuid,0);
                         hashMap.get(s).writeAndFlush(message);
                     }
-                    hashMap.put(uuid,ctx.channel());
-                    System.out.println(hashMap.size()+"     "+uuid+"   "+ctx.channel());
+
                     PipeiMessage message = new PipeiMessage(other,1);
                     ctx.channel().writeAndFlush(message);
                 }
-
+                hashMap.put(uuid,ctx.channel());
+                System.out.println(hashMap.size()+"     "+uuid+"   "+ctx.channel());
                 break;
             case MessageType.move:
                 String uuid1 = ((MoveMessage) (msg)).getUuid();

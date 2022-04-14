@@ -7,6 +7,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import kw.log.NLog;
 import kw.mulitplay.game.message.RegisterMessage;
 import kw.mulitplay.game.message.codec.MessageToMessage;
 import kw.mulitplay.game.message.handler.GameHandler;
@@ -33,9 +34,10 @@ public class GameClient {
     }
 
     public static void run(){
+        NLog.i("run client");
         try {
             MessageToMessage message = new MessageToMessage();
-
+            NLog.i("create decor");
             new Bootstrap().group(new NioEventLoopGroup())
                     .channel(NioSocketChannel.class)
                     .handler(new ChannelInitializer<NioSocketChannel>(){
@@ -43,13 +45,11 @@ public class GameClient {
                         protected void initChannel(NioSocketChannel ch) throws Exception {
                             ch.pipeline().addLast(message);
                             ch.pipeline().addLast(new GameHandler());
-//                            ch.pipeline().addLast()
                         }
                     }).connect("127.0.0.1",8888);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        System.out.println("clcl");
     }
 }

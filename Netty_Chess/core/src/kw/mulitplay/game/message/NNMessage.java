@@ -7,6 +7,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
+import kw.log.NLog;
 import kw.mulitplay.game.config.LevelConfig;
 import kw.mulitplay.game.message.base.Message;
 import kw.mulitplay.game.message.type.MessageType;
@@ -49,11 +50,13 @@ public class NNMessage {
 
     public static void register(){
         RegisterMessage message = new RegisterMessage();
+        NLog.i("register message %s",message.toString());
+        NLog.i("current user uuid "+message.getUuid());
         channel.writeAndFlush(message);
     }
 
     public static void move(MoveMessage message){
-        System.out.println("move ----------- ");
+        NLog.i("send player option ",message.toString());
         channel.writeAndFlush(message);
     }
 }

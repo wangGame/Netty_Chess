@@ -5,10 +5,12 @@ import java.io.Serializable;
 public class Message implements Serializable {
     protected String uuid;
     protected byte type;
+
     @Override
     public String toString() {
         return "Message{" +
                 "uuid='" + uuid + '\'' +
+                ", type=" + type +
                 '}';
     }
 

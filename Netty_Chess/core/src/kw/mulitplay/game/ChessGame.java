@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.StreamUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import kw.log.NLog;
 import kw.mulitplay.game.asset.Asset;
 import kw.mulitplay.game.config.Config;
 import kw.mulitplay.game.screen.LoadingScreen;
@@ -35,6 +36,7 @@ public class ChessGame extends Game {
         chessGameViewport.update(width,height);
         Config.GAME_WIDTH = chessGameViewport.getWorldWidth();
         Config.GAME_HIGHT = chessGameViewport.getWorldHeight();
+        NLog.i("%d  %d",width,height);
     }
 
     @Override
@@ -45,13 +47,7 @@ public class ChessGame extends Game {
 
     @Override
     public void render() {
-        ScreenUtils.clear(Color.valueOf("444444"));
+        ScreenUtils.clear(0,0,0,1);
         super.render();
-    }
-
-    public void setScreen(String name) {
-        if (name.equals("loadcreen")){
-            setScreen(new LoadingScreen());
-        }
     }
 }

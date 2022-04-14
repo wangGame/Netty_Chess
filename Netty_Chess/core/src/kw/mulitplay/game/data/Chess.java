@@ -37,7 +37,7 @@ public class Chess extends Group {
         addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-//                if (LevelConfig.play != LevelConfig.currentPlayer)return;
+                if (LevelConfig.play != LevelConfig.currentPlayer)return;
 
                 if (LevelConfig.currentPlayer == player) {
                     LevelConfig.clickType = 0;

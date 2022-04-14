@@ -2,6 +2,7 @@ package kw.mulitplay.game.message.handler;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import kw.log.NLog;
 import kw.mulitplay.game.message.NNMessage;
 import kw.mulitplay.game.message.base.Message;
 
@@ -11,7 +12,9 @@ public class GameHandler extends ChannelInboundHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         super.channelActive(ctx);
         NNMessage.channel = ctx.channel();
+        NLog.i("register "+ ctx.channel());
         NNMessage.register();
+
     }
 
     @Override
