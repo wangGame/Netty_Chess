@@ -18,10 +18,13 @@ public class Util {
 
     private static final int[] SHELL_STEP = {0, 1, 4, 13, 40, 121, 364, 1093};
 
+    private static int c = 0;
     public static int readShort(InputStream in) throws IOException {
         int b0 = in.read();
         int b1 = in.read();
-        System.out.println(b0+"---"+b1);
+//        System.out.println(b0+"---"+b1);
+        c++;
+        System.out.println(c);
         if (b0 == -1 || b1 == -1) {
             throw new IOException();
         }

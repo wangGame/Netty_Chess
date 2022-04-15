@@ -74,9 +74,9 @@ public class GameLogic implements Runnable {
                 int xx = x - Position.FILE_LEFT;
                 int yy = y - Position.RANK_TOP;
                 int pc = pos.squares[sq];
-                if (pc > 0) {
+//                if (pc > 0) {
                     mGameView.drawPiece(pc, xx, yy);
-                }
+//                }
                 if (sq == sqSelected || sq == Position.SRC(mvLast) ||
                         sq == Position.DST(mvLast)) {
                     mGameView.drawSelected(xx, yy);
