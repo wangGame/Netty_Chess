@@ -1,5 +1,7 @@
 package kw.chess;
 
+import kw.mulitplay.game.config.LevelConfig;
+
 import java.util.Map;
 
 /**
@@ -12,7 +14,7 @@ public class Board{
     public final int BOARD_HEIGHT = 10;
     public Map<String, Piece> pieces;
     private Piece[][] cells;
-    public char player = 'b';
+    public char player = LevelConfig.currentPlayer;
 
     public Board(){
         cells = new Piece[BOARD_HEIGHT][BOARD_WIDTH];

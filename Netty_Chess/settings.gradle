@@ -1,3 +1,4 @@
-include  'core','app','desktop'
+include  'core','android','desktop'
 include 'autochess'
+
 

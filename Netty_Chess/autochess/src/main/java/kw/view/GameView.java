@@ -11,6 +11,8 @@ import kw.chess.Board;
 import kw.chess.Piece;
 import kw.chess.Rules;
 import kw.control.GameController;
+import kw.mulitplay.game.config.LevelConfig;
+import player.client.dispatch.ClientDispatch;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -29,7 +31,7 @@ public class GameView extends Group {
     private static final int VIEW_HEIGHT = 712;
     private static final int PIECE_WIDTH = 67;
     private static final int PIECE_HEIGHT = 67;
-    private static final int SY_COE = 68;
+    private static final int SY_COE = 69;
     private static final int SX_COE = 68;
     private static final int SX_OFFSET = 50;
     private static final int SY_OFFSET = 15;
@@ -45,6 +47,7 @@ public class GameView extends Group {
         pieceObjects = new HashMap<String, Image>();
         this.controller = gameController;
         setSize(700,712);
+        LevelConfig.gameView  = this;
     }
 
     public void init(final Board board) {
@@ -132,6 +135,20 @@ public class GameView extends Group {
 //        System.exit(0);
     }
 
+    public void xx2(String key,String selectedPieceKey,int []pos) {
+
+        pieceObjects.get(key).remove();
+        pieceObjects.remove(key);
+        controller.moveChess(selectedPieceKey, pos, board);
+        movePieceFromModel(selectedPieceKey, pos);
+        pointb.setVisible(false);
+        if (controller.hasWin(board) != 'x') {
+            showWinner(board.player);
+        }
+
+
+    }
+
     class PieceOnClickListener extends ClickListener {
         private String key;
 
@@ -141,6 +158,9 @@ public class GameView extends Group {
 
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            if (LevelConfig.currentUser != board.player) {
+                return super.touchDown(event, x, y, pointer, button);
+            }
             if (selectedPieceKey != null && key.charAt(0) != board.player) {
                 int[] pos = board.pieces.get(key).position;
                 int[] selectedPiecePos = board.pieces.get(selectedPieceKey).position;
@@ -148,11 +168,18 @@ public class GameView extends Group {
                 for (int[] each : Rules.getNextMove(selectedPieceKey, selectedPiecePos, board)) {
                     if (Arrays.equals(each, pos)) {
                         // Kill self and move that piece.
-                        removeActor(pieceObjects.get(key));
+
+                        ClientDispatch.move222(key,selectedPieceKey,pos);
+
+
+                        pieceObjects.get(key).remove();
                         pieceObjects.remove(key);
                         controller.moveChess(selectedPieceKey, pos, board);
                         movePieceFromModel(selectedPieceKey, pos);
                         pointb.setVisible(false);
+                        if (controller.hasWin(board) != 'x') {
+                            showWinner(board.player);
+                        }
                         break;
                     }
                 }
@@ -166,14 +193,24 @@ public class GameView extends Group {
             }
             return super.touchDown(event, x, y, pointer, button);
         }
+
     }
 
+    public void xx(String selectedPieceKey,int[] pos){
+        controller.moveChess(selectedPieceKey, pos, board);
+        //移动展示
+        movePieceFromModel(selectedPieceKey, pos);
+
+    }
     /**
      * 点击到桌面了
      */
     class BoardClickListener extends ClickListener {
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            if (LevelConfig.model == 2&&LevelConfig.currentUser != board.player) {
+                return super.touchDown(event, x, y, pointer, button);
+            }
             if (selectedPieceKey != null) {
                 pointb.setVisible(false);
                     int[] sPos = new int[]{(int) x, (int) y};
@@ -184,6 +221,8 @@ public class GameView extends Group {
                         //如果位置等于点击的位置那么久移动
                         if (Arrays.equals(each, pos)) {
                             //更改坐标
+                            ClientDispatch.move11(selectedPieceKey,pos);
+
                             controller.moveChess(selectedPieceKey, pos, board);
                             //移动展示
                             movePieceFromModel(selectedPieceKey, pos);

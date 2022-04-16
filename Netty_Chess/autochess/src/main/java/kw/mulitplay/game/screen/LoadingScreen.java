@@ -1,37 +1,51 @@
 package kw.mulitplay.game.screen;
 
-import kw.ChessGame;
-import kw.mulitplay.game.ChessGameAsset;
+import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
+
+import java.util.AbstractList;
+
+import kw.mulitplay.game.config.LevelConfig;
 import kw.mulitplay.game.screen.base.BaseScreen;
+import player.client.App;
 
 public class LoadingScreen extends BaseScreen {
-    ChessGame chessGame;
+    float time = 0;
     @Override
     public void show() {
         super.show();
-        chessGame = new ChessGame();
-        chessGame.init();
-        stage.addActor(chessGame.getView());
-    }
+//        addActor(new Image(new Texture("orange.png")));
 
-    public float js(float dp){
-        //英寸
-        int w = 1080;
-        int h = 2340;
-        float yc = 6.0f;
-        float i = h / 1280.0F;
-        float ii = w / 720.0F;
-        float min = Math.min(i, ii);
-        double v = Math.sqrt(w * w + h * h) / yc;
-        //px = 1 x v / 160;
-        float xxx = (float)( v / 160.0F)/min;
-        return xxx * dp;
-        //
+        Group g1 = new Group();
+        g1.setSize(720,200);
+        g1.setOrigin(Align.center);
+        g1.setRotation(270);
+        Table g = new Table(){{
+            for (int i = 0; i < 20; i++) {
+                add(new Image(new Texture("orange.png")));
+            }
+            pack();
+        }};
+        ScrollPane pane = new ScrollPane(g,new ScrollPane.ScrollPaneStyle());
+        addActor(g1);
+        pane.setSize(720,200);
+        pane.setX(0);
+        pane.setDebug(true);
+        g1.addActor(pane);
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        chessGame.run(delta);
+        time+=delta;
+        if (time > 3){
+            setScreen(new MainScreen());
+        }
     }
 }

@@ -5,7 +5,10 @@ import kw.alogrithm.AlphaBetaNode;
 import kw.alogrithm.SearchModel;
 import kw.chess.Board;
 import kw.chess.Piece;
+import kw.mulitplay.game.config.LevelConfig;
 import kw.view.GameView;
+import player.client.dispatch.ClientDispatch;
+import player.message.message.MoveMessage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +18,8 @@ import java.util.Map;
  * GameController, dealing with logic along game process.
  */
 public class GameController {
+    private SearchModel searchModel;
+
     private Map<String, Piece> initPieces() {
         Map<String, Piece> pieces = new HashMap<String, Piece>();
         pieces.put("bj0", new Piece("bj0", new int[]{0, 0}));
@@ -53,9 +58,11 @@ public class GameController {
         return pieces;
     }
 
+    private Board board;
     //得到每一个棋子  并且设置位置
     private Board initBoard() {
         Board board = new Board();
+        this.board= board;
         board.pieces = initPieces();
         for (Map.Entry<String, Piece> stringPieceEntry :  board.pieces.entrySet())
             board.update(stringPieceEntry.getValue());
@@ -72,6 +79,20 @@ public class GameController {
     }
 
 
+
+    public void moveChess1(String key, int[] position) {
+        /**
+         * Implements user's action.
+         * */
+        board.updatePiece(key, position);
+        if (LevelConfig.model == 2){
+//            MoveMessage message = new MoveMessage(key,position);
+//            message.setUuid(LevelConfig.userUUID);
+//            ClientDispatch.move(message);
+        }
+    }
+
+
     public void moveChess(String key, int[] position, Board board) {
         /**
          * Implements user's action.
@@ -84,7 +105,7 @@ public class GameController {
         /**
          * Implements artificial intelligence.
          * */
-        SearchModel searchModel = new SearchModel();
+
         AlphaBetaNode result = searchModel.search(board);
         view.movePieceFromAI(result.piece, result.to);
         board.updatePiece(result.piece, result.to);
@@ -118,4 +139,7 @@ public class GameController {
         else return 'x';
     }
 
+    public void setSearchModel(SearchModel searchModel) {
+        this.searchModel = searchModel;
+    }
 }
