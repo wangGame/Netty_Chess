@@ -29,7 +29,7 @@ public class GameView extends Group {
     private static final int VIEW_HEIGHT = 712;
     private static final int PIECE_WIDTH = 67;
     private static final int PIECE_HEIGHT = 67;
-    private static final int SY_COE = 68;
+    private static final int SY_COE = 69;
     private static final int SX_COE = 68;
     private static final int SX_OFFSET = 50;
     private static final int SY_OFFSET = 15;

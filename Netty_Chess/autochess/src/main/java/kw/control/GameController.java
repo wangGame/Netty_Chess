@@ -15,6 +15,8 @@ import java.util.Map;
  * GameController, dealing with logic along game process.
  */
 public class GameController {
+    private SearchModel searchModel;
+
     private Map<String, Piece> initPieces() {
         Map<String, Piece> pieces = new HashMap<String, Piece>();
         pieces.put("bj0", new Piece("bj0", new int[]{0, 0}));
@@ -84,7 +86,7 @@ public class GameController {
         /**
          * Implements artificial intelligence.
          * */
-        SearchModel searchModel = new SearchModel();
+
         AlphaBetaNode result = searchModel.search(board);
         view.movePieceFromAI(result.piece, result.to);
         board.updatePiece(result.piece, result.to);
@@ -118,4 +120,7 @@ public class GameController {
         else return 'x';
     }
 
+    public void setSearchModel(SearchModel searchModel) {
+        this.searchModel = searchModel;
+    }
 }

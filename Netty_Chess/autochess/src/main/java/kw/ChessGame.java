@@ -1,6 +1,8 @@
 package kw;
 
 import com.badlogic.gdx.utils.Align;
+
+import kw.alogrithm.SearchModel;
 import kw.chess.Board;
 import kw.control.GameController;
 import kw.mulitplay.game.config.Config;
@@ -15,6 +17,8 @@ public class ChessGame {
     public void init() {
         //控制类
         controller = new GameController();
+        SearchModel searchModel = new SearchModel();
+        controller.setSearchModel(searchModel);
         board = controller.playChess();
         view = new GameView(controller);
         view.init(board);
