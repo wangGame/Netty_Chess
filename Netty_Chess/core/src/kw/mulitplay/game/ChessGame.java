@@ -47,7 +47,7 @@ public class ChessGame extends Game {
 
     @Override
     public void render() {
-        ScreenUtils.clear(0,0,0,1);
+        ScreenUtils.clear(229.0F/255,204.0F/255,172.0F/255F,1);
         super.render();
     }
 }

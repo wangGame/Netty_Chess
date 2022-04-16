@@ -1,10 +1,9 @@
 package com.kw.game;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import kw.mulitplay.game.ChessGame;
+import kw.mulitplay.game.ChessGameAsset;
 
 public class DemoApp{
     public static void main(String[] args) {
@@ -13,6 +12,6 @@ public class DemoApp{
         config.y = 0;
         config.width = 360;
         config.height = 640;
-        new LwjglApplication(new ChessGame(), config);
+        new LwjglApplication(new ChessGameAsset(), config);
     }
 }

@@ -15,7 +15,7 @@ import kw.mulitplay.game.asset.Asset;
 import kw.mulitplay.game.config.Config;
 import kw.mulitplay.game.screen.LoadingScreen;
 
-public class ChessGame extends Game {
+public class ChessGameAsset extends Game {
     private Viewport chessGameViewport;
     private CpuSpriteBatch batch;
 
@@ -27,7 +27,19 @@ public class ChessGame extends Game {
         batch = new CpuSpriteBatch();
         Asset.viewport = chessGameViewport;
         Asset.batch = batch;
+
+
+
+//        mSoundEnable = mPreference.getBoolean(getString(R.string.pref_sound_key), true);
+        int mHandicapIndex = 0;
+        boolean mComputerFlip = false;
+//        mPieceStyle = Integer.parseInt(mPreference.getString(getString(R.string.pref_piece_style_key), "0"));
+        int mAILevel = 0;
+
+
+
         setScreen(new LoadingScreen());
+
     }
 
     @Override
@@ -47,7 +59,7 @@ public class ChessGame extends Game {
 
     @Override
     public void render() {
-        ScreenUtils.clear(0,0,0,1);
+        ScreenUtils.clear(229.0F/255,204.0F/255,172.0F/255F,1);
         super.render();
     }
 }
