@@ -12,8 +12,10 @@ public class Board{
 
     public final int BOARD_WIDTH = 9;
     public final int BOARD_HEIGHT = 10;
+
     public Map<String, Piece> pieces;
     private Piece[][] cells;
+
     public char player = LevelConfig.currentPlayer;
 
     public Board(){

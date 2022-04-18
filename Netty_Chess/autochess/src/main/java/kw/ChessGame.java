@@ -9,6 +9,10 @@ import kw.mulitplay.game.config.Config;
 import kw.mulitplay.game.config.LevelConfig;
 import kw.view.GameView;
 
+/**
+ * 实现的思路是通过得到牌之后，
+ * 根据深度进行
+ */
 public class ChessGame {
     private Board board;
     private GameController controller;

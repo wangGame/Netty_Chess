@@ -158,7 +158,7 @@ public class GameView extends Group {
 
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            if (LevelConfig.currentUser != board.player) {
+            if (LevelConfig.model==2&&LevelConfig.currentUser != board.player) {
                 return super.touchDown(event, x, y, pointer, button);
             }
             if (selectedPieceKey != null && key.charAt(0) != board.player) {
@@ -169,8 +169,9 @@ public class GameView extends Group {
                     if (Arrays.equals(each, pos)) {
                         // Kill self and move that piece.
 
-                        ClientDispatch.move222(key,selectedPieceKey,pos);
-
+                        if (LevelConfig.model == 2) {
+                            ClientDispatch.move222(key, selectedPieceKey, pos);
+                        }
 
                         pieceObjects.get(key).remove();
                         pieceObjects.remove(key);
@@ -221,8 +222,9 @@ public class GameView extends Group {
                         //如果位置等于点击的位置那么久移动
                         if (Arrays.equals(each, pos)) {
                             //更改坐标
-                            ClientDispatch.move11(selectedPieceKey,pos);
-
+                            if (LevelConfig.model==2) {
+                                ClientDispatch.move11(selectedPieceKey, pos);
+                            }
                             controller.moveChess(selectedPieceKey, pos, board);
                             //移动展示
                             movePieceFromModel(selectedPieceKey, pos);

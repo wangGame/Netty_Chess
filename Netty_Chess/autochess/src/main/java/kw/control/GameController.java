@@ -19,7 +19,6 @@ import java.util.Map;
  */
 public class GameController {
     private SearchModel searchModel;
-
     private Map<String, Piece> initPieces() {
         Map<String, Piece> pieces = new HashMap<String, Piece>();
         pieces.put("bj0", new Piece("bj0", new int[]{0, 0}));
@@ -57,7 +56,6 @@ public class GameController {
         pieces.put("rz4", new Piece("rz4", new int[]{6, 8}));
         return pieces;
     }
-
     private Board board;
     //得到每一个棋子  并且设置位置
     private Board initBoard() {

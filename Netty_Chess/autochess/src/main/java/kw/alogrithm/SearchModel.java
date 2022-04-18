@@ -15,6 +15,7 @@ import java.util.Map;
 public class SearchModel {
     private int DEPTH = 2;
     private Board board;
+    //用于搜索的时候使用
     private GameController controller;
 
     public SearchModel(){
@@ -33,9 +34,11 @@ public class SearchModel {
             DEPTH = 6;
         long startTime = System.currentTimeMillis();
         AlphaBetaNode best = null;
+        //得到所有可以走的路
         ArrayList<AlphaBetaNode> moves = generateMovesForAll(true);
         for (AlphaBetaNode n : moves) {
             /* Move*/
+            //移动完成之后，  会计算一个value
             Piece eaten = board.updatePiece(n.piece, n.to);
             n.value = alphaBeta(DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
             /* Select a best move during searching to save time*/
@@ -59,7 +62,6 @@ public class SearchModel {
         if (depth == 0 || controller.hasWin(board) != 'x')
             return new EvalModel().eval(board, 'b');
         ArrayList<AlphaBetaNode> moves = generateMovesForAll(isMax);
-
         synchronized (this) {
             for (final AlphaBetaNode n : moves) {
                 Piece eaten = board.updatePiece(n.piece, n.to);
@@ -106,7 +108,7 @@ public class SearchModel {
 
     private ArrayList<AlphaBetaNode> generateMovesForAll(boolean isMax) {
         ArrayList<AlphaBetaNode> moves = new ArrayList<AlphaBetaNode>();
-        //遍历所有的棋子    计算每个棋子可以移动的位置
+        //遍历所有的棋子    计算每个棋子可以移动的位置   判断的目的是存在两个选手，它们需要进行多次模拟
         for (Map.Entry<String, Piece> stringPieceEntry : board.pieces.entrySet()) {
             Piece piece = stringPieceEntry.getValue();
             if (isMax && piece.color == 'r') continue;

@@ -17,7 +17,7 @@ public class MainScreen extends BaseScreen {
 //        setScreen(new GameScreen());
 
         LevelConfig.currentPlayer = 'r';
-        LevelConfig.model = 2;
+        LevelConfig.model = 1;
 
 
         if (LevelConfig.model == 2) {

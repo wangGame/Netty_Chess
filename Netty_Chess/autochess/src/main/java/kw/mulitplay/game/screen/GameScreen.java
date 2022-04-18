@@ -19,17 +19,22 @@ public class GameScreen extends BaseScreen {
 //            chessGame.init();
 //            stage.addActor(chessGame.getView());
 //        }else {
-            ClientDispatch.pipei(new Runnable(){
+        if (LevelConfig.model==2) {
+            ClientDispatch.pipei(new Runnable() {
                 @Override
                 public void run() {
-                    Gdx.app.postRunnable(()->{
+                    Gdx.app.postRunnable(() -> {
                         chessGame = new ChessGame();
                         chessGame.init();
                         stage.addActor(chessGame.getView());
                     });
                 }
             });
-//        }
+        }else {
+            chessGame = new ChessGame();
+            chessGame.init();
+            stage.addActor(chessGame.getView());
+        }
     }
 
     public float js(float dp){
