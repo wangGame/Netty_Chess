@@ -1,80 +1,46 @@
 package com.pj.chess;
-import static com.pj.chess.ChessConstant.*; 
 
-import java.applet.Applet;
-import java.applet.AudioClip;
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Panel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.imageio.ImageIO;
-import javax.swing.ButtonGroup;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
-
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.pj.chess.chessmove.ChessMovePlay;
 import com.pj.chess.chessmove.MoveNode;
 import com.pj.chess.chessparam.ChessParam;
-import com.pj.chess.evaluate.EvaluateCompute; 
 import com.pj.chess.evaluate.EvaluateComputeMiddleGame;
 import com.pj.chess.zobrist.TranspositionTable;
 
-public class ChessBoardMain extends JFrame {
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.URL;
+
+import static com.pj.chess.ChessConstant.*;
+
+public class ChessBoardMain2 extends Group {
 
 	private static final long serialVersionUID = 1L;
-	public static  final String[] chessName=new String[]{ 
+	public static  final String[] chessName=new String[]{
 		"   ",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 		"黑将","黑车","黑车","黑马","黑马","黑炮","黑炮","黑象","黑象","黑士","黑士","黑卒","黑卒","黑卒","黑卒","黑卒",
 		"红将","红车","红车","红马","红马","红炮","红炮","红象","红象","红士","红士","红卒","红卒","红卒","红卒","红卒",
 	};
-	public static  final String[] chessIcon=new String[]{ 
+	public static  final String[] chessIcon=new String[]{
 		 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 		"BK","BR","BR","BN","BN","BC","BC","BB","BB","BA","BA","BP","BP","BP","BP","BP",
-		"RK","RR","RR","RN","RN","RC","RC","RB","RB","RA","RA","RP","RP","RP","RP","RP",		
+		"RK","RR","RR","RN","RN","RC","RC","RB","RB","RA","RA","RP","RP","RP","RP","RP",
 	};
 	int lastTimeCheckedSite=-1; //上次选中棋子的位置
-	private ButtonActionListener my = new ButtonActionListener(); 
-	JLabel[] buttons=new JLabel[BOARDSIZE90];
+	private ButtonActionListener my = new ButtonActionListener();
+	com.badlogic.gdx.scenes.scene2d.ui.Image[] buttons=new com.badlogic.gdx.scenes.scene2d.ui.Image[BOARDSIZE90];
 	int play=1;
 	volatile boolean[] android=new boolean[]{false,false};
 	int begin=-1;
@@ -83,7 +49,7 @@ public class ChessBoardMain extends JFrame {
 	boolean isBackstageThink=false;
 	boolean computeFig=false;
 	TranspositionTable  transTable;
-	ChessMovePlay cmp=null; 
+	ChessMovePlay cmp=null;
 	AICoreHandler _AIThink=new AICoreHandler();
 	AICoreHandler backstageAIThink=new AICoreHandler();
 //	public static List<MoveNode> backMove=new ArrayList<MoveNode>();
@@ -93,15 +59,15 @@ public class ChessBoardMain extends JFrame {
 	private static boolean isSound=false;
 	public void initHandler(){
 		String startFen="c6c5  rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR b - - 0 1";
-		
+
 //		String startFen="c6c5  9/CP2k4/9/9/9/9/9/9/9/4K4 b - - 0 1";
 //		Tools.parseFENtoBoardZobrist(fenStr);
 		startFen=readSaved();
-		
+
 		String[] fenArray = Tools.fenToFENArray(startFen);
 		//将牌放入到数组中
 		int[] boardTemp = Tools.parseFEN(fenArray[1]);
-		//根据棋盘初始参数		
+		//根据棋盘初始参数
 		chessParamCont=ChessInitialize.getGlobalChessParam(boardTemp);
 		//清除所有界面图片
 //		clearBoardIcon();
@@ -111,7 +77,7 @@ public class ChessBoardMain extends JFrame {
 				this.setBoardIconUnchecked(i,boardTemp[i]);
 			}
 		}
-		
+
 		//初始局面(要把棋子摆好后才能计算局面值)
 		transTable=new TranspositionTable() ;
 		if(moveHistory==null){
@@ -121,89 +87,96 @@ public class ChessBoardMain extends JFrame {
 		android[1-play]=true;
 		cmp=new ChessMovePlay(chessParamCont,transTable,new EvaluateComputeMiddleGame(chessParamCont));
 	}
-	JPanel jpanelContent;
+	Group jpanelContent;
 	private void setCenter(){
 		if(jpanelContent!=null){
-			this.remove(jpanelContent);
+			jpanelContent.remove();
 		}
-		jpanelContent= new javax.swing.JPanel() {
-			protected void paintComponent(Graphics g) {
-				try { 
-					BufferedImage img=ImageIO.read(getClass().getResource("/images/MAIN.GIF"));
-					g.drawImage(img, 0, 0,  null);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+		jpanelContent= new Group() {
+//			protected void paintComponent(Graphics g) {
+//				try {
+//					BufferedImage img=ImageIO.read(getClass().getResource("/images/MAIN.GIF"));
+//					g.drawImage(img, 0, 0,  null);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+
 		};
-		this.setLayout(new BorderLayout());
-		
-		JPanel panel  = new javax.swing.JPanel();
-		
-		jpanelContent.setLayout(new BorderLayout());
-		//北		
-		JPanel jpNorth=new JPanel(); 
-		jpNorth.setPreferredSize(new Dimension(25,25));
-//		jpNorth.setBackground(Color.white);
-		jpNorth.setOpaque(false);
-		jpanelContent.add(jpNorth,BorderLayout.NORTH);
-		//南	
-		JPanel jpSouth=new JPanel(); 
-		jpSouth.setPreferredSize(new Dimension(5,5));
-		jpSouth.setBackground(Color.black);
-		jpSouth.setOpaque(false);
-		jpanelContent.add(jpSouth,BorderLayout.SOUTH);	
-		//西
-		JPanel jpWest=new JPanel();
-		jpWest.setPreferredSize(new Dimension(20,20));
-		jpWest.setBackground(Color.blue);
-		jpWest.setOpaque(false);
-		jpanelContent.add(jpWest,BorderLayout.WEST);		
-		//东
-		JPanel jpEast=new JPanel(); 
-		jpEast.setPreferredSize(new Dimension(20,20));
-		jpEast.setBackground(Color.CYAN);
-		jpEast.setOpaque(false);
-		jpanelContent.add(jpEast,BorderLayout.EAST);	
+		jpanelContent.addActor(new com.badlogic.gdx.scenes.scene2d.ui.Image(new Texture("images/MAIN.GIF")));
+		Group panel  = new Group();
+
+//		jpanelContent.setLayout(new BorderLayout());
+//		//北
+//		JPanel jpNorth=new JPanel();
+//		jpNorth.setPreferredSize(new Dimension(25,25));
+////		jpNorth.setBackground(Color.white);
+//		jpNorth.setOpaque(false);
+//		jpanelContent.add(jpNorth,BorderLayout.NORTH);
+		//南
+//		JPanel jpSouth=new JPanel();
+//		jpSouth.setPreferredSize(new Dimension(5,5));
+//		jpSouth.setBackground(Color.black);
+//		jpSouth.setOpaque(false);
+//		jpanelContent.add(jpSouth,BorderLayout.SOUTH);
+//		//西
+//		JPanel jpWest=new JPanel();
+//		jpWest.setPreferredSize(new Dimension(20,20));
+//		jpWest.setBackground(Color.blue);
+//		jpWest.setOpaque(false);
+//		jpanelContent.add(jpWest,BorderLayout.WEST);
+//		//东
+//		JPanel jpEast=new JPanel();
+//		jpEast.setPreferredSize(new Dimension(20,20));
+//		jpEast.setBackground(Color.CYAN);
+//		jpEast.setOpaque(false);
+//		jpanelContent.add(jpEast,BorderLayout.EAST);
 		//中
-		panel.setLayout(new GridLayout(10, 9));
-		panel.setPreferredSize(new Dimension(100,100));
-		panel.setOpaque(false);
-		jpanelContent.add(panel,BorderLayout.CENTER);	
-		
-		for (int i = 0; i < BOARDSIZE90; i++) { 
-			JLabel  p = new JLabel(); 
-			p.addMouseListener(my);
-			p.setBackground(Color.red);
+//		panel.setLayout(new GridLayout(10, 9));
+//		panel.setPreferredSize(new Dimension(100,100));
+//		panel.setOpaque(false);
+//		jpanelContent.add(panel,BorderLayout.CENTER);
+
+		int y = 0;
+		for (int i = 0; i < BOARDSIZE90; i++) {
+			com.badlogic.gdx.scenes.scene2d.ui.Image p = new com.badlogic.gdx.scenes.scene2d.ui.Image();
+			p.addListener(my);
+			p.setColor(Color.RED);
 			p.setSize(55, 55);
-			buttons[i]=p;			
-			panel.add(p);
+			buttons[i]=p;
+			panel.addActor(p);
+			buttons[i].setX(55*(i%9));
+			buttons[i].setY(55*y);
+			if (i!=0&&i%9==0){
+				y++;
+			}
 		}
-		this.add(jpanelContent,BorderLayout.CENTER);
+		this.addActor(jpanelContent);
+		jpanelContent.addActor(panel);
 	}
-	public ChessBoardMain() {
-		super("中国象棋");  
+	public ChessBoardMain2() {
+
 		setCenter();
 		
-		JPanel constrol=new JPanel();
-		constrol.setLayout(new GridLayout(1, 3));
+		Group constrol=new Group();
+//		constrol.setLayout(new GridLayout(1, 3));
 		
-		Button button = new Button("悔棋");
-		button.addActionListener(my); 
-		Button computerMove = new Button("立即走棋");
-		computerMove.addActionListener(my);
-		constrol.add(button);
-		constrol.add(computerMove);
-		this.add(constrol,BorderLayout.SOUTH);
-		
-		this.addWindowListener(my);
+		com.badlogic.gdx.scenes.scene2d.ui.Image button = new com.badlogic.gdx.scenes.scene2d.ui.Image();
+		button.addListener(my);
+//		"立即走棋"
+		com.badlogic.gdx.scenes.scene2d.ui.Image computerMove = new com.badlogic.gdx.scenes.scene2d.ui.Image();
+		computerMove.addListener(my);
+		constrol.addActor(button);
+		constrol.addActor(computerMove);
+		this.addActor(constrol);
+		this.addListener(my);
 		//初始处理器
 		initHandler();
-		this.setJMenuBar(setJMenuBar());
+//		this.setJMenuBar(setJMenuBar());
 		
 		this.setSize(568, 680); 
-		this.setLocationRelativeTo(null);
-		this.setResizable(false);
+//		this.setLocationRelativeTo(null);
+//		this.setResizable(false);
 		this.setVisible(true);
 	}
 	private MenuItemActionListener menuItemAction=new MenuItemActionListener();
@@ -292,20 +265,20 @@ public class ChessBoardMain extends JFrame {
 //		site=boardMap[site];
 //		initBoardRelation(site,chess);
 		if(chess==NOTHING){
-			buttons[site].setIcon(null);	
+			buttons[site].setDrawable(null);
 		}else{
-			buttons[site].setIcon(getImageIcon(chessIcon[chess]));
+			buttons[site].setDrawable(new TextureRegionDrawable(new Texture("images/"+chessIcon[chess]+".GIF")));
 		}
 	}
 	public void setBoardIconChecked(int site,int chess){
-		buttons[site].setIcon(getImageIcon(chessIcon[chess]+"S"));
+		buttons[site].setDrawable(new TextureRegionDrawable(new Texture(chessIcon[chess]+"S")));
 	}
 	public void setCheckedLOSS(int play){
-		buttons[chessParamCont.allChess[chessPlay[play]]].setIcon(getImageIcon(chessIcon[chessPlay[play]]+"M"));
+		buttons[chessParamCont.allChess[chessPlay[play]]].setDrawable(new TextureRegionDrawable(new Texture(chessIcon[chessPlay[play]]+"M")));
 	}
 	public void clearBoardIcon(){
 		for(int i=0;i<buttons.length;i++){
-			buttons[i].setIcon(null);
+//			buttons[i].setIcon(null);
 		}
 	}
 	public  void initBoardRelation(int destSite,int chess){
@@ -329,7 +302,8 @@ public class ChessBoardMain extends JFrame {
 		setBoardIconChecked(moveNode.destSite,moveNode.srcChess); 
 		lastTimeCheckedSite=moveNode.destSite;
 	}
-	class ButtonActionListener   implements ActionListener, WindowListener,MouseListener {
+	class ButtonActionListener extends ClickListener {
+
 		public void actionPerformed(ActionEvent e) {
 			Button sour = (Button)e.getSource();
 			if(sour.getLabel().equals("悔棋")){
@@ -377,12 +351,12 @@ public class ChessBoardMain extends JFrame {
 				setBoardIconUnchecked(lastTimeCheckedSite,chessParamCont.board[lastTimeCheckedSite]);
 			}
 			if(moveNode.srcChess==NOTHING){
-				buttons[moveNode.srcSite].setIcon(null); 
+				buttons[moveNode.srcSite].setDrawable(null);
 			}else{
 				setBoardIconUnchecked(moveNode.srcSite,moveNode.srcChess);
 			} 
 			if(moveNode.destChess==NOTHING){
-				buttons[moveNode.destChess].setIcon(null); 
+				buttons[moveNode.destChess].setDrawable(null);
 			}else{
 				setBoardIconChecked(moveNode.destSite,moveNode.destChess);
 			} 
@@ -444,7 +418,7 @@ public class ChessBoardMain extends JFrame {
 				return;
 			}
 			for (int i = 0; i < buttons.length; i++) {
-					JLabel p = buttons[i];
+					com.badlogic.gdx.scenes.scene2d.ui.Image p = buttons[i];
 					if(p==e.getSource()){
 						if(chessParamCont.board[i]!=NOTHING &&  (chessParamCont.board[i]&chessPlay[play])==chessPlay[play]){//自方子力
 							if(i!=begin){
@@ -482,17 +456,17 @@ public class ChessBoardMain extends JFrame {
 		}
 	}
 	public void gameOverMsg(String msg){
-		if (JOptionPane.showConfirmDialog(this, msg + "是否继续？", "信息",
-				 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-			dispose();
-			new ChessBoardMain();
-		} else{
-			dispose();
-		}
+//		if (JOptionPane.showConfirmDialog(this, msg + "是否继续？", "信息",
+//				 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+////			dispose();
+//			new ChessBoardMain2();
+//		} else{
+////			dispose();
+//		}
 	}
 
 	private ImageIcon getImageIcon(String chessName){
-		String path="/images/"+chessName+".GIF";
+		String path="images/"+chessName+".GIF";
 		ImageIcon  imageIcon=new  ImageIcon(getClass().getResource(path));
 		return imageIcon;
 	}
@@ -547,8 +521,8 @@ public class ChessBoardMain extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			String actionCommand=e.getActionCommand();
 			if("新建".equals(actionCommand)){
-				dispose();
-				new ChessBoardMain();
+//				dispose();
+				new ChessBoardMain2();
 			}else if("保存".equalsIgnoreCase(actionCommand)){
 				Tools.saveFEN(chessParamCont.board,moveHistory);
 			}else if("菜鸟".equals(actionCommand)){
@@ -715,7 +689,7 @@ public class ChessBoardMain extends JFrame {
 		FileInputStream fileInput = null;
 		try {
 			File chessFile = new File("chess.txt");
-			fileInput = new java.io.FileInputStream(chessFile);
+			fileInput = new FileInputStream(chessFile);
 			BufferedReader bufferedReader = new BufferedReader(
 					new java.io.InputStreamReader(fileInput));
 
@@ -723,24 +697,24 @@ public class ChessBoardMain extends JFrame {
 				fen = bufferedReader.readLine();
 			}
 			if (fen != null) {
-				if (JOptionPane.showConfirmDialog(this, "检测到有存档是否继续上次游戏?", "信息",
-						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					ObjectInputStream objInput =null;
-					try{
-						objInput = new ObjectInputStream(new FileInputStream("moves.dat"));
-						moveHistory=(NodeLink) objInput.readObject();
-						turn_num=20;
-					}catch(Exception e){
-						System.err.println("========读取历史记录出错 moves.dat");
-					}finally{
-						if(objInput!=null){
-							objInput.close();
-						}
-					}
-				} else {
+//				if (JOptionPane.showConfirmDialog(this, "检测到有存档是否继续上次游戏?", "信息",
+//						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+//					ObjectInputStream objInput =null;
+//					try{
+//						objInput = new ObjectInputStream(new FileInputStream("moves.dat"));
+//						moveHistory=(NodeLink) objInput.readObject();
+//						turn_num=20;
+//					}catch(Exception e){
+//						System.err.println("========读取历史记录出错 moves.dat");
+//					}finally{
+//						if(objInput!=null){
+//							objInput.close();
+//						}
+//					}
+//				} else {
 					chessFile.deleteOnExit();
 					fen="c6c5  rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR b - - 0 1";
-				}
+//				}
 			}
 		} catch (Exception e) {
 			fen="c6c5  rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR b - - 0 1";
@@ -756,7 +730,7 @@ public class ChessBoardMain extends JFrame {
 		return fen;
 	}
 	public static void main(String args[]) {
-		new ChessBoardMain();
+		new ChessBoardMain2();
 	}
 	public void launchSound(int type){
 		if(isSound){ //开启音效
@@ -767,10 +741,10 @@ public class ChessBoardMain extends JFrame {
 	private static final String checkedPath="/sounds/CHECKED.WAV";
 	private static final String capturePath="/sounds/CAPTURE.WAV";
 	private static final String lossPath="/sounds/LOSS.WAV";
-	private static final URL MOVEPATHURL = ChessBoardMain.class.getResource(movePathPath);
-	private static final URL CHECKEDURL = ChessBoardMain.class.getResource(checkedPath);
-	private static final URL CAPTUREURL = ChessBoardMain.class.getResource(capturePath);
-	private static final URL LOSSURL = ChessBoardMain.class.getResource(lossPath);
+	private static final URL MOVEPATHURL = ChessBoardMain2.class.getResource(movePathPath);
+	private static final URL CHECKEDURL = ChessBoardMain2.class.getResource(checkedPath);
+	private static final URL CAPTUREURL = ChessBoardMain2.class.getResource(capturePath);
+	private static final URL LOSSURL = ChessBoardMain2.class.getResource(lossPath);
 	class SoundEffect extends Thread{
 		public final static int MOVE_SOUND=1;
 		public final static int CAPTURE_SOUND=2;

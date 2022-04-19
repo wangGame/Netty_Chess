@@ -48,10 +48,11 @@ public class GameView extends Group {
         this.controller = gameController;
         setSize(700,712);
         LevelConfig.gameView  = this;
+        this.board = gameController.playChess();
+        init();
     }
 
-    public void init(final Board board) {
-        this.board = board;
+    public void init() {
         //绘制背景
         Image bgBoard = new Image(new Texture("res/img/board.png"));
         bgBoard.setPosition(0, 0);
@@ -142,7 +143,7 @@ public class GameView extends Group {
         controller.moveChess(selectedPieceKey, pos, board);
         movePieceFromModel(selectedPieceKey, pos);
         pointb.setVisible(false);
-        if (controller.hasWin(board) != 'x') {
+        if (controller.hasWin() != 'x') {
             showWinner(board.player);
         }
 
@@ -178,7 +179,7 @@ public class GameView extends Group {
                         controller.moveChess(selectedPieceKey, pos, board);
                         movePieceFromModel(selectedPieceKey, pos);
                         pointb.setVisible(false);
-                        if (controller.hasWin(board) != 'x') {
+                        if (controller.hasWin() != 'x') {
                             showWinner(board.player);
                         }
                         break;

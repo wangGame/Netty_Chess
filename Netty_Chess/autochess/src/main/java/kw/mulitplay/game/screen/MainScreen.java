@@ -11,13 +11,11 @@ public class MainScreen extends BaseScreen {
     public void show() {
         super.show();
         //进入自动游玩
-
-
 //        LevelConfig.currentPlayer = 'r';
 //        setScreen(new GameScreen());
 
         LevelConfig.currentPlayer = 'r';
-        LevelConfig.model = 1;
+        LevelConfig.model = 0;
 
 
         if (LevelConfig.model == 2) {

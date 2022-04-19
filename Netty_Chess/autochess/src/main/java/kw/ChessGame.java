@@ -19,14 +19,14 @@ public class ChessGame {
     private GameView view;
     float time = 0;
 
+    public ChessGame(){
+        init();
+    }
     public void init() {
         //控制类
         controller = new GameController();
-        SearchModel searchModel = new SearchModel();
-        controller.setSearchModel(searchModel);
         board = controller.playChess();
         view = new GameView(controller);
-        view.init(board);
         view.setPosition(Config.GAME_WIDTH/2,Config.GAME_HIGHT/2, Align.center);
         view.setOrigin(Align.center);
         view.setRotation(180);
@@ -39,33 +39,19 @@ public class ChessGame {
     public void run(float delta)  {
         if(LevelConfig.model == 0) {
             //人机对战   机器实在里面进行的
-            if (controller.hasWin(board) == 'x') {
+            if (controller.hasWin() == 'x') {
                 if (board.player == 'b') {
                     time += delta;
                     if (time > 1) {
                         time = 0;
-                        controller.responseMoveChess(board, view);
+                        controller.responseMoveChess(view);
                         view.showPlayer('r');
-                        if (controller.hasWin(board) != 'x') {
+                        if (controller.hasWin() != 'x') {
                             view.showWinner('r');
                         }
                     }
                 }
             }
-        }else {
-//            if (controller.hasWin(board) == 'x') {
-//                if (board.player == 'b') {
-////                    time += delta;
-////                    if (time > 1) {
-////                        time = 0;
-////                        controller.responseMoveChess(board, view);
-////                        view.showPlayer('r');
-////                        if (controller.hasWin(board) != 'x') {
-////                            view.showWinner('r');
-////                        }
-////                    }
-//                }
-//            }
         }
     }
 }

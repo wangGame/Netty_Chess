@@ -85,6 +85,7 @@ public class Tools {
 
 		String[] libArr = new String[]{str};
 		int i=0;
+		//每次读取到的会将其加1
 		while(libArr[0].length()>i){
 			if(libArr[0].charAt(i)>='a' && libArr[0].charAt(i)<='z'){
 				int chess =m.get(libArr[0].charAt(i));

@@ -22,16 +22,22 @@ public class EvalModel {
             int[] reversePosition = new int[]{board.BOARD_HEIGHT - 1 - piece.position[0], piece.position[1]};
             switch (piece.character) {
                 case 'b':
-                    if (piece.color == 'r') values[0][0] += evalPieceValue(0);
-                    else values[1][0] += evalPieceValue(0);
+                    if (piece.color == 'r')
+                        values[0][0] += evalPieceValue(0);
+                    else
+                        values[1][0] += evalPieceValue(0);
                     break;
                 case 's':
-                    if (piece.color == 'r') values[0][0] += evalPieceValue(1);
-                    else values[1][0] += evalPieceValue(1);
+                    if (piece.color == 'r')
+                        values[0][0] += evalPieceValue(1);
+                    else
+                        values[1][0] += evalPieceValue(1);
                     break;
                 case 'x':
-                    if (piece.color == 'r') values[0][0] += evalPieceValue(2);
-                    else values[1][0] += evalPieceValue(2);
+                    if (piece.color == 'r')
+                        values[0][0] += evalPieceValue(2);
+                    else
+                        values[1][0] += evalPieceValue(2);
                     break;
                 case 'm':
                     if (piece.color == 'r') {
@@ -81,10 +87,12 @@ public class EvalModel {
                 return -1;
         }
     }
-
+    int[] pieceValue;
     private int evalPieceValue(int p) {
         /* b | s | x | m | j | p | z*/
-        int[] pieceValue = new int[]{1000000, 110, 110, 300, 600, 300, 70};
+        if(pieceValue==null) {
+            pieceValue = new int[]{1000000, 110, 110, 300, 600, 300, 70};
+        }
         return pieceValue[p];
     }
 
@@ -144,21 +152,21 @@ public class EvalModel {
         return -1;
     }
 
-    private int evalPieceControl() {
-        return 0;
-    }
-
-    private int evalPieceFlexible(int p) {
-        // b | s | x | m | j | p | z
-        int[] pieceFlexible = new int[]{0, 1, 1, 13, 7, 7, 15};
-        return 0;
-    }
-
-    private int evalPieceProtect() {
-        return 0;
-    }
-
-    private int evalPieceFeature() {
-        return 0;
-    }
+//    private int evalPieceControl() {
+//        return 0;
+//    }
+//
+//    private int evalPieceFlexible(int p) {
+//        // b | s | x | m | j | p | z
+//        int[] pieceFlexible = new int[]{0, 1, 1, 13, 7, 7, 15};
+//        return 0;
+//    }
+//
+//    private int evalPieceProtect() {
+//        return 0;
+//    }
+//
+//    private int evalPieceFeature() {
+//        return 0;
+//    }
 }

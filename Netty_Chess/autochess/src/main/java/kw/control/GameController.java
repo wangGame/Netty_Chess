@@ -18,6 +18,7 @@ import java.util.Map;
  * GameController, dealing with logic along game process.
  */
 public class GameController {
+
     private SearchModel searchModel;
     private Map<String, Piece> initPieces() {
         Map<String, Piece> pieces = new HashMap<String, Piece>();
@@ -57,6 +58,10 @@ public class GameController {
         return pieces;
     }
     private Board board;
+    public GameController(){
+        searchModel = new SearchModel(this);
+    }
+
     //得到每一个棋子  并且设置位置
     private Board initBoard() {
         Board board = new Board();
@@ -67,7 +72,6 @@ public class GameController {
         return board;
     }
 
-
     public Board playChess() {
         /**
          * Start game.
@@ -75,21 +79,6 @@ public class GameController {
         initPieces();
         return initBoard();
     }
-
-
-
-    public void moveChess1(String key, int[] position) {
-        /**
-         * Implements user's action.
-         * */
-        board.updatePiece(key, position);
-        if (LevelConfig.model == 2){
-//            MoveMessage message = new MoveMessage(key,position);
-//            message.setUuid(LevelConfig.userUUID);
-//            ClientDispatch.move(message);
-        }
-    }
-
 
     public void moveChess(String key, int[] position, Board board) {
         /**
@@ -99,7 +88,7 @@ public class GameController {
     }
 
 
-    public void responseMoveChess(Board board, GameView view) {
+    public void responseMoveChess(GameView view) {
         /**
          * Implements artificial intelligence.
          * */
@@ -125,7 +114,7 @@ public class GameController {
     }
 
     //每次都来进行搜索
-    public char hasWin(Board board) {
+    public char hasWin() {
         /**
          * Judge has the game ended.
          * @return 'r' for RED wins, 'b' for BLACK wins, 'x' for game continues.
@@ -135,9 +124,5 @@ public class GameController {
         if (isRedWin) return 'r';
         else if (isBlackWin) return 'b';
         else return 'x';
-    }
-
-    public void setSearchModel(SearchModel searchModel) {
-        this.searchModel = searchModel;
     }
 }

@@ -18,8 +18,8 @@ public class SearchModel {
     //用于搜索的时候使用
     private GameController controller;
 
-    public SearchModel(){
-        controller = new GameController();
+    public SearchModel(GameController controller){
+        this.controller = controller;
     }
 
     public AlphaBetaNode search(Board board) {
@@ -56,10 +56,9 @@ public class SearchModel {
         return best;
     }
 
-
     private int alphaBeta(int depth, int alpha, int beta, boolean isMax) {
         /* Return evaluation if reaching leaf node or any side won.*/
-        if (depth == 0 || controller.hasWin(board) != 'x')
+        if (depth == 0 || controller.hasWin() != 'x')
             return new EvalModel().eval(board, 'b');
         ArrayList<AlphaBetaNode> moves = generateMovesForAll(isMax);
         synchronized (this) {

@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Align;
 
 import java.util.AbstractList;
 
+import com.pj.chess.ChessBoardMain2;
 import kw.mulitplay.game.config.LevelConfig;
 import kw.mulitplay.game.screen.base.BaseScreen;
 import player.client.App;
@@ -20,32 +21,35 @@ public class LoadingScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
-//        addActor(new Image(new Texture("orange.png")));
 
-        Group g1 = new Group();
-        g1.setSize(720,200);
-        g1.setOrigin(Align.center);
-        g1.setRotation(270);
-        Table g = new Table(){{
-            for (int i = 0; i < 20; i++) {
-                add(new Image(new Texture("orange.png")));
-            }
-            pack();
-        }};
-        ScrollPane pane = new ScrollPane(g,new ScrollPane.ScrollPaneStyle());
-        addActor(g1);
-        pane.setSize(720,200);
-        pane.setX(0);
-        pane.setDebug(true);
-        g1.addActor(pane);
+
+        ChessBoardMain2 main2 = new ChessBoardMain2();
+        stage.addActor(main2);
+//        addActor(new Image(new Texture("orange.png")));
+//        Group g1 = new Group();
+//        g1.setSize(720,200);
+//        g1.setOrigin(Align.center);
+//        g1.setRotation(90);
+//        Table g = new Table(){{
+//            for (int i = 0; i < 20; i++) {
+//                add(new Image(new Texture("orange.png")));
+//            }
+//            pack();
+//        }};
+//        ScrollPane pane = new ScrollPane(g,new ScrollPane.ScrollPaneStyle());
+//        addActor(g1);
+//        pane.setSize(720,200);
+//        pane.setX(0);
+//        pane.setDebug(true);
+//        g1.addActor(pane);
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        time+=delta;
-        if (time > 3){
-            setScreen(new MainScreen());
-        }
+//        time+=delta;
+//        if (time > 3){
+//            setScreen(new MainScreen());
+//        }
     }
 }
