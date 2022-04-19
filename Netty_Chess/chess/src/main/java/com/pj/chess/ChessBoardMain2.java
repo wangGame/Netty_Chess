@@ -1,8 +1,10 @@
 package com.pj.chess;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -271,7 +273,7 @@ public class ChessBoardMain2 extends Group {
 		}
 	}
 	public void setBoardIconChecked(int site,int chess){
-		buttons[site].setDrawable(new TextureRegionDrawable(new Texture(chessIcon[chess]+"S")));
+		buttons[site].setDrawable(new TextureRegionDrawable(new Texture("images/"+chessIcon[chess]+"S.GIF")));
 	}
 	public void setCheckedLOSS(int play){
 		buttons[chessParamCont.allChess[chessPlay[play]]].setDrawable(new TextureRegionDrawable(new Texture(chessIcon[chessPlay[play]]+"M")));
@@ -303,6 +305,45 @@ public class ChessBoardMain2 extends Group {
 		lastTimeCheckedSite=moveNode.destSite;
 	}
 	class ButtonActionListener extends ClickListener {
+
+		@Override
+		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			if(android[play]){
+				return false;
+			}
+			for (int i = 0; i < buttons.length; i++) {
+				com.badlogic.gdx.scenes.scene2d.ui.Image p = buttons[i];
+				if(p==event.getTarget()){
+					if(chessParamCont.board[i]!=NOTHING &&  (chessParamCont.board[i]&chessPlay[play])==chessPlay[play]){//自方子力
+						if(i!=begin){
+							begin=i;
+
+							setBoardIconChecked(i,chessParamCont.board[i]);
+							if(lastTimeCheckedSite!=-1){
+								setBoardIconUnchecked(lastTimeCheckedSite,chessParamCont.board[lastTimeCheckedSite]);
+							}
+							lastTimeCheckedSite=begin;
+						}
+						return false;
+					}else if(begin==-1){
+						return false;
+					}
+					end=i;
+					if (this.checkZFPath(begin, end, play)) {
+						MoveNode moveNode = new MoveNode(begin, end, chessParamCont.board[begin], chessParamCont.board[end], 0);
+						showMoveNode(moveNode);
+						NodeLink nextLink = new NodeLink(play, transTable.boardZobrist32, transTable.boardZobrist64);
+						nextLink.setMoveNode(moveNode);
+						moveHistory.setNextLink(nextLink);
+						moveHistory = moveHistory.getNextLink();
+						begin = -1;
+						opponentMove();
+					}
+				}
+			}
+
+			return super.touchDown(event, x, y, pointer, button);
+		}
 
 		public void actionPerformed(ActionEvent e) {
 			Button sour = (Button)e.getSource();
@@ -362,57 +403,7 @@ public class ChessBoardMain2 extends Group {
 			} 
 			lastTimeCheckedSite=moveNode.destSite;
 		}
-		public void windowActivated(WindowEvent arg0) {
-			// TODO Auto-generated method stub
 
-		}
-
-		public void windowClosed(WindowEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
-
-		public void windowClosing(WindowEvent arg0) {
-			// TODO Auto-generated method stub
-			System.exit(1);
-		}
-
-		public void windowDeactivated(WindowEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
-
-		public void windowDeiconified(WindowEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
-
-		public void windowIconified(WindowEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
-
-		public void windowOpened(WindowEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
-		
-		
-		public void mouseClicked(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		
 		public void mousePressed(MouseEvent e) {
 			if(android[play]){
 				return;
@@ -449,11 +440,7 @@ public class ChessBoardMain2 extends Group {
 			} 
 			
 		}
-		
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+
 	}
 	public void gameOverMsg(String msg){
 //		if (JOptionPane.showConfirmDialog(this, msg + "是否继续？", "信息",
@@ -633,7 +620,10 @@ public class ChessBoardMain2 extends Group {
 				_AIThink.setLocalVariable(computerLevel,chessParamCont,moveHistory);
 				_AIThink.launchTimer();
 				_AIThink.run();
-				computeAIMoving(moveHistory.getNextLink());
+				Gdx.app.postRunnable(()->{
+
+					computeAIMoving(moveHistory.getNextLink());
+				});
 			}
 		}.start();
 	}
