@@ -1,4 +1,5 @@
 include  'core','android','desktop'
 include 'autochess'
 include 'chess'
+include 'androidchess'
 

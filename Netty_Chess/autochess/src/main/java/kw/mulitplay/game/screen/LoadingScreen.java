@@ -1,20 +1,15 @@
 package kw.mulitplay.game.screen;
 
-import com.badlogic.gdx.Graphics;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Align;
-
-import java.util.AbstractList;
-
-import com.pj.chess.ChessBoardMain2;
-import kw.mulitplay.game.config.LevelConfig;
+import com.badlogic.gdx.Gdx;
+import game.GameConfig;
 import kw.mulitplay.game.screen.base.BaseScreen;
-import player.client.App;
+import xqwlight.GAmeView;
+import xqwlight.Position;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class LoadingScreen extends BaseScreen {
     float time = 0;
@@ -22,9 +17,18 @@ public class LoadingScreen extends BaseScreen {
     public void show() {
         super.show();
 
+        InputStream is = null;
+        try {
+            is = new FileInputStream(Gdx.files.internal("book.dat").file());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Position.loadBook(is);
+        GAmeView view = new GAmeView();
+        stage.addActor(view);
 
-        ChessBoardMain2 main2 = new ChessBoardMain2();
-        stage.addActor(main2);
+//        ChessBoardMain2 main2 = new ChessBoardMain2();
+//        stage.addActor(main2);
 //        addActor(new Image(new Texture("orange.png")));
 //        Group g1 = new Group();
 //        g1.setSize(720,200);

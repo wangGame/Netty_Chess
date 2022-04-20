@@ -45,6 +45,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+
+        exclude 'META-INF/*******'
+
+        exclude 'META-INF/INDEX.LIST'
+
+        exclude 'META-INF/io.netty.versions.properties'
+
+    }
 }
 project.ext.assetsDir = new File("../Asset");
 task copyAndroidNatives {
@@ -102,6 +111,9 @@ idea {
             }
         }
     }
+
+
+
 }
 
 dependencies {

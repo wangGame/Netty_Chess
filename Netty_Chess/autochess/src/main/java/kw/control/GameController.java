@@ -62,6 +62,10 @@ public class GameController {
         searchModel = new SearchModel(this);
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
     //得到每一个棋子  并且设置位置
     private Board initBoard() {
         Board board = new Board();

@@ -48,7 +48,7 @@ public class GameView extends Group {
         this.controller = gameController;
         setSize(700,712);
         LevelConfig.gameView  = this;
-        this.board = gameController.playChess();
+        this.board = gameController.getBoard();
         init();
     }
 

@@ -17,11 +17,11 @@ public class EvaluateComputeEndGame extends EvaluateCompute {
 	BitBoard[] bitBoardMove=new BitBoard[2];
 	int[][] attackPartition=new int[2][3];
 	int[][] defensePartition=new int[2][3];
-	//卒之间相互保护
+	//???????????
 	int[] soldiersProtected=new int[]{0,55,150,300,400,500};
-	//炮对应对手士的数量分数
+	//???????????????????
 	int[] gunOpptNotGuard=new int[]{0,40,110};
-	//马对应对手士的数量分数
+	//???????????????????
 	int[] knightOpptNotGuard=new int[]{110,40,0};
 	public int evaluate(int play){ 
 		score[REDPLAYSIGN]=chessParam.baseScore[REDPLAYSIGN];
@@ -30,22 +30,22 @@ public class EvaluateComputeEndGame extends EvaluateCompute {
 			int soldierNum = chessParam.getChessesNum(curplay,ChessConstant.SOLDIER);
 			int gunNum = chessParam.getChessesNum(curplay,ChessConstant.GUN);
 			int knightNum = chessParam.getChessesNum(curplay,ChessConstant.KNIGHT);
-			//卒之间相互保护加分
+			//??????????????
 			if(soldierNum>=2){
-				//卒所能攻击到的位置
+				//?????????????λ??
 				BitBoard soldierAttack = this.getSoldiersAttackBitBoard(curplay);
-				//卒所在的位置
+				//???????λ??
 				BitBoard soldierSite = chessParam.getBitBoardByPlayRole(curplay, ChessConstant.SOLDIER);
 				soldierAttack.assignAnd(soldierSite);
 				score[curplay]+=soldiersProtected[soldierAttack.Count()];
 			}
-			//对手士的数量
+			//???????????
 			int opponentGuardNum = chessParam.getChessesNum(1-curplay,ChessConstant.GUARD);
-			//炮
+			//??
 			if(gunNum>0){
 				score[curplay]+=gunOpptNotGuard[opponentGuardNum]*(gunNum==2?1.7:1);
 			}
-			//马
+			//??
 			if(knightNum>0){
 				score[curplay]+=knightOpptNotGuard[opponentGuardNum]*(knightNum==2?1.7:1);
 			}
@@ -56,7 +56,7 @@ public class EvaluateComputeEndGame extends EvaluateCompute {
 	
 	private static int[][] soldiersRole=new int[][]{{27,28,29,30,31},{43,44,45,46,47}};
 	
-	/** 卒所能攻击到的位置
+	/** ?????????????λ??
 	 * @param play
 	 * @return
 	 */
@@ -71,7 +71,7 @@ public class EvaluateComputeEndGame extends EvaluateCompute {
 		}
 		return soldierAttack;
 	}
-	//马
+	//??
 	public  final int blackKnightAttach[]={ 
 				 0 ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0,
 				 0 ,0  ,+30,+30,-20,+30,+30,0  ,0,
@@ -85,7 +85,7 @@ public class EvaluateComputeEndGame extends EvaluateCompute {
 				 0 ,+35,+35,+50,+60,+50,+35,+35,0,
 				 0 ,+10,+20,+20,-20,+20,+20,+10,0
 		};
-	//炮
+	//??
 	public  final  int blackGunAttach[]={
 		  0 ,0 ,+30,+80,+20,+80,+30,0  ,0 ,
 		  0 ,0 ,+30,+70,+55,+70,+30,0  ,0 , 
@@ -99,7 +99,7 @@ public class EvaluateComputeEndGame extends EvaluateCompute {
 		  0 ,+10,+10,0  ,0  ,0  ,+10,+10,0,
 		  0 ,+10,+10,+10,-10,+10,+10,+10,0
 	};
-	//车
+	//??
 	public  final  int blackChariotAttach[]={ 
 			  +20,+20,+20,+65,  0,+65,+20,+20,+20,
 			  +20,+30,+30,+50,+35,+50,+30,+30,+20,
@@ -113,7 +113,7 @@ public class EvaluateComputeEndGame extends EvaluateCompute {
 			  +20,+40,+40,+60,+90,+60,+40,+40,+20,
 			  +20,+20,+20,+20,+20,+20,+20,+20,+20
 	};
-	   //卒
+	   //??
 			public  final  int blackSoldierAttach[]={ 
 				
 				  0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0    
@@ -127,7 +127,7 @@ public class EvaluateComputeEndGame extends EvaluateCompute {
 				 ,+110,+180,+220,+260,+300,+260,+220,+160,+110
 				 ,+100,+100,+100,+100,+100,+100,+100,+100,+100
 		};
-			//象
+			//??
 		public  final  int ElephantAttch[]={ 
 				 
 				  0  ,0  ,10 ,0  ,0  ,0  ,10 ,0  ,0  
@@ -143,7 +143,7 @@ public class EvaluateComputeEndGame extends EvaluateCompute {
 				 ,0  ,0  ,10 ,0  ,0  ,0  ,10 ,0  ,0  
 				 
 		};	
-		//士
+		//?
 		public  final  int GuardAttach[]={  
 			 
 			  0  ,0  ,0  ,0  ,0  ,0 ,0  ,0  ,0  
@@ -158,7 +158,7 @@ public class EvaluateComputeEndGame extends EvaluateCompute {
 			 ,0  ,0  ,0  ,0  ,25 ,0  ,0  ,0  ,0  
 			 ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0    
 	};	
-		//王
+		//??
 		public  final  int kingAttach[]={ 
 			  0  ,0  ,0  ,10 ,10 ,10 ,0  ,0  ,0  
 			 ,0  ,0  ,0  ,-15,-20,-15,0  ,0  ,0        
@@ -192,7 +192,7 @@ public class EvaluateComputeEndGame extends EvaluateCompute {
 	};
 	
 	/*
-	 *附加分 
+	 *????? 
 	 */ 
 	public  int chessAttachScore(int chessRole, int chessSite) {
 		return chessSiteScoreByRole[chessRole][chessSite];
