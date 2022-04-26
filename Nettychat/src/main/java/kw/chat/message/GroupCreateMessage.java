@@ -13,4 +13,20 @@ public class GroupCreateMessage extends Message {
         this.members = members;
         this.type = MessageType.GROUPCREATE;
     }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public void setMembers(Set<String> members) {
+        this.members = members;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public Set<String> getMembers() {
+        return members;
+    }
 }

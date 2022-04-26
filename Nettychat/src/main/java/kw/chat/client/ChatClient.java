@@ -36,6 +36,7 @@ public class ChatClient {
                                 @Override
                                 public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 //                                    super.channelRead(ctx, msg);
+                                    System.out.println("---------收到消息");
                                     if (msg instanceof LoginResponseMessage){
                                         LoginResponseMessage message = (LoginResponseMessage) msg;
                                         if (!message.isSuccess()) {
@@ -43,6 +44,8 @@ public class ChatClient {
                                         }
                                         LOGIN.set(true);
                                         WAIT_FOR_LOGIN.countDown();
+                                    }else if (msg instanceof ChatResponseMessage){
+                                        System.out.println(((ChatResponseMessage) (msg)).getMsg());
                                     }
                                 }
 

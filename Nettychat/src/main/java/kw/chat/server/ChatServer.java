@@ -1,9 +1,6 @@
 package kw.chat.server;
 
-import com.sun.javafx.util.Logging;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -11,12 +8,16 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LoggingHandler;
 import kw.chat.decoder.MessageDecoder;
 import kw.chat.hander.LoginRequestMessageHandler;
-import kw.chat.message.LoginRequestMessage;
-import kw.chat.message.base.Message;
+import kw.chat.hander.SendRequestMessageHandler;
+import kw.chat.hander.GroupCreateRequestMessageHandler;
 
 public class ChatServer {
     public static void main(String[] args) {
         LoggingHandler loggingHandler = new LoggingHandler();
+        MessageDecoder messageDecoder = new MessageDecoder();
+        LoginRequestMessageHandler loginRequestMessageHandler = new LoginRequestMessageHandler();
+        SendRequestMessageHandler sendRequestMessageHandler = new SendRequestMessageHandler();
+        GroupCreateRequestMessageHandler groupCreateRequestMessageHandler = new GroupCreateRequestMessageHandler();
         try {
             new ServerBootstrap()
                     .group(new NioEventLoopGroup())
@@ -25,9 +26,11 @@ public class ChatServer {
                         @Override
                         protected void initChannel(NioSocketChannel ch) throws Exception {
                             ch.pipeline().addLast(loggingHandler);
-                            ch.pipeline().addLast(new MessageDecoder());
-                            ch.pipeline().addLast(new LoginRequestMessageHandler());
-
+                            //编解码
+                            ch.pipeline().addLast(messageDecoder);
+                            ch.pipeline().addLast(loginRequestMessageHandler);
+                            ch.pipeline().addLast(sendRequestMessageHandler);
+                            ch.pipeline().addLast(groupCreateRequestMessageHandler);
                         }
                     }).bind(8888)
                     .sync()

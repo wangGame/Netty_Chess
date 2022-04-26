@@ -1,6 +1,7 @@
 package kw.chat.decoder;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageCodec;
 import kw.chat.constant.Constant;
@@ -16,6 +17,7 @@ import java.util.List;
 - 消息类型  （4）
 - 消息长度  （4）
 - 消息内容  （length）*/
+@ChannelHandler.Sharable
 public class MessageDecoder extends MessageToMessageCodec<ByteBuf, Message> {
     @Override
     protected void encode(ChannelHandlerContext ctx, Message msg, List<Object> out) throws Exception {

@@ -2,12 +2,13 @@ kw/chat/message/GroupMembersRequestMessage.java
  kw.chat.message.GroupMembersRequestMessage
 kw/chat/dao/UserDaoImpl.java
  kw.chat.dao.UserDaoImpl
-kw/chat/message/GroupCreateMessage.java
- kw.chat.message.GroupCreateMessage
-kw/chat/factory/UserServiceFactory.java
- kw.chat.factory.UserServiceFactory
-kw/chat/decoder/MessageDecoder.java
- kw.chat.decoder.MessageDecoder
+kw/chat/serializable/MySerializable.java
+ kw.chat.serializable.MySerializable
+ kw.chat.serializable.MySerializable$1
+kw/chat/dao/base/UserDao.java
+ kw.chat.dao.base.UserDao
+kw/chat/message/ChatRequestMessage.java
+ kw.chat.message.ChatRequestMessage
 kw/chat/constant/Constant.java
  kw.chat.constant.Constant
 kw/chat/message/GroupJoinPeopleMessage.java
@@ -16,9 +17,8 @@ kw/chat/message/CommonMessage.java
  kw.chat.message.CommonMessage
 kw/chat/message/base/Message.java
  kw.chat.message.base.Message
-kw/chat/server/ChatServer.java
- kw.chat.server.ChatServer
- kw.chat.server.ChatServer$1
+kw/chat/message/GroupQuitRequestMessage.java
+ kw.chat.message.GroupQuitRequestMessage
 kw/chat/factory/UserDaoFactory.java
  kw.chat.factory.UserDaoFactory
 kw/chat/message/LoginResponseMessage.java
@@ -35,20 +35,42 @@ kw/chat/message/GroupChatRequestMessage.java
  kw.chat.message.GroupChatRequestMessage
 kw/chat/message/MessageType.java
  kw.chat.message.MessageType
-kw/chat/message/ChatRequestMessage.java
- kw.chat.message.ChatRequestMessage
-kw/chat/dao/base/UserDao.java
- kw.chat.dao.base.UserDao
-kw/chat/service/UserServiceImpl.java
- kw.chat.service.UserServiceImpl
-kw/chat/message/GroupQuitRequestMessage.java
- kw.chat.message.GroupQuitRequestMessage
-kw/chat/serializable/MySerializable.java
- kw.chat.serializable.MySerializable
- kw.chat.serializable.MySerializable$1
-kw/chat/hander/LoginRequestMessageHandler.java
- kw.chat.hander.LoginRequestMessageHandler
+kw/chat/message/GroupJoinRequestMessage.java
+ kw.chat.message.GroupJoinRequestMessage
+kw/chat/group/Group.java
+ kw.chat.group.Group
+kw/chat/message/GroupCreateMessage.java
+ kw.chat.message.GroupCreateMessage
+kw/chat/hander/GroupCreateRequestMessageHandler.java
+ kw.chat.hander.GroupCreateRequestMessageHandler
+kw/chat/session/GroupSession.java
+ kw.chat.session.GroupSession
+kw/chat/decoder/MessageDecoder.java
+ kw.chat.decoder.MessageDecoder
+kw/chat/session/GroupSessionMemoryImpl.java
+ kw.chat.session.GroupSessionMemoryImpl
+kw/chat/message/ChatResponseMessage.java
+ kw.chat.message.ChatResponseMessage
+kw/chat/session/GroupSessionFactory.java
+ kw.chat.session.GroupSessionFactory
+kw/chat/hander/SendRequestMessageHandler.java
+ kw.chat.hander.SendRequestMessageHandler
+kw/chat/session/SessionMemoryImpl.java
+ kw.chat.session.SessionMemoryImpl
 kw/chat/client/ChatClient.java
  kw.chat.client.ChatClient
  kw.chat.client.ChatClient$1
  kw.chat.client.ChatClient$1$1
+kw/chat/session/SessionFactory.java
+ kw.chat.session.SessionFactory
+kw/chat/session/Session.java
+ kw.chat.session.Session
+kw/chat/service/UserServiceImpl.java
+ kw.chat.service.UserServiceImpl
+kw/chat/hander/LoginRequestMessageHandler.java
+ kw.chat.hander.LoginRequestMessageHandler
+kw/chat/factory/UserServiceFactory.java
+ kw.chat.factory.UserServiceFactory
+kw/chat/server/ChatServer.java
+ kw.chat.server.ChatServer
+ kw.chat.server.ChatServer$1
