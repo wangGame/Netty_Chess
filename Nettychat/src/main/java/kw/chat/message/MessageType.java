@@ -8,4 +8,5 @@ public interface MessageType {
     int GROUPCREATE = 4;
     int GROUPMEMBER = 5;
     int JOINPEOPLE = 6;
+    int PINGMESSAGE = 7;
 }

@@ -1,12 +1,16 @@
 package kw.chat.client;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.handler.timeout.IdleState;
+import io.netty.handler.timeout.IdleStateEvent;
+import io.netty.handler.timeout.IdleStateHandler;
 import kw.chat.decoder.MessageDecoder;
 import kw.chat.message.*;
 
@@ -32,6 +36,20 @@ public class ChatClient {
                         protected void initChannel(NioSocketChannel ch) throws Exception {
                             ch.pipeline().addLast(handler);
                             ch.pipeline().addLast(new MessageDecoder());
+                            ch.pipeline().addLast(new IdleStateHandler(0, 3, 0));
+                            // ChannelDuplexHandler 可以同时作为入站和出站处理器
+                            ch.pipeline().addLast(new ChannelDuplexHandler() {
+                                // 用来触发特殊事件
+                                @Override
+                                public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception{
+                                    IdleStateEvent event = (IdleStateEvent) evt;
+                                    // 触发了写空闲事件
+                                    if (event.state() == IdleState.WRITER_IDLE) {
+                                        //                                log.debug("3s 没有写数据了，发送一个心跳包");
+                                        ctx.writeAndFlush(new PingMessage());
+                                    }
+                                }
+                            });
                             ch.pipeline().addLast(new ChannelInboundHandlerAdapter(){
                                 @Override
                                 public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
