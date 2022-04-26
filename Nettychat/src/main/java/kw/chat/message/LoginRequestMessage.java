@@ -4,12 +4,12 @@ import kw.chat.message.base.Message;
 
 import static kw.chat.message.MessageType.*;
 
-public class LoginMessage extends Message {
+public class LoginRequestMessage extends Message {
     private String name;
     private String password;
 
-    public LoginMessage(){
-        type = LOGIN;
+    public LoginRequestMessage(){
+        type = LOGINREQUEST;
     }
 
     public void setPassword(String password) {
