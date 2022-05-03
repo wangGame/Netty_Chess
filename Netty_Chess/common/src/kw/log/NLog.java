@@ -1,6 +1,5 @@
 package kw.log;
 
-import com.badlogic.gdx.Application;
 
 import java.util.Locale;
 import java.util.Vector;

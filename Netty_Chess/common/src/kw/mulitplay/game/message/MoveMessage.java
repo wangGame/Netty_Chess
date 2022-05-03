@@ -1,6 +1,6 @@
 package kw.mulitplay.game.message;
 
-import kw.mulitplay.game.config.LevelConfig;
+//import kw.mulitplay.game.config.LevelConfig;
 import kw.mulitplay.game.message.base.Message;
 import kw.mulitplay.game.message.type.MessageType;
 
@@ -16,8 +16,8 @@ public class MoveMessage extends Message {
         this.startY = startY;
         this.endX = endX;
         this.endY = endY;
-        uuid = LevelConfig.userUUID1;
-        clickType = LevelConfig.clickType;
+//        uuid = LevelConfig.userUUID1;
+//        clickType = LevelConfig.clickType;
     }
 
     public int getClickType() {

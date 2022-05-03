@@ -29,22 +29,22 @@ public class ChessBoardMain2 extends Group {
 	private static final long serialVersionUID = 1L;
 	public static final String[] chessName = new String[]{
 			"   ", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-			"ºÚ½«", "ºÚ³µ", "ºÚ³µ", "ºÚÂí", "ºÚÂí", "ºÚÅÚ", "ºÚÅÚ", "ºÚÏó", "ºÚÏó", "ºÚÊ¿", "ºÚÊ¿", "ºÚ×ä", "ºÚ×ä", "ºÚ×ä", "ºÚ×ä", "ºÚ×ä",
-			"ºì½«", "ºì³µ", "ºì³µ", "ºìÂí", "ºìÂí", "ºìÅÚ", "ºìÅÚ", "ºìÏó", "ºìÏó", "ºìÊ¿", "ºìÊ¿", "ºì×ä", "ºì×ä", "ºì×ä", "ºì×ä", "ºì×ä",
+			"é»‘å°†", "é»‘è½¦", "é»‘è½¦", "é»‘é©¬", "é»‘é©¬", "é»‘ç‚®", "é»‘ç‚®", "é»‘è±¡", "é»‘è±¡", "é»‘å£«", "é»‘å£«", "é»‘å’", "é»‘å’", "é»‘å’", "é»‘å’", "é»‘å’",
+			"çº¢å°†", "çº¢è½¦", "çº¢è½¦", "çº¢é©¬", "çº¢é©¬", "çº¢ç‚®", "çº¢ç‚®", "çº¢è±¡", "çº¢è±¡", "çº¢å£«", "çº¢å£«", "çº¢å’", "çº¢å’", "çº¢å’", "çº¢å’", "çº¢å’",
 	};
 	public static final String[] chessIcon = new String[]{
 			null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
 			"BK", "BR", "BR", "BN", "BN", "BC", "BC", "BB", "BB", "BA", "BA", "BP", "BP", "BP", "BP", "BP",
 			"RK", "RR", "RR", "RN", "RN", "RC", "RC", "RB", "RB", "RA", "RA", "RP", "RP", "RP", "RP", "RP",
 	};
-	int lastTimeCheckedSite = -1; //ÉÏ´ÎÑ¡ÖĞÆå×ÓµÄÎ»ÖÃ
+	int lastTimeCheckedSite = -1; //ä¸Šæ¬¡é€‰ä¸­æ£‹å­çš„ä½ç½®
 	private ButtonActionListener my = new ButtonActionListener();
 	Image[] buttons = new Image[BOARDSIZE90];
 	int play = 1;
 	volatile boolean[] android = new boolean[]{false, false};
 	int begin = -1;
 	int end = 0;
-	private static ComputerLevel computerLevel = ComputerLevel.greenHand; //Ä¬ÈÏ
+	private static ComputerLevel computerLevel = ComputerLevel.greenHand; //é»˜è®¤
 	boolean isBackstageThink = false;
 	boolean computeFig = false;
 	TranspositionTable transTable;
@@ -53,24 +53,24 @@ public class ChessBoardMain2 extends Group {
 	AICoreHandler backstageAIThink = new AICoreHandler();
 	//	public static List<MoveNode> backMove=new ArrayList<MoveNode>();
 	NodeLink moveHistory;
-	int turn_num = 0;//»ØºÏÊı
+	int turn_num = 0;//å›åˆæ•°
 	ChessParam chessParamCont;
 	private static boolean isSound = false;
 
 	public void initHandler() {
 		String startFen = "c6c5  rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR b - - 0 1";
 		String[] fenArray = Tools.fenToFENArray(startFen);
-		//½«ÅÆ·ÅÈëµ½Êı×éÖĞ
+		//å°†ç‰Œæ”¾å…¥åˆ°æ•°ç»„ä¸­
 		int[] boardTemp = Tools.parseFEN(fenArray[1]);
-		//¸ù¾İÆåÅÌ³õÊ¼²ÎÊı
+		//æ ¹æ®æ£‹ç›˜åˆå§‹å‚æ•°
 		chessParamCont = ChessInitialize.getGlobalChessParam(boardTemp);
-		//³õÊ¼½çÃæÆå×Ó
+		//åˆå§‹ç•Œé¢æ£‹å­
 		for (int i = 0; i < boardTemp.length; i++) {
 			if (boardTemp[i] > 0) {
 				this.setBoardIconUnchecked(i, boardTemp[i]);
 			}
 		}
-		//³õÊ¼¾ÖÃæ(Òª°ÑÆå×Ó°ÚºÃºó²ÅÄÜ¼ÆËã¾ÖÃæÖµ)
+		//åˆå§‹å±€é¢(è¦æŠŠæ£‹å­æ‘†å¥½åæ‰èƒ½è®¡ç®—å±€é¢å€¼)
 		transTable = new TranspositionTable();
 		if (moveHistory == null) {
 			moveHistory = new NodeLink(1 - play, transTable.boardZobrist32, transTable.boardZobrist64);
@@ -120,14 +120,14 @@ public class ChessBoardMain2 extends Group {
 		Group constrol = new Group();
 		Image button = new Image();
 		button.addListener(my);
-//		"Á¢¼´×ßÆå"
+//		"ç«‹å³èµ°æ£‹"
 		Image computerMove = new Image();
 		computerMove.addListener(my);
 		constrol.addActor(button);
 		constrol.addActor(computerMove);
 		this.addActor(constrol);
 		this.addListener(my);
-		//³õÊ¼´¦ÀíÆ÷
+		//åˆå§‹å¤„ç†å™¨
 		initHandler();
 		this.setSize(568, 680);
 		this.setVisible(true);
@@ -167,7 +167,7 @@ public class ChessBoardMain2 extends Group {
 			for (int i = 0; i < buttons.length; i++) {
 				Image p = buttons[i];
 				if (p == event.getTarget()) {
-					if (chessParamCont.board[i] != NOTHING && (chessParamCont.board[i] & chessPlay[play]) == chessPlay[play]) {//×Ô·½×ÓÁ¦
+					if (chessParamCont.board[i] != NOTHING && (chessParamCont.board[i] & chessPlay[play]) == chessPlay[play]) {//è‡ªæ–¹å­åŠ›
 						if (i != begin) {
 							begin = i;
 
@@ -223,7 +223,7 @@ public class ChessBoardMain2 extends Group {
 			lastTimeCheckedSite = moveNode.destSite;
 		}
 		public void gameOverMsg(String msg) {
-//		if (JOptionPane.showConfirmDialog(this, msg + "ÊÇ·ñ¼ÌĞø£¿", "ĞÅÏ¢",
+//		if (JOptionPane.showConfirmDialog(this, msg + "æ˜¯å¦ç»§ç»­ï¼Ÿ", "ä¿¡æ¯",
 //				 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 ////			dispose();
 //			new ChessBoardMain2();
@@ -235,38 +235,38 @@ public class ChessBoardMain2 extends Group {
 			boolean isGameOver = false;
 			String msg = null;
 			if (moveHistory == null || moveHistory.getMoveNode() == null) {
-				msg = (play == BLACKPLAYSIGN ? "ºÚ·½" : "ºì·½") + "±»²ĞÈÌµÄ½«ËÀ£¡";
+				msg = (play == BLACKPLAYSIGN ? "é»‘æ–¹" : "çº¢æ–¹") + "è¢«æ®‹å¿çš„å°†æ­»ï¼";
 				isGameOver = true;
-				//×Ô¼ºË§±»³Ô
+				//è‡ªå·±å¸…è¢«åƒ
 			} else if (chessParamCont.allChess[chessPlay[BLACKPLAYSIGN]] == NOTHING || moveHistory.getMoveNode().destChess == chessPlay[BLACKPLAYSIGN]) {
 				isGameOver = true;
-				msg = "ºÚ·½±»ÍêÅ°£¡";
+				msg = "é»‘æ–¹è¢«å®Œè™ï¼";
 			} else if (chessParamCont.allChess[chessPlay[REDPLAYSIGN]] == NOTHING || moveHistory.getMoveNode().destChess == chessPlay[REDPLAYSIGN]) {
-				msg = "ºì·½±»ÍêÅ°£¡";
+				msg = "çº¢æ–¹è¢«å®Œè™ï¼";
 				isGameOver = true;
 			} else if (moveHistory.getMoveNode().score == -LONGCHECKSCORE) {
-				msg = (play == BLACKPLAYSIGN ? "ºÚ·½" : "ºì·½") + "³¤½«ÅĞ¸º£¡";
+				msg = (play == BLACKPLAYSIGN ? "é»‘æ–¹" : "çº¢æ–¹") + "é•¿å°†åˆ¤è´Ÿï¼";
 				isGameOver = true;
 			} else if (moveHistory.getMoveNode().score <= -(maxScore - 2)) {
 				setCheckedLOSS(play);
-				msg = (play == BLACKPLAYSIGN ? "ºÚ·½" : "ºì·½") + "±»²ĞÈÌµÄ½«ËÀ£¡";
+				msg = (play == BLACKPLAYSIGN ? "é»‘æ–¹" : "çº¢æ–¹") + "è¢«æ®‹å¿çš„å°†æ­»ï¼";
 				isGameOver = true;
 			} else if (moveHistory.getMoveNode().score >= (maxScore - 2)) {
 				setCheckedLOSS(1 - play);
-				msg = (play == BLACKPLAYSIGN ? "ºÚ·½" : "ºì·½") + "Ó®µÃÁË×îÖÕµÄÊ¤Àû£¡";
+				msg = (play == BLACKPLAYSIGN ? "é»‘æ–¹" : "çº¢æ–¹") + "èµ¢å¾—äº†æœ€ç»ˆçš„èƒœåˆ©ï¼";
 				isGameOver = true;
 			} else if (chessParamCont.getAttackChessesNum(REDPLAYSIGN) == 0 && chessParamCont.getAttackChessesNum(BLACKPLAYSIGN) == 0) {
-				msg = "Ë«·½¶¼ÎŞ¹¥»÷Æå×Ó´ËÄËºÍÆå£¡";
+				msg = "åŒæ–¹éƒ½æ— æ”»å‡»æ£‹å­æ­¤ä¹ƒå’Œæ£‹ï¼";
 				isGameOver = true;
 			} else if (turn_num >= 300) {
-				msg = "´óÕ½300»ØºÏÎ´·ÖÊ¤¸º°¡£¡";
+				msg = "å¤§æˆ˜300å›åˆæœªåˆ†èƒœè´Ÿå•Šï¼";
 				isGameOver = true;
 			}
 			if (isGameOver) {
 				gameOverMsg(msg);
 			} else {
 				MoveNode moveNode = moveHistory.getMoveNode();
-				if (cmp.checked(1 - play)) {//¶ÔÊÖÊÇ·ñ±»½«
+				if (cmp.checked(1 - play)) {//å¯¹æ‰‹æ˜¯å¦è¢«å°†
 				} else if (moveNode.destChess != NOTHING) {
 				} else {
 				}
@@ -274,11 +274,11 @@ public class ChessBoardMain2 extends Group {
 			return isGameOver;
 		}
 		private void opponentMove() {
-			//²é¿´ÊÇ·ñÒÔÊ¤Àû
+			//æŸ¥çœ‹æ˜¯å¦ä»¥èƒœåˆ©
 			if (!checkGameOver()) {
 				turn_num++;
-				play = 1 - play; //½»»»Ë«·½
-				//¶ÔÊÖÊÇ·ñÎªµçÄÔ
+				play = 1 - play; //äº¤æ¢åŒæ–¹
+				//å¯¹æ‰‹æ˜¯å¦ä¸ºç”µè„‘
 				if (android[play]) {
 					computeThinkStart();
 				}
@@ -286,15 +286,15 @@ public class ChessBoardMain2 extends Group {
 		}
 
 		private void computeThinkStart() {
-			//ÉèÖÃºóÌ¨Ë¼¿¼
+			//è®¾ç½®åå°æ€è€ƒ
 			if (isBackstageThink && (guessLink != null && moveHistory != null)) {
-				//²é¿´ÊÇ·ñ²ÂÖĞ
+				//æŸ¥çœ‹æ˜¯å¦çŒœä¸­
 				if (guessLink.getMoveNode().equals(moveHistory.getMoveNode())) {
 					new Thread() {
 						public void run() {
-							System.out.println("---->²Â²âÃüÖĞ£¡£¡");
+							System.out.println("---->çŒœæµ‹å‘½ä¸­ï¼ï¼");
 							try {
-								//¼ÓÈëÊ±¼ä¿ØÖÆ
+								//åŠ å…¥æ—¶é—´æ§åˆ¶
 								backstageAIThink.launchTimer();
 								backstageThinkThread.join();
 							} catch (InterruptedException e) {
@@ -307,15 +307,15 @@ public class ChessBoardMain2 extends Group {
 				} else {
 					new Thread() {
 						public void run() {
-							System.out.println("--->Î´ÃüÖĞ");
-							//Èç¹ûÃ»ÖĞ½øĞĞÔËËã
+							System.out.println("--->æœªå‘½ä¸­");
+							//å¦‚æœæ²¡ä¸­è¿›è¡Œè¿ç®—
 							backstageAIThink.setStop();
 							try {
 								backstageThinkThread.join();
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}
-							System.out.println("--->ÖØĞÂË¼¿¼");
+							System.out.println("--->é‡æ–°æ€è€ƒ");
 							computeThink();
 						}
 					}.start();
@@ -354,7 +354,7 @@ public class ChessBoardMain2 extends Group {
 		private Thread backstageThinkThread = null;
 		private NodeLink guessLink;
 
-		//ºóÌ¨Ë¼¿¼
+		//åå°æ€è€ƒ
 		private void backstageThink() {
 			if (!isBackstageThink) {
 				return;
@@ -363,10 +363,10 @@ public class ChessBoardMain2 extends Group {
 
 				backstageThinkThread = new Thread() {
 					public void run() {
-						//²Â²âµÄ×Å·¨
+						//çŒœæµ‹çš„ç€æ³•
 						guessLink = moveHistory.getNextLink();
 						backstageAIThink.setLocalVariable(computerLevel, chessParamCont, guessLink);
-						System.out.println("---->¿ªÊ¼²Â²â(" + guessLink.getMoveNode() + ")");
+						System.out.println("---->å¼€å§‹çŒœæµ‹(" + guessLink.getMoveNode() + ")");
 						backstageAIThink.guessRun(guessLink.getMoveNode());
 					}
 				};
@@ -383,7 +383,7 @@ public class ChessBoardMain2 extends Group {
 		}
 
 		/*
-		 * ¼ÇÈ¡ÉÏ´Î±£´æ¼ÇÂ¼
+		 * è®°å–ä¸Šæ¬¡ä¿å­˜è®°å½•
 		 */
 		public String readSaved() {
 			String fen = null;

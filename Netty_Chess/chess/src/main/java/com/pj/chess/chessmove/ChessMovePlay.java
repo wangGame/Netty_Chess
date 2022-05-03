@@ -36,7 +36,7 @@ public class ChessMovePlay extends ChessMoveAbs{
 		
 	}
 
-	/**¼ÇÂ¼ÏÂËùÓĞ¿É×ßµÄ·½Ê½
+	/**è®°å½•ä¸‹æ‰€æœ‰å¯èµ°çš„æ–¹å¼
 	 * @param srcSite
 	 * @param destSite
 	 * @param play
@@ -44,8 +44,8 @@ public class ChessMovePlay extends ChessMoveAbs{
 	public void savePlayChess(int srcSite,int destSite,int play){
 		int destChess=board[destSite];
 /*		if(!isOpponentCheck(destChess,play)){
-			System.out.println("ÓĞÎÊÌâ¡£¡£¡£¡£¡£¡£");
-			//¹¥»÷µÄÆå×ÓÎªÒÑ·½Æå×Ó
+			System.out.println("æœ‰é—®é¢˜ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚");
+			//æ”»å‡»çš„æ£‹å­ä¸ºå·²æ–¹æ£‹å­
 			return;
 		}*/
 		for(int i=0;i<repeatMoveList.size;i++){
@@ -62,15 +62,15 @@ public class ChessMovePlay extends ChessMoveAbs{
 		if (destChess != NOTHING ){
 			
 			int srcScore=0;
-			//Òª³ÔµÄ¹ñ×Ó±»¶ÔÊÖ±£»¤
+			//è¦åƒçš„æŸœå­è¢«å¯¹æ‰‹ä¿æŠ¤
 			if(isOppProtect){
 				srcScore=EvaluateCompute.chessBaseScore[srcChess]+evaluateCompute.chessAttachScore(chessRoles[srcChess], srcSite);					
 			}else{
 				srcScore=-500;
 			}
 			int destScore=EvaluateCompute.chessBaseScore[destChess]+evaluateCompute.chessAttachScore(chessRoles[destChess], destSite);
-			if (destScore>=srcScore) {  //³Ô×Ó
-				//°´±»³ÔÆå×Ó¼ÛÖµÅÅĞò
+			if (destScore>=srcScore) {  //åƒå­
+				//æŒ‰è¢«åƒæ£‹å­ä»·å€¼æ’åº
 				MoveNode moveNode = new MoveNode(srcSite,destSite,srcChess,destChess,destScore-srcScore);
 				moveNode.isOppProtect=isOppProtect;
 				goodMoveList.add(moveNode);
@@ -79,7 +79,7 @@ public class ChessMovePlay extends ChessMoveAbs{
 		}	
 		MoveNode moveNode = new MoveNode(srcSite,destSite,srcChess,destChess,CHistoryHeuritic.cHistory[ChessConstant.chessRoles_eight[srcChess]][destSite]+(isOppProtect?0:256));
 		moveNode.isOppProtect=isOppProtect;
-		generalMoveList.add(moveNode); //²»³Ô×Ó
+		generalMoveList.add(moveNode); //ä¸åƒå­
 	}
  
 }

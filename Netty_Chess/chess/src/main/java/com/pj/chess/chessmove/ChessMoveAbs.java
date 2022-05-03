@@ -57,7 +57,7 @@ public abstract class ChessMoveAbs {
 		this.evaluateCompute=evaluateCompute;
 	}
 	
-	/**Æå×ÓÒÆ¶¯¸Ä±äÆåÅÌºÍÎ»ÆåÅÌ
+	/**æ£‹å­ç§»åŠ¨æ”¹å˜æ£‹ç›˜å’Œä½æ£‹ç›˜
 	 * @param moveNode
 	 */
 	public void moveOperate(MoveNode moveNode){
@@ -70,38 +70,38 @@ public abstract class ChessMoveAbs {
 			return ;
 		}
 		
-		/*******Æå×ÓÃ¿²½·ÖÊıÔ¤¼Ó*******/
+		/*******æ£‹å­æ¯æ­¥åˆ†æ•°é¢„åŠ *******/
 		int srcChessRole = chessRoles[board[srcSite]];
 		int srcPlay;
-		if((chessPlay[BLACKPLAYSIGN] & srcChess)!=0){ //Ô­Æå×ÓÎªºÚ·½		
+		if((chessPlay[BLACKPLAYSIGN] & srcChess)!=0){ //åŸæ£‹å­ä¸ºé»‘æ–¹		
 			srcPlay=BLACKPLAYSIGN;
-		}else{ //Ô­Æå×ÓÎªºì·½
+		}else{ //åŸæ£‹å­ä¸ºçº¢æ–¹
 			srcPlay=REDPLAYSIGN;
 		}
-		//»ù´¡·ÖÊıºÍÎ»ÖÃ·ÖÊıÔ¤¼Ó
+		//åŸºç¡€åˆ†æ•°å’Œä½ç½®åˆ†æ•°é¢„åŠ 
 		chessParam.baseScore[srcPlay]-=evaluateCompute.chessAttachScore(srcChessRole, srcSite);
 		chessParam.baseScore[srcPlay]+=evaluateCompute.chessAttachScore(srcChessRole, destSite);
-		//¸ÄÈ«¾Ö±äÎ»ÆåÅÌ
+		//æ”¹å…¨å±€å˜ä½æ£‹ç›˜
 		chessParam.maskBoardChesses.assignXor(MaskChesses[srcSite]);
 		chessParam.maskBoardChesses.assignOr(MaskChesses[destSite]);
-		//ĞŞ¸Ä×Å×Ó·½Î»ÆåÅÌ
+		//ä¿®æ”¹ç€å­æ–¹ä½æ£‹ç›˜
 		chessParam.maskBoardPersonalChesses[srcPlay].assignXor(MaskChesses[srcSite]);
 		chessParam.maskBoardPersonalChesses[srcPlay].assignXor(MaskChesses[destSite]);
-		//ĞŞ¸Ä´Ë½ÇÉ«µÄÎ»ÆåÅÌ
+		//ä¿®æ”¹æ­¤è§’è‰²çš„ä½æ£‹ç›˜
 		chessParam.maskBoardPersonalRoleChesses[srcChessRole].assignXor(MaskChesses[srcSite]);
 		chessParam.maskBoardPersonalRoleChesses[srcChessRole].assignXor(MaskChesses[destSite]);
 		
-		//ÓĞ³Ô×Ó
+		//æœ‰åƒå­
 		if(destChess!=NOTHING){
 			int destPlay=1-srcPlay;
 			int destChessRole = chessRoles[board[destSite]];
 			chessParam.baseScore[destPlay]-=evaluateCompute.chessBaseScore[destChess];
 			chessParam.baseScore[destPlay]-=evaluateCompute.chessAttachScore(destChessRole, destSite);
-			//¼õÉÙÆå×ÓÊıÁ¿
+			//å‡å°‘æ£‹å­æ•°é‡
 			chessParam.reduceChessesNum(destChessRole);
-			//ĞŞ¸Ä±»³Ô·½µÄÎ»ÆåÅÌ
+			//ä¿®æ”¹è¢«åƒæ–¹çš„ä½æ£‹ç›˜
 			chessParam.maskBoardPersonalChesses[destPlay].assignXor(MaskChesses[destSite]);
-			//ĞŞ¸Ä±»³Ô·½µÄ½ÇÉ«Î»ÆåÅÌ
+			//ä¿®æ”¹è¢«åƒæ–¹çš„è§’è‰²ä½æ£‹ç›˜
 			chessParam.maskBoardPersonalRoleChesses[destChessRole].assignXor(MaskChesses[destSite]);
 		}
 		setBoard(srcSite,NOTHING);
@@ -114,24 +114,24 @@ public abstract class ChessMoveAbs {
 		int srcCol = boardCol[srcSite];
 		int destRow = boardRow[destSite];
 		int destCol = boardCol[destSite];
-//		System.out.println("Ô­Î»ÖÃ:µÚ"+srcRow+"ĞĞ"+srcCol+"ÁĞ");
-//		System.out.println("Ä¿±êÎ»ÖÃ:µÚ"+destRow+"ĞĞ"+destCol+"ÁĞ");
-//		System.out.println("ĞŞ¸ÄÖ®Ç°row¹ØÏµ\t"+Integer.toBinaryString(boardBitRow[destRow]));
+//		System.out.println("åŸä½ç½®:ç¬¬"+srcRow+"è¡Œ"+srcCol+"åˆ—");
+//		System.out.println("ç›®æ ‡ä½ç½®:ç¬¬"+destRow+"è¡Œ"+destCol+"åˆ—");
+//		System.out.println("ä¿®æ”¹ä¹‹å‰rowå…³ç³»\t"+Integer.toBinaryString(boardBitRow[destRow]));
 		chessParam.boardBitRow[destRow]|=(1<<(8-destCol));
-//		System.out.println("ĞŞ¸ÄÖ®ºórow¹ØÏµ\t"+Integer.toBinaryString(chessParam.boardBitRow[destRow]));
+//		System.out.println("ä¿®æ”¹ä¹‹årowå…³ç³»\t"+Integer.toBinaryString(chessParam.boardBitRow[destRow]));
 		chessParam.boardBitCol[destCol]|=(1<<(9-destRow));
 		
-//		System.out.println("ĞŞ¸ÄÖ®Ç°row¹ØÏµ\t"+Integer.toBinaryString(chessParam.boardBitRow[srcRow]));
+//		System.out.println("ä¿®æ”¹ä¹‹å‰rowå…³ç³»\t"+Integer.toBinaryString(chessParam.boardBitRow[srcRow]));
 		chessParam.boardBitRow[srcRow]^=(1<<(8-srcCol));
-//		System.out.println("ĞŞ¸ÄÖ®ºórow¹ØÏµ\t"+Integer.toBinaryString(chessParam.boardBitRow[srcRow]));
+//		System.out.println("ä¿®æ”¹ä¹‹årowå…³ç³»\t"+Integer.toBinaryString(chessParam.boardBitRow[srcRow]));
 		chessParam.boardBitCol[srcCol]^=(1<<(9-srcRow));
 		
-//		System.out.println("ÒÆ¶¯Æå×ÓÇ°Zobrist£º"+TranspositionTable.boardZobrist);
+//		System.out.println("ç§»åŠ¨æ£‹å­å‰Zobristï¼š"+TranspositionTable.boardZobrist);
 		tranTable.moveOperate(moveNode);
-//		System.out.println("ÒÆ¶¯Æå×ÓºóZobrist£º"+TranspositionTable.boardZobrist);
+//		System.out.println("ç§»åŠ¨æ£‹å­åZobristï¼š"+TranspositionTable.boardZobrist);
 		
 	}
-	/**³·ÏúÆå×ÓÒÆ¶¯¸Ä±äÆåÅÌºÍÎ»ÆåÅÌ
+	/**æ’¤é”€æ£‹å­ç§»åŠ¨æ”¹å˜æ£‹ç›˜å’Œä½æ£‹ç›˜
 	 * @param moveNode 
 	 */
 	public void unMoveOperate(MoveNode moveNode){
@@ -139,7 +139,7 @@ public abstract class ChessMoveAbs {
 		int srcChess =moveNode.destChess;
 		int destSite=moveNode.srcSite;
 		int destChess = moveNode.srcChess;
-		//¹ØÏµ»¹Ô­ 
+		//å…³ç³»è¿˜åŸ 
 		setBoard(srcSite,srcChess);
 		setBoard(destSite,destChess);
 		setChess(srcChess,srcSite);
@@ -147,37 +147,37 @@ public abstract class ChessMoveAbs {
 		
 		int destPlay; 
 		int destChessRole = chessRoles[board[destSite]];
-		if((chessPlay[BLACKPLAYSIGN] & destChess)!=0){ //Ô­Æå×ÓÎªºÚ·½			
+		if((chessPlay[BLACKPLAYSIGN] & destChess)!=0){ //åŸæ£‹å­ä¸ºé»‘æ–¹			
 			destPlay=BLACKPLAYSIGN;
-		}else{ //Ô­Æå×ÓÎªºì·½			
+		}else{ //åŸæ£‹å­ä¸ºçº¢æ–¹			
 			destPlay=REDPLAYSIGN; 
 		}
-		//Æå×Ó·ÖÊıÔ¤¼Ó
+		//æ£‹å­åˆ†æ•°é¢„åŠ 
 		chessParam.baseScore[destPlay]-=evaluateCompute.chessAttachScore(destChessRole, srcSite);
 		chessParam.baseScore[destPlay]+=evaluateCompute.chessAttachScore(destChessRole, destSite);
-		//¸ÄÈ«¾Ö±äÎ»ÆåÅÌ(½«Ä¿±êÎ»ÖÃ»¹Ô­)
+		//æ”¹å…¨å±€å˜ä½æ£‹ç›˜(å°†ç›®æ ‡ä½ç½®è¿˜åŸ)
 		chessParam.maskBoardChesses.assignXor(MaskChesses[destSite]);
-		//ĞŞ¸Ä×Å×Ó·½Î»ÆåÅÌ
+		//ä¿®æ”¹ç€å­æ–¹ä½æ£‹ç›˜
 		chessParam.maskBoardPersonalChesses[destPlay].assignXor(MaskChesses[srcSite]);
 		chessParam.maskBoardPersonalChesses[destPlay].assignXor(MaskChesses[destSite]);
-		//ĞŞ¸Ä×Å×Ó·½½ÇÉ«Î»ÆåÅÌ
+		//ä¿®æ”¹ç€å­æ–¹è§’è‰²ä½æ£‹ç›˜
 		chessParam.maskBoardPersonalRoleChesses[destChessRole].assignXor(MaskChesses[srcSite]);
 		chessParam.maskBoardPersonalRoleChesses[destChessRole].assignXor(MaskChesses[destSite]);
 		
-		//ÕâÒ»²½·¢Éú¹ı³Ô×Ó
+		//è¿™ä¸€æ­¥å‘ç”Ÿè¿‡åƒå­
 		if(srcChess!=NOTHING){
 			int srcChessRole = chessRoles[board[srcSite]];
 			int srcPlay=1-destPlay;
 			chessParam.baseScore[srcPlay] += evaluateCompute.chessBaseScore[srcChess];
 			chessParam.baseScore[srcPlay] += evaluateCompute.chessAttachScore(srcChessRole, srcSite);
-			//»¹Ô­Æå×ÓÊıÁ¿
+			//è¿˜åŸæ£‹å­æ•°é‡
 			chessParam.increaseChessesNum(srcChessRole);
-			//½«±»³Ô×ÓÒ»·½µÄÆå×ÓÔÚÎ»ÆåÅÌÉÏ»¹Ô­
+			//å°†è¢«åƒå­ä¸€æ–¹çš„æ£‹å­åœ¨ä½æ£‹ç›˜ä¸Šè¿˜åŸ
 			chessParam.maskBoardPersonalChesses[srcPlay].assignXor(MaskChesses[srcSite]);
-			//½«±»³Ô×ÓÒ»·½µÄÆå×ÓÔÚ½ÇÉ«Î»ÆåÅÌÉÏ»¹Ô­
+			//å°†è¢«åƒå­ä¸€æ–¹çš„æ£‹å­åœ¨è§’è‰²ä½æ£‹ç›˜ä¸Šè¿˜åŸ
 			chessParam.maskBoardPersonalRoleChesses[srcChessRole].assignXor(MaskChesses[srcSite]);
 		}else{
-			//Ã»ÓĞÆå×ÓĞŞ¸ÄÈ«¾ÖÎ»ÆåÅÌ  ÒòÎªÒª»¹Ô­ËùÒÔÒªÇå³şÄÇÀïµÄÆå×Ó
+			//æ²¡æœ‰æ£‹å­ä¿®æ”¹å…¨å±€ä½æ£‹ç›˜  å› ä¸ºè¦è¿˜åŸæ‰€ä»¥è¦æ¸…æ¥šé‚£é‡Œçš„æ£‹å­
 			chessParam.maskBoardChesses.assignXor(MaskChesses[srcSite]);
 		}
 		 
@@ -197,9 +197,9 @@ public abstract class ChessMoveAbs {
 			chessParam.boardBitRow[srcRow]|=(1<<(8-srcCol)); 
 			chessParam.boardBitCol[srcCol]|=(1<<(9-srcRow));
 		}
-//		System.out.println("»¹Ô­Æå×ÓÇ°Zobrist£º"+TranspositionTable.boardZobrist);
+//		System.out.println("è¿˜åŸæ£‹å­å‰Zobristï¼š"+TranspositionTable.boardZobrist);
 		tranTable.unMoveOperate(moveNode);
-//		System.out.println("»¹Ô­Æå×ÓºóZobrist£º"+TranspositionTable.boardZobrist);
+//		System.out.println("è¿˜åŸæ£‹å­åZobristï¼š"+TranspositionTable.boardZobrist);
 		
 		
 	}
@@ -218,7 +218,7 @@ public abstract class ChessMoveAbs {
 	/**
 	 *@author pengjiu 
 	 *@date:Aug 31, 2011 2:34:27 PM
-	 * ¹¦ÄÜ£º×Å·¨ºÏÀíĞÔÅĞ¶Ï
+	 * åŠŸèƒ½ï¼šç€æ³•åˆç†æ€§åˆ¤æ–­
 	 *@param play
 	 *@param moveNode
 	 *@return
@@ -228,7 +228,7 @@ public abstract class ChessMoveAbs {
 			return false;
 		int srcChess = chessParam.board[moveNode.srcSite];
 		int destChess = chessParam.board[moveNode.destSite];
-		//Ô­Æå×Ó²»ÎªÒÑ·½Æå×Ó»òÄ¿±êÆå×ÓÎªÒÑ·½Æå×Ó
+		//åŸæ£‹å­ä¸ä¸ºå·²æ–¹æ£‹å­æˆ–ç›®æ ‡æ£‹å­ä¸ºå·²æ–¹æ£‹å­
 		if((chessPlay[play] & srcChess)==0){
 			return false;
 		}
@@ -246,8 +246,8 @@ public abstract class ChessMoveAbs {
 		case BLACKCHARIOT:
 			int row=chessParam.boardBitRow[boardRow[srcSite]];
 			int col=chessParam.boardBitCol[boardCol[srcSite]];
-			if(destChess!=NOTHING){ //ÊÇ³Ô×Ó×ß·¨
-				//È¡³öĞĞÁĞÄÜ¹¥»÷µ½µÄÎ»ÖÃ
+			if(destChess!=NOTHING){ //æ˜¯åƒå­èµ°æ³•
+				//å–å‡ºè¡Œåˆ—èƒ½æ”»å‡»åˆ°çš„ä½ç½®
 				bitBoard=BitBoard.assignXorToNew(ChariotBitBoardOfAttackRow[srcSite][row], ChariotBitBoardOfAttackCol[srcSite][col]);
 			}else{
 				bitBoard=BitBoard.assignXorToNew(MoveChariotOrGunBitBoardRow[srcSite][row], MoveChariotOrGunBitBoardCol[srcSite][col]);
@@ -255,7 +255,7 @@ public abstract class ChessMoveAbs {
 			break;
 		case REDKNIGHT:
 		case BLACKKNIGHT:
-			//È¡³ö±»±ğÂíÍÈµÄÎ»ÖÃ
+			//å–å‡ºè¢«åˆ«é©¬è…¿çš„ä½ç½®
 			BitBoard legBoard = BitBoard.assignAndToNew(KnightLegBitBoards[srcSite],chessParam.maskBoardChesses);
 			bitBoard=new BitBoard(KnightBitBoardOfAttackLimit[srcSite][legBoard.checkSumOfKnight()]);
 			break;
@@ -263,8 +263,8 @@ public abstract class ChessMoveAbs {
 		case BLACKGUN:
 			row=chessParam.boardBitRow[boardRow[srcSite]];
 			col=chessParam.boardBitCol[boardCol[srcSite]];
-			//È¡³öĞĞÁĞÄÜ¹¥»÷µ½µÄÎ»ÖÃ
-			if(destChess!=NOTHING){ //ÊÇ³Ô×Ó×ß·¨
+			//å–å‡ºè¡Œåˆ—èƒ½æ”»å‡»åˆ°çš„ä½ç½®
+			if(destChess!=NOTHING){ //æ˜¯åƒå­èµ°æ³•
 				bitBoard=BitBoard.assignXorToNew(GunBitBoardOfAttackRow[srcSite][row], GunBitBoardOfAttackCol[srcSite][col]);
 			}else{
 				bitBoard=BitBoard.assignXorToNew(MoveChariotOrGunBitBoardRow[srcSite][row], MoveChariotOrGunBitBoardCol[srcSite][col]);
@@ -272,13 +272,13 @@ public abstract class ChessMoveAbs {
 			break;
 		case REDELEPHANT:
 		case BLACKELEPHANT:
-			//È¡³ö±»ÈûÏóÑÛµÄÎ»ÖÃ
+			//å–å‡ºè¢«å¡è±¡çœ¼çš„ä½ç½®
 			legBoard=BitBoard.assignAndToNew(ElephanLegBitBoards[srcSite],chessParam.maskBoardChesses);
 			bitBoard=new BitBoard(ElephanBitBoardOfAttackLimit[srcSite][legBoard.checkSumOfElephant()]);
 			break;
 		case REDKING:
 		case BLACKKING:
-			//½«³Ô×Ó×Å·¨
+			//å°†åƒå­ç€æ³•
 			bitBoard=new BitBoard(KingBitBoard[srcSite]);
 			break;
 		case REDGUARD:
@@ -290,7 +290,7 @@ public abstract class ChessMoveAbs {
 			bitBoard=new BitBoard(SoldiersBitBoard[play][srcSite]);
 			break;
 		default :
-			System.out.println("Ã»ÓĞÕâ¸öÆå×Ó:"+srcSite);
+			System.out.println("æ²¡æœ‰è¿™ä¸ªæ£‹å­:"+srcSite);
 		}
 		bitBoard.assignAnd(MaskChesses[destSite]);
 		if(!bitBoard.isEmpty()){
@@ -305,13 +305,13 @@ public abstract class ChessMoveAbs {
 	/**
 	 *@author pengjiu 
 	 *@date:Aug 31, 2011 5:36:05 PM
-	 * ¹¦ÄÜ£º ½«¾üÅĞ¶Ï
+	 * åŠŸèƒ½ï¼š å°†å†›åˆ¤æ–­
 	 *@param play
 	 *@return
 	*/
 	public boolean checked(int play){
 		int opponentPlay=1-play;
-		//¶Ô·½½«±»¸ÉÁË
+		//å¯¹æ–¹å°†è¢«å¹²äº†
 		if(chessParam.allChess[chessPlay[opponentPlay]]==NOTHING){
 			return false;
 		} 
@@ -320,48 +320,48 @@ public abstract class ChessMoveAbs {
 		int row=chessParam.boardBitRow[boardRow[kingSite]];
 		int col=chessParam.boardBitCol[boardCol[kingSite]];
 		
-		//³µ½«¾ü
+		//è½¦å°†å†›
 		BitBoard bitBoard = BitBoard.assignXorToNew(ChariotBitBoardOfAttackRow[kingSite][row], ChariotBitBoardOfAttackCol[kingSite][col]);
 		bitBoard.assignAnd(chessParam.getBitBoardByPlayRole(opponentPlay, ChessConstant.CHARIOT));
 		if(!bitBoard.isEmpty()){
 			return true;
 		}
-		//½«¶ÔÁ³
+		//å°†å¯¹è„¸
 		if(!BitBoard.assignAndToNew(ChariotBitBoardOfAttackCol[kingSite][col],MaskChesses[chessParam.allChess[chessPlay[1-play]]]).isEmpty()){
 			return true;
 		}
 		
-		//ÅÚ½«¾ü
+		//ç‚®å°†å†›
 		bitBoard=BitBoard.assignXorToNew(GunBitBoardOfAttackRow[kingSite][row], GunBitBoardOfAttackCol[kingSite][col]);
 		bitBoard.assignAnd(chessParam.getBitBoardByPlayRole(opponentPlay, ChessConstant.GUN));
 		if(!bitBoard.isEmpty()){
 			return true;
 		}
-		//Âí½«¾ü
-		//È¡³öÂí²»¿¼ÂÇ±ğÍÈÄÜ×ßµ½µÄÎ»ÖÃ
+		//é©¬å°†å†›
+		//å–å‡ºé©¬ä¸è€ƒè™‘åˆ«è…¿èƒ½èµ°åˆ°çš„ä½ç½®
 		bitBoard =new BitBoard(KnightBitBoards[kingSite]);
 		int opponentKnight1 = knights[play][0],opponentKnight2 = knights[play][1];;
 		int knight1Site=chessParam.allChess[opponentKnight1],knight2Site=chessParam.allChess[opponentKnight2];
-		//²»¿¼ÂÇ±ğÍÈ¿´ÊÇ·ñÄÜ½«¾ü
+		//ä¸è€ƒè™‘åˆ«è…¿çœ‹æ˜¯å¦èƒ½å°†å†›
 		if(!BitBoard.assignAndToNew(chessParam.getBitBoardByPlayRole(opponentPlay,ChessConstant.KNIGHT),bitBoard).isEmpty()){
-			//Âí1
+			//é©¬1
 			if(knight1Site!=NOTHING && !BitBoard.assignAndToNew(MaskChesses[knight1Site],bitBoard).isEmpty()){
 				BitBoard legBoard = BitBoard.assignAndToNew(KnightLegBitBoards[knight1Site],chessParam.maskBoardChesses);
-				//¿´Âí1ÄÜ¹¥»÷µ½µÄÎ»ÖÃÊÇ·ñÓĞ½«
+				//çœ‹é©¬1èƒ½æ”»å‡»åˆ°çš„ä½ç½®æ˜¯å¦æœ‰å°†
 				if(!BitBoard.assignAndToNew(KnightBitBoardOfAttackLimit[knight1Site][legBoard.checkSumOfKnight()],MaskChesses[kingSite]).isEmpty()){
 					return true;
 				}
 			}
-			//Âí2
+			//é©¬2
 			if(knight2Site!=NOTHING && !BitBoard.assignAndToNew(MaskChesses[knight2Site],bitBoard).isEmpty()){
 				BitBoard legBoard = BitBoard.assignAndToNew(KnightLegBitBoards[knight2Site],chessParam.maskBoardChesses);
-				//¿´Âí1ÄÜ¹¥»÷µ½µÄÎ»ÖÃÊÇ·ñÓĞ½«
+				//çœ‹é©¬1èƒ½æ”»å‡»åˆ°çš„ä½ç½®æ˜¯å¦æœ‰å°†
 				if(!BitBoard.assignAndToNew(KnightBitBoardOfAttackLimit[knight2Site][legBoard.checkSumOfKnight()],MaskChesses[kingSite]).isEmpty()){
 					return true;
 				}
 			}
 		}
-		//±ø½«¾üµÄÅĞ¶Ï
+		//å…µå°†å†›çš„åˆ¤æ–­
 		if(!BitBoard.assignAndToNew(KingCheckedSoldierBitBoards[kingSite],chessParam.getBitBoardByPlayRole(opponentPlay, ChessConstant.SOLDIER)).isEmpty()){
 			return true;
 		}
@@ -371,14 +371,14 @@ public abstract class ChessMoveAbs {
 	/**
 	 *@author pengjiu 
 	 *@date:Sep 20, 2011 2:13:54 PM
-	 * ¹¦ÄÜ£º ±»¼¸¸öÆå×Ó½«¾ü
+	 * åŠŸèƒ½ï¼š è¢«å‡ ä¸ªæ£‹å­å°†å†›
 	 *@param play
 	 *@return
 	*/
 	public int chkNum(int play){
 		int opponentPlay=1-play;
 		int chkNum=0;
-		//¶Ô·½½«±»¸ÉÁË
+		//å¯¹æ–¹å°†è¢«å¹²äº†
 		if(chessParam.allChess[chessPlay[opponentPlay]]==NOTHING){
 			return chkNum;
 		} 
@@ -387,44 +387,44 @@ public abstract class ChessMoveAbs {
 		int row=chessParam.boardBitRow[boardRow[kingSite]];
 		int col=chessParam.boardBitCol[boardCol[kingSite]];
 		
-		//³µ½«¾ü
+		//è½¦å°†å†›
 		BitBoard bitBoard = BitBoard.assignXorToNew(ChariotBitBoardOfAttackRow[kingSite][row], ChariotBitBoardOfAttackCol[kingSite][col]);
 		bitBoard.assignAnd(chessParam.getBitBoardByPlayRole(opponentPlay, ChessConstant.CHARIOT));
 		if(!bitBoard.isEmpty()){ 
 			chkNum++;
 		}
 		
-		//ÅÚ½«¾ü
+		//ç‚®å°†å†›
 		bitBoard=BitBoard.assignXorToNew(GunBitBoardOfAttackRow[kingSite][row], GunBitBoardOfAttackCol[kingSite][col]);
 		bitBoard.assignAnd(chessParam.getBitBoardByPlayRole(opponentPlay, ChessConstant.GUN));
 		if(!bitBoard.isEmpty()){ 
 			chkNum++;
 		}
-		//Âí½«¾ü
-		//È¡³öÂí²»¿¼ÂÇ±ğÍÈÄÜ×ßµ½µÄÎ»ÖÃ
+		//é©¬å°†å†›
+		//å–å‡ºé©¬ä¸è€ƒè™‘åˆ«è…¿èƒ½èµ°åˆ°çš„ä½ç½®
 		bitBoard =new BitBoard(KnightBitBoards[kingSite]);
 		int opponentKnight1 = knights[play][0],opponentKnight2 = knights[play][1];;
 		int knight1Site=chessParam.allChess[opponentKnight1],knight2Site=chessParam.allChess[opponentKnight2];
-		//²»¿¼ÂÇ±ğÍÈ¿´ÊÇ·ñÄÜ½«¾ü
+		//ä¸è€ƒè™‘åˆ«è…¿çœ‹æ˜¯å¦èƒ½å°†å†›
 		if(!BitBoard.assignAndToNew(chessParam.getBitBoardByPlayRole(opponentPlay,ChessConstant.KNIGHT),bitBoard).isEmpty()){
-			//Âí1
+			//é©¬1
 			if(knight1Site!=NOTHING && !BitBoard.assignAndToNew(MaskChesses[knight1Site],bitBoard).isEmpty()){
 				BitBoard legBoard = BitBoard.assignAndToNew(KnightLegBitBoards[knight1Site],chessParam.maskBoardChesses);
-				//¿´Âí1ÄÜ¹¥»÷µ½µÄÎ»ÖÃÊÇ·ñÓĞ½«
+				//çœ‹é©¬1èƒ½æ”»å‡»åˆ°çš„ä½ç½®æ˜¯å¦æœ‰å°†
 				if(!BitBoard.assignAndToNew(KnightBitBoardOfAttackLimit[knight1Site][legBoard.checkSumOfKnight()],MaskChesses[kingSite]).isEmpty()){
 					chkNum++;
 				}
 			}
-			//Âí2
+			//é©¬2
 			if(knight2Site!=NOTHING && !BitBoard.assignAndToNew(MaskChesses[knight2Site],bitBoard).isEmpty()){
 				BitBoard legBoard = BitBoard.assignAndToNew(KnightLegBitBoards[knight2Site],chessParam.maskBoardChesses);
-				//¿´Âí1ÄÜ¹¥»÷µ½µÄÎ»ÖÃÊÇ·ñÓĞ½«
+				//çœ‹é©¬1èƒ½æ”»å‡»åˆ°çš„ä½ç½®æ˜¯å¦æœ‰å°†
 				if(!BitBoard.assignAndToNew(KnightBitBoardOfAttackLimit[knight2Site][legBoard.checkSumOfKnight()],MaskChesses[kingSite]).isEmpty()){
 					chkNum++;
 				}
 			}
 		}
-		//±ø½«¾üµÄÅĞ¶Ï
+		//å…µå°†å†›çš„åˆ¤æ–­
 		if(!BitBoard.assignAndToNew(KingCheckedSoldierBitBoards[kingSite],chessParam.getBitBoardByPlayRole(opponentPlay, ChessConstant.SOLDIER)).isEmpty()){
 			chkNum++;
 		}
@@ -445,7 +445,7 @@ public abstract class ChessMoveAbs {
 	/**
 	 *@author pengjiu 
 	 *@date:Aug 31, 2011 11:01:45 AM
-	 * ¹¦ÄÜ£ºÉú³ÉËùÓĞ³Ô×Ó×Å·¨ note£º(µ«Ëù³Ô×ÓµÄ¼ÛÖµµÍÓÚÒ»¶¨ÖµÊ±½«²»ËãÎª³Ô×Ó×Å·¨ÖĞ)
+	 * åŠŸèƒ½ï¼šç”Ÿæˆæ‰€æœ‰åƒå­ç€æ³• noteï¼š(ä½†æ‰€åƒå­çš„ä»·å€¼ä½äºä¸€å®šå€¼æ—¶å°†ä¸ç®—ä¸ºåƒå­ç€æ³•ä¸­)
 	 *@param play
 	 *@param dumpMoveList
 	*/
@@ -464,8 +464,8 @@ public abstract class ChessMoveAbs {
 	/**
 	 *@author pengjiu 
 	 *@date:Aug 31, 2011 11:01:19 AM
-	 * ¹¦ÄÜ£ºÉú³É²»³Ô×Ó×Å·¨ÁĞ±í
-	 *@param play Íæ¼Ò
+	 * åŠŸèƒ½ï¼šç”Ÿæˆä¸åƒå­ç€æ³•åˆ—è¡¨
+	 *@param play ç©å®¶
 	 *@param dumpMoveList  
 	*/
 	public void genNopMoveList(int play){ 
@@ -479,18 +479,18 @@ public abstract class ChessMoveAbs {
 		}
 		this.chessNopMove(chessRoles[begin], allChess[begin], play);
 	 }
-	//note:[play][ÏóÊ¿½«]
+	//note:[play][è±¡å£«å°†]
 	private static int[][] checkMateFristUseMove= new int[][]{
 			{23,24,25,26,16},
 			{39,40,41,42,32} };
-	//note:[play][³µÂíÅÚ×ä] 
+	//note:[play][è½¦é©¬ç‚®å’] 
 	private static int[][] checkMateSecondlyUseMove= new int[][]{
 			{17,18,19,20,21,22,27,28,29,30,31},
 			{33,34,35,36,37,38,43,44,45,46,47} };
 	/**
 	 *@author pengjiu 
 	 *@date:Aug 31, 2011 11:00:38 AM
-	 * ¹¦ÄÜ£º	ÓÅÏÈ½â½«×Å·¨,ÆÕ±é½«¾ü¶¼»á±»»¯½â note:ÏóÊ¿½« 
+	 * åŠŸèƒ½ï¼š	ä¼˜å…ˆè§£å°†ç€æ³•,æ™®éå°†å†›éƒ½ä¼šè¢«åŒ–è§£ note:è±¡å£«å°† 
 	 *@param play
 	 *@param dumpMoveList
 	*/
@@ -504,7 +504,7 @@ public abstract class ChessMoveAbs {
 		} 
 	 }*/
 
-	/**¶ÔÊÖËùÓĞÄÜ¹¥»÷µÄÎ»ÖÃ
+	/**å¯¹æ‰‹æ‰€æœ‰èƒ½æ”»å‡»çš„ä½ç½®
 	 * @param play
 	 */
 	public BitBoard getOppAttackSite(int play ) {
@@ -526,13 +526,13 @@ public abstract class ChessMoveAbs {
 		case BLACKCHARIOT:
 			int row=chessParam.boardBitRow[boardRow[srcSite]];
 			int col=chessParam.boardBitCol[boardCol[srcSite]];
-			//È¡³öĞĞÁĞÄÜ¹¥»÷µ½µÄÎ»ÖÃ
+			//å–å‡ºè¡Œåˆ—èƒ½æ”»å‡»åˆ°çš„ä½ç½®
 			bitBoard=BitBoard.assignXorToNew(ChariotBitBoardOfAttackRow[srcSite][row], ChariotBitBoardOfAttackCol[srcSite][col]);			
 			bitBoard.assignXor(BitBoard.assignXorToNew(MoveChariotOrGunBitBoardRow[srcSite][row], MoveChariotOrGunBitBoardCol[srcSite][col]));
 			break;
 		case REDKNIGHT:
 		case BLACKKNIGHT:
-			//È¡³ö±»±ğÂíÍÈµÄÎ»ÖÃ
+			//å–å‡ºè¢«åˆ«é©¬è…¿çš„ä½ç½®
 			BitBoard legBoard = BitBoard.assignAndToNew(KnightLegBitBoards[srcSite],chessParam.maskBoardChesses);
 			bitBoard=new BitBoard(KnightBitBoardOfAttackLimit[srcSite][legBoard.checkSumOfKnight()]);
 			break;
@@ -540,22 +540,22 @@ public abstract class ChessMoveAbs {
 		case BLACKGUN:
 			row=chessParam.boardBitRow[boardRow[srcSite]];
 			col=chessParam.boardBitCol[boardCol[srcSite]];
-			//È¡³öĞĞÁĞÄÜ¹¥»÷µ½µÄÎ»ÖÃ
+			//å–å‡ºè¡Œåˆ—èƒ½æ”»å‡»åˆ°çš„ä½ç½®
 			bitBoard=BitBoard.assignXorToNew(GunBitBoardOfAttackRow[srcSite][row], GunBitBoardOfAttackCol[srcSite][col]);
-			//ÄÜ×ßµ½µÄÎ»ÖÃ
+			//èƒ½èµ°åˆ°çš„ä½ç½®
 //			bitBoard=BitBoard.assignXorToNew(MoveChariotOrGunBitBoardRow[srcSite][row], MoveChariotOrGunBitBoardCol[srcSite][col]);
-			//ÅÚÎ±¹¥»÷Î»ÖÃ
+			//ç‚®ä¼ªæ”»å‡»ä½ç½®
 			bitBoard.assignXor(BitBoard.assignXorToNew(GunBitBoardOfFakeAttackRow[srcSite][row], GunBitBoardOfFakeAttackCol[srcSite][col]));
 			break;
 		case REDELEPHANT:
 		case BLACKELEPHANT:
-			//È¡³ö±»ÈûÏóÑÛµÄÎ»ÖÃ
+			//å–å‡ºè¢«å¡è±¡çœ¼çš„ä½ç½®
 			legBoard=BitBoard.assignAndToNew(ElephanLegBitBoards[srcSite],chessParam.maskBoardChesses);
 			bitBoard=new BitBoard(ElephanBitBoardOfAttackLimit[srcSite][legBoard.checkSumOfElephant()]);
 			break;
 		case REDKING:
 		case BLACKKING:
-			//½«³Ô×Ó×Å·¨
+			//å°†åƒå­ç€æ³•
 			bitBoard=new BitBoard(KingBitBoard[srcSite]);
 			break;
 		case REDGUARD:
@@ -567,7 +567,7 @@ public abstract class ChessMoveAbs {
 			bitBoard=new BitBoard(SoldiersBitBoard[play][srcSite]);
 			break;
 		default :
-			System.out.println("Ã»ÓĞÕâ¸öÆå×Ó:"+srcSite);
+			System.out.println("æ²¡æœ‰è¿™ä¸ªæ£‹å­:"+srcSite);
 		}
 		return bitBoard;
 	}
@@ -579,25 +579,25 @@ public abstract class ChessMoveAbs {
 			int row=chessParam.boardBitRow[boardRow[srcSite]];
 			int col=chessParam.boardBitCol[boardCol[srcSite]];
 			
-			//È¡³öĞĞÁĞÄÜ¹¥»÷µ½µÄÎ»ÖÃ
+			//å–å‡ºè¡Œåˆ—èƒ½æ”»å‡»åˆ°çš„ä½ç½®
 			bitBoard=BitBoard.assignXorToNew(ChariotBitBoardOfAttackRow[srcSite][row], ChariotBitBoardOfAttackCol[srcSite][col]);
-			//È¡³ö¹¥»÷µ½µÄ¶Ô·½Æå×Ó
+			//å–å‡ºæ”»å‡»åˆ°çš„å¯¹æ–¹æ£‹å­
 			bitBoard.assignAnd(chessParam.maskBoardPersonalChesses[1-play]);
 			break;
 		case REDKNIGHT:
 		case BLACKKNIGHT:
-			//È¡³ö±»±ğÂíÍÈµÄÎ»ÖÃ
+			//å–å‡ºè¢«åˆ«é©¬è…¿çš„ä½ç½®
 			BitBoard legBoard = BitBoard.assignAndToNew(KnightLegBitBoards[srcSite],chessParam.maskBoardChesses);
-			//È¡³öÄÜ¹¥»÷µ½¶Ô·½Æå×ÓÎ»ÖÃ
+			//å–å‡ºèƒ½æ”»å‡»åˆ°å¯¹æ–¹æ£‹å­ä½ç½®
 			bitBoard=BitBoard.assignAndToNew(KnightBitBoardOfAttackLimit[srcSite][legBoard.checkSumOfKnight()],chessParam.maskBoardPersonalChesses[1-play]);
 			break;
 		case REDGUN:
 		case BLACKGUN:
 			row=chessParam.boardBitRow[boardRow[srcSite]];
 			col=chessParam.boardBitCol[boardCol[srcSite]];
-			//È¡³öĞĞÁĞÄÜ¹¥»÷µ½µÄÎ»ÖÃ
+			//å–å‡ºè¡Œåˆ—èƒ½æ”»å‡»åˆ°çš„ä½ç½®
 			bitBoard=BitBoard.assignXorToNew(GunBitBoardOfAttackRow[srcSite][row], GunBitBoardOfAttackCol[srcSite][col]);
-			//È¡³ö¹¥»÷µ½µÄ¶Ô·½Æå×Ó
+			//å–å‡ºæ”»å‡»åˆ°çš„å¯¹æ–¹æ£‹å­
 			bitBoard.assignAnd(chessParam.maskBoardPersonalChesses[1-play]);
 			
 			
@@ -605,14 +605,14 @@ public abstract class ChessMoveAbs {
 			break;
 		case REDELEPHANT:
 		case BLACKELEPHANT:
-			//È¡³ö±»ÈûÏóÑÛµÄÎ»ÖÃ
+			//å–å‡ºè¢«å¡è±¡çœ¼çš„ä½ç½®
 			legBoard=BitBoard.assignAndToNew(ElephanLegBitBoards[srcSite],chessParam.maskBoardChesses);
-			//È¡³öÄÜ¹¥»÷µ½¶Ô·½Æå×ÓÎ»ÖÃ
+			//å–å‡ºèƒ½æ”»å‡»åˆ°å¯¹æ–¹æ£‹å­ä½ç½®
 			bitBoard=BitBoard.assignAndToNew(ElephanBitBoardOfAttackLimit[srcSite][legBoard.checkSumOfElephant()],chessParam.maskBoardPersonalChesses[1-play]);
 			break;
 		case REDKING:
 		case BLACKKING:
-			//½«³Ô×Ó×Å·¨
+			//å°†åƒå­ç€æ³•
 			bitBoard=BitBoard.assignAndToNew(KingBitBoard[srcSite],chessParam.maskBoardPersonalChesses[1-play]);
 			break;
 		case REDGUARD:
@@ -624,12 +624,12 @@ public abstract class ChessMoveAbs {
 			bitBoard=BitBoard.assignAndToNew(SoldiersBitBoard[play][srcSite],chessParam.maskBoardPersonalChesses[1-play]);
 			break;
 		default :
-			System.out.println("Ã»ÓĞÕâ¸öÆå×Ó:"+srcSite);
+			System.out.println("æ²¡æœ‰è¿™ä¸ªæ£‹å­:"+srcSite);
 		}
 		int destSite;
 		while((destSite = bitBoard.MSB(play))!=-1){
 			savePlayChess(srcSite, destSite, play);
-			//È¥µô¸Õ±£´æµÄÊı¾İ
+			//å»æ‰åˆšä¿å­˜çš„æ•°æ®
 			bitBoard.assignXor(MaskChesses[destSite]);
 		}
 	}
@@ -640,18 +640,18 @@ public abstract class ChessMoveAbs {
 		case BLACKCHARIOT:
 			int row=chessParam.boardBitRow[boardRow[srcSite]];
 			int col=chessParam.boardBitCol[boardCol[srcSite]];
-			//È¡³öĞĞÁĞÄÜ×ßµ½µÄÎ»ÖÃ
+			//å–å‡ºè¡Œåˆ—èƒ½èµ°åˆ°çš„ä½ç½®
 			bitBoard=BitBoard.assignXorToNew(MoveChariotOrGunBitBoardRow[srcSite][row], MoveChariotOrGunBitBoardCol[srcSite][col]);
 			break;
 		case REDKNIGHT:
 		case BLACKKNIGHT:
-			//È¡³ö±»±ğÂíÍÈµÄÎ»ÖÃ
+			//å–å‡ºè¢«åˆ«é©¬è…¿çš„ä½ç½®
 			BitBoard legBoard = BitBoard.assignAndToNew(KnightLegBitBoards[srcSite],chessParam.maskBoardChesses);
-			//ÂíÄÜ×Åµ½µÄÎ»ÖÃ
+			//é©¬èƒ½ç€åˆ°çš„ä½ç½®
 			BitBoard attackBoard=KnightBitBoardOfAttackLimit[srcSite][legBoard.checkSumOfKnight()];
-			//×ßµ½µÄÎ»ÖÃÓĞÆå×ÓµÄ
+			//èµ°åˆ°çš„ä½ç½®æœ‰æ£‹å­çš„
 			bitBoard=BitBoard.assignAndToNew(attackBoard,chessParam.maskBoardChesses);
-			//ÄÃ³ö×ßµ½µÄÎ»ÖÃÃ»ÓĞÆå×ÓµÄ
+			//æ‹¿å‡ºèµ°åˆ°çš„ä½ç½®æ²¡æœ‰æ£‹å­çš„
 			bitBoard.assignXor(attackBoard);
 			break;
 		case REDGUN:
@@ -662,43 +662,43 @@ public abstract class ChessMoveAbs {
 			break;
 		case REDELEPHANT:
 		case BLACKELEPHANT:
-			//È¡³ö±»ÈûÏóÑÛµÄÎ»ÖÃ
+			//å–å‡ºè¢«å¡è±¡çœ¼çš„ä½ç½®
 			legBoard=BitBoard.assignAndToNew(ElephanLegBitBoards[srcSite],chessParam.maskBoardChesses);
-			//ÏóÄÜ×Åµ½µÄÎ»ÖÃ
+			//è±¡èƒ½ç€åˆ°çš„ä½ç½®
 			attackBoard=ElephanBitBoardOfAttackLimit[srcSite][legBoard.checkSumOfElephant()];
-			//×ßµ½µÄÎ»ÖÃÓĞÆå×ÓµÄ
+			//èµ°åˆ°çš„ä½ç½®æœ‰æ£‹å­çš„
 			bitBoard=BitBoard.assignAndToNew(attackBoard,chessParam.maskBoardChesses);
-			//ÄÃ³ö×ßµ½µÄÎ»ÖÃÃ»ÓĞÆå×ÓµÄ
+			//æ‹¿å‡ºèµ°åˆ°çš„ä½ç½®æ²¡æœ‰æ£‹å­çš„
 			bitBoard.assignXor(attackBoard);
 			break;
 		case REDKING:
 		case BLACKKING:
-			//½«×Åµ½µÄÎ»ÖÃÓĞÆå×ÓµÄ
+			//å°†ç€åˆ°çš„ä½ç½®æœ‰æ£‹å­çš„
 			bitBoard=BitBoard.assignAndToNew(KingBitBoard[srcSite],chessParam.maskBoardChesses);
-			//½«×Åµ½µÄÎ»ÖÃÃ»ÓĞÆå×ÓµÄ
+			//å°†ç€åˆ°çš„ä½ç½®æ²¡æœ‰æ£‹å­çš„
 			bitBoard.assignXor(KingBitBoard[srcSite]);
 			break;
 		case REDGUARD:
 		case BLACKGUARD:
-			//×ßµÄÎ»ÖÃÓĞÆå×Ó
+			//èµ°çš„ä½ç½®æœ‰æ£‹å­
 			bitBoard=BitBoard.assignAndToNew(GuardBitBoard[srcSite],chessParam.maskBoardChesses);
-			//È¡³öÃ»ÓĞÆå×ÓµÄ
+			//å–å‡ºæ²¡æœ‰æ£‹å­çš„
 			bitBoard.assignXor(GuardBitBoard[srcSite]);
 			break;
 		case REDSOLDIER:
 		case BLACKSOLDIER:
-			//ÓĞÆå×Ó
+			//æœ‰æ£‹å­
 			bitBoard=BitBoard.assignAndToNew(SoldiersBitBoard[play][srcSite],chessParam.maskBoardChesses);
-			//È¡³öÎŞÆå×Ó
+			//å–å‡ºæ— æ£‹å­
 			bitBoard.assignXor(SoldiersBitBoard[play][srcSite]);
 			break;
 		default :
-			System.out.println("Ã»ÓĞÕâ¸öÆå×Ó:"+srcSite);
+			System.out.println("æ²¡æœ‰è¿™ä¸ªæ£‹å­:"+srcSite);
 		}
 		int destSite;
 		while((destSite = bitBoard.MSB(play))!=-1){
 			savePlayChess(srcSite, destSite, play);
-			//È¥µô¸Õ±£´æµÄÊı¾İ
+			//å»æ‰åˆšä¿å­˜çš„æ•°æ®
 			bitBoard.assignXor(MaskChesses[destSite]);
 		}
 	}
@@ -706,16 +706,16 @@ public abstract class ChessMoveAbs {
 	/**
 	 *@author pengjiu 
 	 *@date:Aug 10, 2011 12:40:22 PM
-	 * ¹¦ÄÜ£º¼ì²â¹¥»÷µÄÆå×ÓÊÇ·ñÎª¶ÔÊÖÆå×Ó
+	 * åŠŸèƒ½ï¼šæ£€æµ‹æ”»å‡»çš„æ£‹å­æ˜¯å¦ä¸ºå¯¹æ‰‹æ£‹å­
 	 *@param srcChess
 	 *@param destChess
 	 *@param play
 	*/
 	public boolean isOpponentCheck(int destChess,int play){
-		//ÎŞÆå×Ó·µ»Ø
+		//æ— æ£‹å­è¿”å›
 		if(destChess==NOTHING){
 			return true;
-		//Îª¶ÔÊÖÆå×Ó	
+		//ä¸ºå¯¹æ‰‹æ£‹å­	
 		}
 		return ((chessPlay[play] & destChess)==0);
 	}

@@ -64,22 +64,22 @@ public class ChessBoardMain extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public static  final String[] chessName=new String[]{ 
 		"   ",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
-		"ºÚ½«","ºÚ³µ","ºÚ³µ","ºÚÂí","ºÚÂí","ºÚÅÚ","ºÚÅÚ","ºÚÏó","ºÚÏó","ºÚÊ¿","ºÚÊ¿","ºÚ×ä","ºÚ×ä","ºÚ×ä","ºÚ×ä","ºÚ×ä",
-		"ºì½«","ºì³µ","ºì³µ","ºìÂí","ºìÂí","ºìÅÚ","ºìÅÚ","ºìÏó","ºìÏó","ºìÊ¿","ºìÊ¿","ºì×ä","ºì×ä","ºì×ä","ºì×ä","ºì×ä",
+		"é»‘å°†","é»‘è½¦","é»‘è½¦","é»‘é©¬","é»‘é©¬","é»‘ç‚®","é»‘ç‚®","é»‘è±¡","é»‘è±¡","é»‘å£«","é»‘å£«","é»‘å’","é»‘å’","é»‘å’","é»‘å’","é»‘å’",
+		"çº¢å°†","çº¢è½¦","çº¢è½¦","çº¢é©¬","çº¢é©¬","çº¢ç‚®","çº¢ç‚®","çº¢è±¡","çº¢è±¡","çº¢å£«","çº¢å£«","çº¢å’","çº¢å’","çº¢å’","çº¢å’","çº¢å’",
 	};
 	public static  final String[] chessIcon=new String[]{ 
 		 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 		"BK","BR","BR","BN","BN","BC","BC","BB","BB","BA","BA","BP","BP","BP","BP","BP",
 		"RK","RR","RR","RN","RN","RC","RC","RB","RB","RA","RA","RP","RP","RP","RP","RP",		
 	};
-	int lastTimeCheckedSite=-1; //ÉÏ´ÎÑ¡ÖĞÆå×ÓµÄÎ»ÖÃ
+	int lastTimeCheckedSite=-1; //ä¸Šæ¬¡é€‰ä¸­æ£‹å­çš„ä½ç½®
 	private ButtonActionListener my = new ButtonActionListener(); 
 	JLabel[] buttons=new JLabel[BOARDSIZE90];
 	int play=1;
 	volatile boolean[] android=new boolean[]{false,false};
 	int begin=-1;
 	int end=0;
-	private static ComputerLevel computerLevel=ComputerLevel.greenHand; //Ä¬ÈÏ
+	private static ComputerLevel computerLevel=ComputerLevel.greenHand; //é»˜è®¤
 	boolean isBackstageThink=false;
 	boolean computeFig=false;
 	TranspositionTable  transTable;
@@ -88,7 +88,7 @@ public class ChessBoardMain extends JFrame {
 	AICoreHandler backstageAIThink=new AICoreHandler();
 //	public static List<MoveNode> backMove=new ArrayList<MoveNode>();
 	NodeLink moveHistory;
-	int turn_num=0;//»ØºÏÊı
+	int turn_num=0;//å›åˆæ•°
 	ChessParam chessParamCont;
 	private static boolean isSound=false;
 	public void initHandler(){
@@ -99,20 +99,20 @@ public class ChessBoardMain extends JFrame {
 		startFen=readSaved();
 		
 		String[] fenArray = Tools.fenToFENArray(startFen);
-		//½«ÅÆ·ÅÈëµ½Êı×éÖĞ
+		//å°†ç‰Œæ”¾å…¥åˆ°æ•°ç»„ä¸­
 		int[] boardTemp = Tools.parseFEN(fenArray[1]);
-		//¸ù¾İÆåÅÌ³õÊ¼²ÎÊı		
+		//æ ¹æ®æ£‹ç›˜åˆå§‹å‚æ•°		
 		chessParamCont=ChessInitialize.getGlobalChessParam(boardTemp);
-		//Çå³ıËùÓĞ½çÃæÍ¼Æ¬
+		//æ¸…é™¤æ‰€æœ‰ç•Œé¢å›¾ç‰‡
 //		clearBoardIcon();
-		//³õÊ¼½çÃæÆå×Ó
+		//åˆå§‹ç•Œé¢æ£‹å­
 		for(int i=0;i<boardTemp.length;i++){
 			if(boardTemp[i]>0){
 				this.setBoardIconUnchecked(i,boardTemp[i]);
 			}
 		}
 		
-		//³õÊ¼¾ÖÃæ(Òª°ÑÆå×Ó°ÚºÃºó²ÅÄÜ¼ÆËã¾ÖÃæÖµ)
+		//åˆå§‹å±€é¢(è¦æŠŠæ£‹å­æ‘†å¥½åæ‰èƒ½è®¡ç®—å±€é¢å€¼)
 		transTable=new TranspositionTable() ;
 		if(moveHistory==null){
 			moveHistory=new NodeLink(1-play,transTable.boardZobrist32,transTable.boardZobrist64);
@@ -141,31 +141,31 @@ public class ChessBoardMain extends JFrame {
 		JPanel panel  = new javax.swing.JPanel();
 		
 		jpanelContent.setLayout(new BorderLayout());
-		//±±		
+		//åŒ—		
 		JPanel jpNorth=new JPanel(); 
 		jpNorth.setPreferredSize(new Dimension(25,25));
 //		jpNorth.setBackground(Color.white);
 		jpNorth.setOpaque(false);
 		jpanelContent.add(jpNorth,BorderLayout.NORTH);
-		//ÄÏ	
+		//å—	
 		JPanel jpSouth=new JPanel(); 
 		jpSouth.setPreferredSize(new Dimension(5,5));
 		jpSouth.setBackground(Color.black);
 		jpSouth.setOpaque(false);
 		jpanelContent.add(jpSouth,BorderLayout.SOUTH);	
-		//Î÷
+		//è¥¿
 		JPanel jpWest=new JPanel();
 		jpWest.setPreferredSize(new Dimension(20,20));
 		jpWest.setBackground(Color.blue);
 		jpWest.setOpaque(false);
 		jpanelContent.add(jpWest,BorderLayout.WEST);		
-		//¶«
+		//ä¸œ
 		JPanel jpEast=new JPanel(); 
 		jpEast.setPreferredSize(new Dimension(20,20));
 		jpEast.setBackground(Color.CYAN);
 		jpEast.setOpaque(false);
 		jpanelContent.add(jpEast,BorderLayout.EAST);	
-		//ÖĞ
+		//ä¸­
 		panel.setLayout(new GridLayout(10, 9));
 		panel.setPreferredSize(new Dimension(100,100));
 		panel.setOpaque(false);
@@ -182,22 +182,22 @@ public class ChessBoardMain extends JFrame {
 		this.add(jpanelContent,BorderLayout.CENTER);
 	}
 	public ChessBoardMain() {
-		super("ÖĞ¹úÏóÆå");  
+		super("ä¸­å›½è±¡æ£‹");  
 		setCenter();
 		
 		JPanel constrol=new JPanel();
 		constrol.setLayout(new GridLayout(1, 3));
 		
-		Button button = new Button("»ÚÆå");
+		Button button = new Button("æ‚”æ£‹");
 		button.addActionListener(my); 
-		Button computerMove = new Button("Á¢¼´×ßÆå");
+		Button computerMove = new Button("ç«‹å³èµ°æ£‹");
 		computerMove.addActionListener(my);
 		constrol.add(button);
 		constrol.add(computerMove);
 		this.add(constrol,BorderLayout.SOUTH);
 		
 		this.addWindowListener(my);
-		//³õÊ¼´¦ÀíÆ÷
+		//åˆå§‹å¤„ç†å™¨
 		initHandler();
 		this.setJMenuBar(setJMenuBar());
 		
@@ -207,20 +207,20 @@ public class ChessBoardMain extends JFrame {
 		this.setVisible(true);
 	}
 	private MenuItemActionListener menuItemAction=new MenuItemActionListener();
-	JRadioButtonMenuItem hashSize2M = new JRadioButtonMenuItem("HASH±íĞ¡",true);
-	JRadioButtonMenuItem hashSize32M = new JRadioButtonMenuItem("HASH±íÖĞ",false);
-	JRadioButtonMenuItem hashSize64M = new JRadioButtonMenuItem("HASH±í´ó",false);
+	JRadioButtonMenuItem hashSize2M = new JRadioButtonMenuItem("HASHè¡¨å°",true);
+	JRadioButtonMenuItem hashSize32M = new JRadioButtonMenuItem("HASHè¡¨ä¸­",false);
+	JRadioButtonMenuItem hashSize64M = new JRadioButtonMenuItem("HASHè¡¨å¤§",false);
 	private JMenuBar setJMenuBar(){
 		JMenuBar jmb = new JMenuBar();
-		JMenu menu_file = new JMenu("ÎÄ¼ş");
-		JMenuItem create = new JMenuItem("ĞÂ½¨");
-		JMenuItem save= new JMenuItem("±£´æ");
-		JRadioButtonMenuItem mi_6 = new JRadioButtonMenuItem("²ËÄñ",true);
-		JRadioButtonMenuItem mi_7 = new JRadioButtonMenuItem("ÈëÃÅ",false);
-		JRadioButtonMenuItem mi_8 = new JRadioButtonMenuItem("ÒµÓà",false);
-		JRadioButtonMenuItem mi_9 = new JRadioButtonMenuItem("×¨¼Ò",false);
-		JRadioButtonMenuItem mi_10 = new JRadioButtonMenuItem("´óÊ¦",false);
-		JRadioButtonMenuItem mi_11 = new JRadioButtonMenuItem("ÎŞµĞ",false);
+		JMenu menu_file = new JMenu("æ–‡ä»¶");
+		JMenuItem create = new JMenuItem("æ–°å»º");
+		JMenuItem save= new JMenuItem("ä¿å­˜");
+		JRadioButtonMenuItem mi_6 = new JRadioButtonMenuItem("èœé¸Ÿ",true);
+		JRadioButtonMenuItem mi_7 = new JRadioButtonMenuItem("å…¥é—¨",false);
+		JRadioButtonMenuItem mi_8 = new JRadioButtonMenuItem("ä¸šä½™",false);
+		JRadioButtonMenuItem mi_9 = new JRadioButtonMenuItem("ä¸“å®¶",false);
+		JRadioButtonMenuItem mi_10 = new JRadioButtonMenuItem("å¤§å¸ˆ",false);
+		JRadioButtonMenuItem mi_11 = new JRadioButtonMenuItem("æ— æ•Œ",false);
 		
 		ButtonGroup group=new ButtonGroup();
 		group.add(mi_6);
@@ -255,11 +255,11 @@ public class ChessBoardMain extends JFrame {
 		menu_file.add(save);
 		jmb.add(menu_file);
 		//------------------------------------------------------
-		JMenu menu_set = new JMenu("ÉèÖÃ");
-		JCheckBoxMenuItem redCmp = new JCheckBoxMenuItem("µçÄÔºì·½",play!=REDPLAYSIGN);
-		JCheckBoxMenuItem blackCmp = new JCheckBoxMenuItem("µçÄÔºÚ·½",play!=BLACKPLAYSIGN);
+		JMenu menu_set = new JMenu("è®¾ç½®");
+		JCheckBoxMenuItem redCmp = new JCheckBoxMenuItem("ç”µè„‘çº¢æ–¹",play!=REDPLAYSIGN);
+		JCheckBoxMenuItem blackCmp = new JCheckBoxMenuItem("ç”µè„‘é»‘æ–¹",play!=BLACKPLAYSIGN);
 
-		JCheckBoxMenuItem isSoundBox= new JCheckBoxMenuItem("ÒôĞ§",isSound);
+		JCheckBoxMenuItem isSoundBox= new JCheckBoxMenuItem("éŸ³æ•ˆ",isSound);
 
 		
 		ButtonGroup hashSizeGroup=new ButtonGroup();
@@ -268,7 +268,7 @@ public class ChessBoardMain extends JFrame {
 		hashSizeGroup.add(hashSize64M);
 		
 		
-		JCheckBoxMenuItem backstageThink=new JCheckBoxMenuItem("ºóÌ¨Ë¼¿¼",isBackstageThink); 
+		JCheckBoxMenuItem backstageThink=new JCheckBoxMenuItem("åå°æ€è€ƒ",isBackstageThink); 
 		
 		redCmp.addActionListener(menuItemAction);
 		blackCmp.addActionListener(menuItemAction);
@@ -332,15 +332,15 @@ public class ChessBoardMain extends JFrame {
 	class ButtonActionListener   implements ActionListener, WindowListener,MouseListener {
 		public void actionPerformed(ActionEvent e) {
 			Button sour = (Button)e.getSource();
-			if(sour.getLabel().equals("»ÚÆå")){
+			if(sour.getLabel().equals("æ‚”æ£‹")){
 				if(moveHistory.getMoveNode()!=null ){
 					MoveNode moveNode=moveHistory.getMoveNode();
 					unMoveNode(moveNode); 
 					moveHistory=moveHistory.getLastLink();
 					turn_num--;
-					play=1-play; //½»»»Ë«·½
+					play=1-play; //äº¤æ¢åŒæ–¹
 				}
-			}else if(sour.getLabel().equals("Á¢¼´×ßÆå")){ 
+			}else if(sour.getLabel().equals("ç«‹å³èµ°æ£‹")){ 
 				if(_AIThink!=null){
 					_AIThink.setStop();
 				}
@@ -356,9 +356,9 @@ public class ChessBoardMain extends JFrame {
 //			int col=chessParamCont.boardBitCol[boardCol[srcSite]];
 			/*BitBoard bt = BitBoard.assignXorToNew(GunBitBoardOfFakeAttackRow[srcSite][row],GunBitBoardOfFakeAttackCol[srcSite][col]);
 			System.out.println(chessParamCont.maskBoardChesses);
-			System.out.println("============ÅÚÎ±¹¥»÷µÄÎ»ÖÃ==========");
+			System.out.println("============ç‚®ä¼ªæ”»å‡»çš„ä½ç½®==========");
 			System.out.println(bt);*/
-//			System.out.println("³µ»òÅÚµÄ»ú¶¯ĞÔÎª->>"+(ChariotAndGunMobilityRow[srcSite][row]+ChariotAndGunMobilityCol[srcSite][col]));
+//			System.out.println("è½¦æˆ–ç‚®çš„æœºåŠ¨æ€§ä¸º->>"+(ChariotAndGunMobilityRow[srcSite][row]+ChariotAndGunMobilityCol[srcSite][col]));
 			
 			MoveNode moveNode = new MoveNode(srcSite,destSite,chessParamCont.board[srcSite],chessParamCont.board[destSite],0);
 			return cmp.legalMove(play,moveNode);
@@ -446,7 +446,7 @@ public class ChessBoardMain extends JFrame {
 			for (int i = 0; i < buttons.length; i++) {
 					JLabel p = buttons[i];
 					if(p==e.getSource()){
-						if(chessParamCont.board[i]!=NOTHING &&  (chessParamCont.board[i]&chessPlay[play])==chessPlay[play]){//×Ô·½×ÓÁ¦
+						if(chessParamCont.board[i]!=NOTHING &&  (chessParamCont.board[i]&chessPlay[play])==chessPlay[play]){//è‡ªæ–¹å­åŠ›
 							if(i!=begin){
 								begin=i;
 								
@@ -482,7 +482,7 @@ public class ChessBoardMain extends JFrame {
 		}
 	}
 	public void gameOverMsg(String msg){
-		if (JOptionPane.showConfirmDialog(this, msg + "ÊÇ·ñ¼ÌĞø£¿", "ĞÅÏ¢",
+		if (JOptionPane.showConfirmDialog(this, msg + "æ˜¯å¦ç»§ç»­ï¼Ÿ", "ä¿¡æ¯",
 				 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 			dispose();
 			new ChessBoardMain();
@@ -501,31 +501,31 @@ public class ChessBoardMain extends JFrame {
 		boolean isGameOver=false;
 		String msg=null;
 		if(moveHistory==null || moveHistory.getMoveNode()==null){
-			msg=(play==BLACKPLAYSIGN?"ºÚ·½":"ºì·½")+"±»²ĞÈÌµÄ½«ËÀ£¡";
+			msg=(play==BLACKPLAYSIGN?"é»‘æ–¹":"çº¢æ–¹")+"è¢«æ®‹å¿çš„å°†æ­»ï¼";
 			isGameOver=true;
-		//×Ô¼ºË§±»³Ô
+		//è‡ªå·±å¸…è¢«åƒ
 		}else if(chessParamCont.allChess[chessPlay[BLACKPLAYSIGN]]==NOTHING || moveHistory.getMoveNode().destChess==chessPlay[BLACKPLAYSIGN]){
 			isGameOver=true;
-			msg="ºÚ·½±»ÍêÅ°£¡";
+			msg="é»‘æ–¹è¢«å®Œè™ï¼";
 		}else if(chessParamCont.allChess[chessPlay[REDPLAYSIGN]]==NOTHING || moveHistory.getMoveNode().destChess==chessPlay[REDPLAYSIGN]){
-			msg="ºì·½±»ÍêÅ°£¡";
+			msg="çº¢æ–¹è¢«å®Œè™ï¼";
 			isGameOver=true; 
 		}else if(moveHistory.getMoveNode().score==-LONGCHECKSCORE){
-			msg=(play==BLACKPLAYSIGN?"ºÚ·½":"ºì·½")+"³¤½«ÅĞ¸º£¡";
+			msg=(play==BLACKPLAYSIGN?"é»‘æ–¹":"çº¢æ–¹")+"é•¿å°†åˆ¤è´Ÿï¼";
 			isGameOver=true;
 		}else if(moveHistory.getMoveNode().score<=-(maxScore-2)){
 			setCheckedLOSS(play);
-			msg=(play==BLACKPLAYSIGN?"ºÚ·½":"ºì·½")+"±»²ĞÈÌµÄ½«ËÀ£¡";
+			msg=(play==BLACKPLAYSIGN?"é»‘æ–¹":"çº¢æ–¹")+"è¢«æ®‹å¿çš„å°†æ­»ï¼";
 			isGameOver=true;
 		}else if(moveHistory.getMoveNode().score>=(maxScore-2)){
 			setCheckedLOSS(1-play);
-			msg=(play==BLACKPLAYSIGN?"ºÚ·½":"ºì·½")+"Ó®µÃÁË×îÖÕµÄÊ¤Àû£¡";
+			msg=(play==BLACKPLAYSIGN?"é»‘æ–¹":"çº¢æ–¹")+"èµ¢å¾—äº†æœ€ç»ˆçš„èƒœåˆ©ï¼";
 			isGameOver=true;
 		}else if(chessParamCont.getAttackChessesNum(REDPLAYSIGN)==0 && chessParamCont.getAttackChessesNum(BLACKPLAYSIGN)==0){
-			msg="Ë«·½¶¼ÎŞ¹¥»÷Æå×Ó´ËÄËºÍÆå£¡";
+			msg="åŒæ–¹éƒ½æ— æ”»å‡»æ£‹å­æ­¤ä¹ƒå’Œæ£‹ï¼";
 			isGameOver=true;
 		}else if(turn_num>=300){
-			msg="´óÕ½300»ØºÏÎ´·ÖÊ¤¸º°¡£¡";
+			msg="å¤§æˆ˜300å›åˆæœªåˆ†èƒœè´Ÿå•Šï¼";
 			isGameOver=true;
 		}
 		if(isGameOver){
@@ -533,7 +533,7 @@ public class ChessBoardMain extends JFrame {
 			gameOverMsg(msg);
 		}else{
 			MoveNode moveNode = moveHistory.getMoveNode();
-			if(cmp.checked(1-play)){//¶ÔÊÖÊÇ·ñ±»½«
+			if(cmp.checked(1-play)){//å¯¹æ‰‹æ˜¯å¦è¢«å°†
 				launchSound(SoundEffect.CHECKED_SOUND);
 			}else if(moveNode.destChess!=NOTHING){
 				launchSound(SoundEffect.CAPTURE_SOUND);
@@ -546,24 +546,24 @@ public class ChessBoardMain extends JFrame {
 	class MenuItemActionListener   implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			String actionCommand=e.getActionCommand();
-			if("ĞÂ½¨".equals(actionCommand)){
+			if("æ–°å»º".equals(actionCommand)){
 				dispose();
 				new ChessBoardMain();
-			}else if("±£´æ".equalsIgnoreCase(actionCommand)){
+			}else if("ä¿å­˜".equalsIgnoreCase(actionCommand)){
 				Tools.saveFEN(chessParamCont.board,moveHistory);
-			}else if("²ËÄñ".equals(actionCommand)){
+			}else if("èœé¸Ÿ".equals(actionCommand)){
 				computerLevel=ComputerLevel.greenHand;
-			}else if("ÈëÃÅ".equals(actionCommand)){
+			}else if("å…¥é—¨".equals(actionCommand)){
 				computerLevel=ComputerLevel.introduction;
-			}else if("ÒµÓà".equals(actionCommand)){
+			}else if("ä¸šä½™".equals(actionCommand)){
 				computerLevel=ComputerLevel.amateur;
-			}else if("×¨¼Ò".equals(actionCommand)){
+			}else if("ä¸“å®¶".equals(actionCommand)){
 				computerLevel=ComputerLevel.career;
-			}else if("´óÊ¦".equals(actionCommand)){
+			}else if("å¤§å¸ˆ".equals(actionCommand)){
 				computerLevel=ComputerLevel.master;
-			}else if("ÎŞµĞ".equals(actionCommand)){
+			}else if("æ— æ•Œ".equals(actionCommand)){
 				computerLevel=ComputerLevel.invincible;
-			}else if("µçÄÔºì·½".equals(actionCommand)){				
+			}else if("ç”µè„‘çº¢æ–¹".equals(actionCommand)){				
 				android[REDPLAYSIGN]=!android[REDPLAYSIGN];
 				if(android[REDPLAYSIGN] && (REDPLAYSIGN==play || turn_num<=0) ){
 					if(turn_num<=0){
@@ -572,7 +572,7 @@ public class ChessBoardMain extends JFrame {
 					}
 					computeThinkStart();
 				}
-			}else if("µçÄÔºÚ·½".equals(actionCommand)){
+			}else if("ç”µè„‘é»‘æ–¹".equals(actionCommand)){
 				android[BLACKPLAYSIGN]=!android[BLACKPLAYSIGN];
 				if(android[BLACKPLAYSIGN] && (BLACKPLAYSIGN==play || turn_num<=0)){
 					if(turn_num<=0){
@@ -581,21 +581,21 @@ public class ChessBoardMain extends JFrame {
 					}
 					computeThinkStart();
 				}
-			}else if("HASH±íĞ¡".equals(actionCommand)){
+			}else if("HASHè¡¨å°".equals(actionCommand)){
 				if(turn_num==0){
 					TranspositionTable.setHashSize(0x7FFFF);
 				}
-			}else if("HASH±íÖĞ".equals(actionCommand)){
+			}else if("HASHè¡¨ä¸­".equals(actionCommand)){
 				if(turn_num==0){
 					TranspositionTable.setHashSize(0xFFFFF);
 				}
-			}else if("HASH±í´ó".equals(actionCommand)){
+			}else if("HASHè¡¨å¤§".equals(actionCommand)){
 				if(turn_num==0){
 					TranspositionTable.setHashSize(0x1FFFFF);
 				}
-			}else if("ºóÌ¨Ë¼¿¼".equals(actionCommand)){
+			}else if("åå°æ€è€ƒ".equals(actionCommand)){
 				isBackstageThink=!isBackstageThink;
-			}else if("ÒôĞ§".equals(actionCommand)){
+			}else if("éŸ³æ•ˆ".equals(actionCommand)){
 				isSound=!isSound;
 			}
 		}
@@ -604,26 +604,26 @@ public class ChessBoardMain extends JFrame {
  
 	private void opponentMove(){
 		setHashTablesEnabled();
-		//²é¿´ÊÇ·ñÒÔÊ¤Àû
+		//æŸ¥çœ‹æ˜¯å¦ä»¥èƒœåˆ©
 		if(!checkGameOver()){
 			turn_num++;
-			play=1-play; //½»»»Ë«·½
-			//¶ÔÊÖÊÇ·ñÎªµçÄÔ
+			play=1-play; //äº¤æ¢åŒæ–¹
+			//å¯¹æ‰‹æ˜¯å¦ä¸ºç”µè„‘
 			if(android[play]){
 				computeThinkStart();
 			}
 		}
 	}
 	private void computeThinkStart(){
-		//ÉèÖÃºóÌ¨Ë¼¿¼
+		//è®¾ç½®åå°æ€è€ƒ
 		if(isBackstageThink && (guessLink!=null && moveHistory!=null) ){
-			//²é¿´ÊÇ·ñ²ÂÖĞ
+			//æŸ¥çœ‹æ˜¯å¦çŒœä¸­
 			if(guessLink.getMoveNode().equals(moveHistory.getMoveNode())){
 				new Thread(){
 					public void run(){
-						System.out.println("---->²Â²âÃüÖĞ£¡£¡");
+						System.out.println("---->çŒœæµ‹å‘½ä¸­ï¼ï¼");
 						try {
-							//¼ÓÈëÊ±¼ä¿ØÖÆ
+							//åŠ å…¥æ—¶é—´æ§åˆ¶
 							backstageAIThink.launchTimer();
 							backstageThinkThread.join();
 						} catch (InterruptedException e) {
@@ -636,15 +636,15 @@ public class ChessBoardMain extends JFrame {
 			}else{
 				new Thread(){
 					public void run(){
-						System.out.println("--->Î´ÃüÖĞ");
-						//Èç¹ûÃ»ÖĞ½øĞĞÔËËã
+						System.out.println("--->æœªå‘½ä¸­");
+						//å¦‚æœæ²¡ä¸­è¿›è¡Œè¿ç®—
 						backstageAIThink.setStop();
 						try {
 							backstageThinkThread.join();
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
-						System.out.println("--->ÖØĞÂË¼¿¼");
+						System.out.println("--->é‡æ–°æ€è€ƒ");
 						computeThink();
 					}
 				}.start();
@@ -677,17 +677,17 @@ public class ChessBoardMain extends JFrame {
 	}
 	private Thread backstageThinkThread=null;
 	private NodeLink guessLink ;
-	//ºóÌ¨Ë¼¿¼
+	//åå°æ€è€ƒ
 	private void backstageThink(){
 		if(!isBackstageThink){return;}
 		if(moveHistory.getNextLink()!=null && moveHistory.getNextLink().getMoveNode()!=null){
 
 			backstageThinkThread=new Thread(){
 				public void run(){
-					//²Â²âµÄ×Å·¨
+					//çŒœæµ‹çš„ç€æ³•
 					guessLink = moveHistory.getNextLink();
 					backstageAIThink.setLocalVariable(computerLevel,chessParamCont,guessLink);
-					System.out.println("---->¿ªÊ¼²Â²â("+guessLink.getMoveNode()+")");
+					System.out.println("---->å¼€å§‹çŒœæµ‹("+guessLink.getMoveNode()+")");
 					backstageAIThink.guessRun(guessLink.getMoveNode());
 				}
 			};
@@ -708,7 +708,7 @@ public class ChessBoardMain extends JFrame {
 	}
 	
 	/*
-	 * ¼ÇÈ¡ÉÏ´Î±£´æ¼ÇÂ¼
+	 * è®°å–ä¸Šæ¬¡ä¿å­˜è®°å½•
 	 */
 	public  String readSaved(){
 		String fen = null;
@@ -723,7 +723,7 @@ public class ChessBoardMain extends JFrame {
 				fen = bufferedReader.readLine();
 			}
 			if (fen != null) {
-				if (JOptionPane.showConfirmDialog(this, "¼ì²âµ½ÓĞ´æµµÊÇ·ñ¼ÌĞøÉÏ´ÎÓÎÏ·?", "ĞÅÏ¢",
+				if (JOptionPane.showConfirmDialog(this, "æ£€æµ‹åˆ°æœ‰å­˜æ¡£æ˜¯å¦ç»§ç»­ä¸Šæ¬¡æ¸¸æˆ?", "ä¿¡æ¯",
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					ObjectInputStream objInput =null;
 					try{
@@ -731,7 +731,7 @@ public class ChessBoardMain extends JFrame {
 						moveHistory=(NodeLink) objInput.readObject();
 						turn_num=20;
 					}catch(Exception e){
-						System.err.println("========¶ÁÈ¡ÀúÊ·¼ÇÂ¼³ö´í moves.dat");
+						System.err.println("========è¯»å–å†å²è®°å½•å‡ºé”™ moves.dat");
 					}finally{
 						if(objInput!=null){
 							objInput.close();
@@ -759,7 +759,7 @@ public class ChessBoardMain extends JFrame {
 		new ChessBoardMain();
 	}
 	public void launchSound(int type){
-		if(isSound){ //¿ªÆôÒôĞ§
+		if(isSound){ //å¼€å¯éŸ³æ•ˆ
 			new SoundEffect(type).start();
 		}
 	}

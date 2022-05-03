@@ -10,7 +10,6 @@ import android.view.View;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
-import kw.mulitplay.game.ChessGameAsset;
 
 public class AndroidLauncher extends AndroidApplication {
 
@@ -29,7 +28,7 @@ public class AndroidLauncher extends AndroidApplication {
             // 华为这个型号的平板不支持
             config.numSamples = 0;
         }
-        initialize(new ChessGameAsset(), config);
+//        initialize(new ChessGameAsset(), config);
     }
 
     @Override

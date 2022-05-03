@@ -18,13 +18,13 @@ import com.pj.chess.zobrist.TranspositionTable;
 public class ChessQuiescMove extends ChessMoveAbs{
 
 	
-//	public static final int BLACKKING=KING+7;    //Íõ
-//	public static final int BLACKCHARIOT=CHARIOT+7; //³µ
-//	public static final int BLACKKNIGHT=KNIGHT+7; //Âí
-//	public static final int BLACKGUN=GUN+7; //ÅÚ
-//	public static final int BLACKELEPHANT=ELEPHANT+7; //Ïó
-//	public static final int BLACKGUARD=GUARD+7; //Ê¿
-//	public static final int BLACKSOLDIER=SOLDIER+7; //±ø
+//	public static final int BLACKKING=KING+7;    //ç‹
+//	public static final int BLACKCHARIOT=CHARIOT+7; //è½¦
+//	public static final int BLACKKNIGHT=KNIGHT+7; //é©¬
+//	public static final int BLACKGUN=GUN+7; //ç‚®
+//	public static final int BLACKELEPHANT=ELEPHANT+7; //è±¡
+//	public static final int BLACKGUARD=GUARD+7; //å£«
+//	public static final int BLACKSOLDIER=SOLDIER+7; //å…µ
 	
 	
 	
@@ -36,7 +36,7 @@ public class ChessQuiescMove extends ChessMoveAbs{
 	
 	
 	
-	/**¼ÇÂ¼ÏÂËùÓĞ¿É×ßµÄ·½Ê½
+	/**è®°å½•ä¸‹æ‰€æœ‰å¯èµ°çš„æ–¹å¼
 	 * @param srcSite
 	 * @param destSite
 	 * @param play
@@ -49,18 +49,18 @@ public class ChessQuiescMove extends ChessMoveAbs{
 			int destScore=0;
 			int srcScore=0;
 			destScore=EvaluateCompute.chessBaseScore[destChess]+evaluateCompute.chessAttachScore(chessRoles[destChess], destSite);
-			if (destScore>=150) {  //³Ô×Ó
-				//Òª³ÔµÄ¹ñ×Ó±»¶ÔÊÖ±£»¤
+			if (destScore>=150) {  //åƒå­
+				//è¦åƒçš„æŸœå­è¢«å¯¹æ‰‹ä¿æŠ¤
 				srcScore=EvaluateCompute.chessBaseScore[srcChess]+evaluateCompute.chessAttachScore(chessRoles[srcChess], srcSite);	
-				//°´±»³ÔÆå×Ó¼ÛÖµÅÅĞò
+				//æŒ‰è¢«åƒæ£‹å­ä»·å€¼æ’åº
 				moveNode = new MoveNode(srcSite,destSite,srcChess,destChess,destScore-srcScore);
 				goodMoveList.add(moveNode);
 				return ;
 			}
 		}
-		//ÀúÀô±íÅÅĞò
+		//å†åè¡¨æ’åº
 		moveNode=new MoveNode(srcSite,destSite,srcChess,destChess,CHistoryHeuritic.cHistory[ChessConstant.chessRoles_eight[srcChess]][destSite]);
-		generalMoveList.add(moveNode); //²»³Ô×Ó
+		generalMoveList.add(moveNode); //ä¸åƒå­
 	}
 }
 

@@ -6,9 +6,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageCodec;
-import kw.mulitplay.game.client.Serializer;
-import kw.mulitplay.game.message.RegisterMessage;
 import kw.mulitplay.game.message.base.Message;
+import kw.mulitplay.game.message.serializer.Serializer;
 import kw.mulitplay.game.message.type.MessageType;
 
 

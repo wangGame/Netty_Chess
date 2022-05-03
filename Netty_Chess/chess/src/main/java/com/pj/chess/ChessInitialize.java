@@ -25,38 +25,38 @@ import com.pj.chess.zobrist.TranspositionTable;
 import static com.pj.chess.chessmove.ChessQuiescMove.*;
 /**
  * @author pengjiu
- * Æå×ÓÆåÅÌ³õÊ¼»¯²Ù×÷
- * Æå×ÓµÄ×Å·¨Ô¤Éú³É
+ * æ£‹å­æ£‹ç›˜åˆå§‹åŒ–æ“ä½œ
+ * æ£‹å­çš„ç€æ³•é¢„ç”Ÿæˆ
  */
 
 
 
 public class ChessInitialize {
-	//Âí×Å·¨Ô¤Éú³ÉÊı×é
+	//é©¬ç€æ³•é¢„ç”Ÿæˆæ•°ç»„
 	int[][]  knightMove=new int[BOARDSIZE90][8];  
-	//Âí×Å·¨°èÍÈÎ»ÖÃÔ¤Éú³ÉÊı×é
+	//é©¬ç€æ³•æ‹Œè…¿ä½ç½®é¢„ç”Ÿæˆæ•°ç»„
 	int[][]  horseLeg=new int[BOARDSIZE90][8];  
-	//Ïó×Å·¨Ô¤Éú³ÉÊı×é
+	//è±¡ç€æ³•é¢„ç”Ÿæˆæ•°ç»„
 	int[][]  elephantMove=new int[BOARDSIZE90][4];  
-	//Ïó×Å·¨°èÍÈÎ»ÖÃÔ¤Éú³ÉÊı×é
+	//è±¡ç€æ³•æ‹Œè…¿ä½ç½®é¢„ç”Ÿæˆæ•°ç»„
 	int[][]  elephantLeg=new int[BOARDSIZE90][4];
-	//±ø×Å·¨Ô¤Éú³ÉÊı×é
+	//å…µç€æ³•é¢„ç”Ÿæˆæ•°ç»„
 	 int[][][]  soldierMove=new int[2][BOARDSIZE90][3]; 
-	//³µ³Ô×Ó×Å·¨Ô¤Éú³ÉÊı×é
-	int[][][]  chariotMoveRowEat=new int[9][512][2];//ĞĞ(ÉÏÏÂ)
-	int[][][]  chariotMoveColEat=new int[10][1024][2];   //ÁĞ(×óÓÒ)
-	//³µÅÚ²»³Ô×Ó×Å·¨Ô¤Éú³ÉÊı×é
-	int[][][]  move_chariotGunRowNop=new int[9][512][9];//ĞĞ(ÉÏÏÂ)²»³Ô×ÓÊÇÓĞ¶à¸öÇé¿ö
-	int[][][]  move_chariotGunColNop=new int[10][1024][10];   //ÁĞ(×óÓÒ)
-	//ÅÚ³Ô×Ó×Å·¨Ô¤Éú³ÉÊı×é
-	int[][][]  gunMoveRowEat=new int[9][512][2];//ĞĞ(ÉÏÏÂ)
-	int[][][]  gunMoveColEat=new int[10][1024][2];   //ÁĞ(×óÓÒ)
-	//ÅÚÎ±¹¥»÷Î»ÖÃ
-	int[][][]  gunFackAttackRow=new int[9][512][9];//ĞĞ(ÉÏÏÂ)
-	int[][][]  gunFackAttackCol=new int[10][1024][10];   //ÁĞ(×óÓÒ)
-	//ÅÚ¸ô¶à×ÓËùÄÜ¹¥»÷µ½µÄÎ»ÖÃ
-	int[][][]  gunMoreRestAttackRow=new int[9][512][9];//ĞĞ(ÉÏÏÂ)
-	int[][][]  gunMoreRestAttackCol=new int[10][1024][10];   //ÁĞ(×óÓÒ)
+	//è½¦åƒå­ç€æ³•é¢„ç”Ÿæˆæ•°ç»„
+	int[][][]  chariotMoveRowEat=new int[9][512][2];//è¡Œ(ä¸Šä¸‹)
+	int[][][]  chariotMoveColEat=new int[10][1024][2];   //åˆ—(å·¦å³)
+	//è½¦ç‚®ä¸åƒå­ç€æ³•é¢„ç”Ÿæˆæ•°ç»„
+	int[][][]  move_chariotGunRowNop=new int[9][512][9];//è¡Œ(ä¸Šä¸‹)ä¸åƒå­æ˜¯æœ‰å¤šä¸ªæƒ…å†µ
+	int[][][]  move_chariotGunColNop=new int[10][1024][10];   //åˆ—(å·¦å³)
+	//ç‚®åƒå­ç€æ³•é¢„ç”Ÿæˆæ•°ç»„
+	int[][][]  gunMoveRowEat=new int[9][512][2];//è¡Œ(ä¸Šä¸‹)
+	int[][][]  gunMoveColEat=new int[10][1024][2];   //åˆ—(å·¦å³)
+	//ç‚®ä¼ªæ”»å‡»ä½ç½®
+	int[][][]  gunFackAttackRow=new int[9][512][9];//è¡Œ(ä¸Šä¸‹)
+	int[][][]  gunFackAttackCol=new int[10][1024][10];   //åˆ—(å·¦å³)
+	//ç‚®éš”å¤šå­æ‰€èƒ½æ”»å‡»åˆ°çš„ä½ç½®
+	int[][][]  gunMoreRestAttackRow=new int[9][512][9];//è¡Œ(ä¸Šä¸‹)
+	int[][][]  gunMoreRestAttackCol=new int[10][1024][10];   //åˆ—(å·¦å³)
 
 	public static ChessParam getGlobalChessParam(int[] boardTemp ){
 		int[] board = new int[BOARDSIZE90];
@@ -94,18 +94,18 @@ public class ChessInitialize {
 		return chessParamCont;
 	}
 	static{
-		// Î»ÆåÅÌµÄ³õÊ¼
+		// ä½æ£‹ç›˜çš„åˆå§‹
 		for (int i = 0; i < MaskChesses.length; i++) {
 			MaskChesses[i] = new BitBoard(i);
 		}
 		new ChessInitialize();
 	}
 	private ChessInitialize(){
-		//Âí²»¿¼ÂÇ±ğÍÈµÄÎ»ÆåÅÌ
+		//é©¬ä¸è€ƒè™‘åˆ«è…¿çš„ä½æ£‹ç›˜
 		initBitBoard(KnightBitBoards);
-		//Âí±ğÍÈµÄÎ»×Ó
+		//é©¬åˆ«è…¿çš„ä½å­
 		initBitBoard(KnightLegBitBoards);
-		//ÂíÏó¹¥»÷Éú³É
+		//é©¬è±¡æ”»å‡»ç”Ÿæˆ
 		initBitBoard(KnightBitBoardOfAttackLimit);
 		initBitBoard(ElephanBitBoardOfAttackLimit);
 		
@@ -119,81 +119,81 @@ public class ChessInitialize {
 		cleanEmpty(gunMoreRestAttackRow);
 		cleanEmpty(gunMoreRestAttackCol);
 		
-		//³õÊ¼ÂíµÄ×Å·¨
+		//åˆå§‹é©¬çš„ç€æ³•
 		initKnightMove();
-		//³õÊ¼ÏóµÄ×Å·¨
+		//åˆå§‹è±¡çš„ç€æ³•
 		initElephantMove();
-		//³õÊ¼×äµÄ×Å·¨
+		//åˆå§‹å’çš„ç€æ³•
 		initSoldier();
-		//³õÊ¼²»³Ô×Ó³µÅÚ¶ÔÓ¦ËùÓĞĞĞ×Å·¨  
+		//åˆå§‹ä¸åƒå­è½¦ç‚®å¯¹åº”æ‰€æœ‰è¡Œç€æ³•  
 		this.initChariotGunVariedMove(cleanEmpty(move_chariotGunRowNop), 0, 0,false);
-		//³õÊ¼²»³Ô×Ó³µÅÚ¶ÔÓ¦ËùÓĞÁĞ×Å·¨
+		//åˆå§‹ä¸åƒå­è½¦ç‚®å¯¹åº”æ‰€æœ‰åˆ—ç€æ³•
 		this.initChariotGunVariedMove(cleanEmpty(move_chariotGunColNop), 1, 0,false); 
-		//³õÊ¼ÅÚ³Ô×Ó¶ÔÓ¦ËùÓĞĞĞ×Å·¨ 
+		//åˆå§‹ç‚®åƒå­å¯¹åº”æ‰€æœ‰è¡Œç€æ³• 
 		this.initChariotGunVariedMove(cleanEmpty(gunMoveRowEat), 0, 1,true);
-		//³õÊ¼ÅÚ³Ô×Ó¶ÔÓ¦ËùÓĞÁĞ×Å·¨
+		//åˆå§‹ç‚®åƒå­å¯¹åº”æ‰€æœ‰åˆ—ç€æ³•
 		this.initChariotGunVariedMove(cleanEmpty(gunMoveColEat), 1, 1,true); 
-		//³µ³Ô×Ó (ĞĞ) 
+		//è½¦åƒå­ (è¡Œ) 
 		this.initChariotGunVariedMove(cleanEmpty(chariotMoveRowEat), 0, 0,true);
-		//³µ³Ô×Ó (ÁĞ)
+		//è½¦åƒå­ (åˆ—)
 		this.initChariotGunVariedMove(cleanEmpty(chariotMoveColEat), 1, 0,true); 
 		
-		/******ÅÚÎ±¹¥»÷Î»ÖÃ*******/
+		/******ç‚®ä¼ªæ”»å‡»ä½ç½®*******/
 		initGunFackEatMove(gunFackAttackRow,0);
 		initGunFackEatMove(gunFackAttackCol,1);
-		//ÅÚ¸ô¶à×ÓÄÜ¹¥»÷µ½µÄÎ»ÖÃ
+		//ç‚®éš”å¤šå­èƒ½æ”»å‡»åˆ°çš„ä½ç½®
 		this.initChariotGunVariedMove(gunMoreRestAttackRow, 0, 2,true);
 		this.initChariotGunVariedMove(gunMoreRestAttackCol, 1, 2,true);
 		
-		//Éú³ÉÖÃ»»±í
+		//ç”Ÿæˆç½®æ¢è¡¨
 //		genBoardZobrist();
-		//Éú³É»ù´¡·Ö ºÍ Æå×ÓÊıÁ¿
+		//ç”ŸæˆåŸºç¡€åˆ† å’Œ æ£‹å­æ•°é‡
  
-		//Ô¤Éú³ÉËùÓĞÎ»ÆåÅÌ
+		//é¢„ç”Ÿæˆæ‰€æœ‰ä½æ£‹ç›˜
 		preAllBitBoard();
 
 		
 	}
 
 	private void preAllBitBoard() {
-		// Âí ¿¼ÂÇ±ğÍÈËùÄÜ¹¥»÷µ½µÄÎ»ÖÃ
+		// é©¬ è€ƒè™‘åˆ«è…¿æ‰€èƒ½æ”»å‡»åˆ°çš„ä½ç½®
 		preBitBoardAttack(knightMove, horseLeg, KnightBitBoardOfAttackLimit, 0);
-		// Ïó ¿¼ÂÇ±ğÍÈËùÄÜ¹¥»÷µ½µÄÎ»ÖÃ
+		// è±¡ è€ƒè™‘åˆ«è…¿æ‰€èƒ½æ”»å‡»åˆ°çš„ä½ç½®
 		preBitBoardAttack(elephantMove, elephantLeg,
 				ElephanBitBoardOfAttackLimit, 1);
-		// ³µÅÚ²»³Ô×ÓµÄÇé¿ö ĞĞ
+		// è½¦ç‚®ä¸åƒå­çš„æƒ…å†µ è¡Œ
 		preGunAndChariotBitBoardAttack(move_chariotGunRowNop,
 				MoveChariotOrGunBitBoardRow, 0);
-		// ³µÅÚ²»³Ô×ÓµÄÇé¿ö ÁĞ
+		// è½¦ç‚®ä¸åƒå­çš„æƒ…å†µ åˆ—
 		preGunAndChariotBitBoardAttack(move_chariotGunColNop,
 				MoveChariotOrGunBitBoardCol, 1);
-		// ³µ³Ô×ÓÇé¿ö ĞĞ
+		// è½¦åƒå­æƒ…å†µ è¡Œ
 		preGunAndChariotBitBoardAttack(chariotMoveRowEat,
 				ChariotBitBoardOfAttackRow, 0);
-		// ³µ³Ô×ÓÇé¿ö ÁĞ
+		// è½¦åƒå­æƒ…å†µ åˆ—
 		preGunAndChariotBitBoardAttack(chariotMoveColEat,
 				ChariotBitBoardOfAttackCol, 1);
-		// ÅÚ³Ô×ÓÇé¿ö ĞĞ
+		// ç‚®åƒå­æƒ…å†µ è¡Œ
 		preGunAndChariotBitBoardAttack(gunMoveRowEat, GunBitBoardOfAttackRow, 0);
-		// ÅÚ³Ô×ÓÇé¿ö ÁĞ
+		// ç‚®åƒå­æƒ…å†µ åˆ—
 		preGunAndChariotBitBoardAttack(gunMoveColEat, GunBitBoardOfAttackCol, 1);
-		// Éú³É½«µÄÎ»ÆåÅÌ
+		// ç”Ÿæˆå°†çš„ä½æ£‹ç›˜
 		preBitBoardKingMove(KingBitBoard);
-		// Éú³ÉÊ¿µÄÎ»ÆåÅÌ
+		// ç”Ÿæˆå£«çš„ä½æ£‹ç›˜
 		preBitBoardGuardMove(GuardBitBoard);
-		// ×ä½«¾üµÄÆåÅÌ
+		// å’å°†å†›çš„æ£‹ç›˜
 		preKingCheckedSoldierBitBoards(KingCheckedSoldierBitBoards);
-		//ÅÚÎ±¹¥»÷Î»ÖÃ
+		//ç‚®ä¼ªæ”»å‡»ä½ç½®
 		preGunAndChariotBitBoardAttack(gunFackAttackRow, GunBitBoardOfFakeAttackRow, 0);
 		preGunAndChariotBitBoardAttack(gunFackAttackCol, GunBitBoardOfFakeAttackCol, 1);
-		//³µÅÚµÄ»ú¶¯ĞÔ
+		//è½¦ç‚®çš„æœºåŠ¨æ€§
 		preGunAndChariotMobility(MoveChariotOrGunBitBoardRow,ChariotAndGunMobilityRow);
 		preGunAndChariotMobility(MoveChariotOrGunBitBoardCol,ChariotAndGunMobilityCol);
-		// ÅÚ¸ô¶à×Ó³Ô×ÓÇé¿ö ĞĞ
+		// ç‚®éš”å¤šå­åƒå­æƒ…å†µ è¡Œ
 		preGunAndChariotBitBoardAttack(gunMoreRestAttackRow, GunBitBoardOfMoreRestAttackRow, 0);
-		// ÅÚ¸ô¶à×Ó³Ô×ÓÇé¿ö ÁĞ
+		// ç‚®éš”å¤šå­åƒå­æƒ…å†µ åˆ—
 		preGunAndChariotBitBoardAttack(gunMoreRestAttackCol, GunBitBoardOfMoreRestAttackCol, 1);
-		//¼ÓÔØ¿ª¾Ö¿â
+		//åŠ è½½å¼€å±€åº“
 //		loadBook();
 	}
 	private void preKingCheckedSoldierBitBoards(BitBoard[] bitBoard){
@@ -209,7 +209,7 @@ public class ChessInitialize {
 		}
 	}
 	/**
-	 * ³õÊ¼ÂíµÄ×Å·¨Ô¤Éú³ÉÊı×é
+	 * åˆå§‹é©¬çš„ç€æ³•é¢„ç”Ÿæˆæ•°ç»„
 	 */
 	private  void initKnightMove(){
 		int[] cnKnightMoveTab=new int[]{-0x21, -0x1f, -0x12, -0x0e, +0x0e, +0x12, +0x1f, +0x21}; 
@@ -233,7 +233,7 @@ public class ChessInitialize {
 						 if(KnightLegBitBoards[siteTo90]==null){
 							 KnightLegBitBoards[siteTo90]=new BitBoard();
 						 }
-						 //ÂíµÄÎ»ÆåÅÌ
+						 //é©¬çš„ä½æ£‹ç›˜
 						 KnightBitBoards[siteTo90].assignOr(new BitBoard(_tKnightTo90));
 						 KnightLegBitBoards[siteTo90].assignOr(new BitBoard(_tHorseLegTo90));
 						 
@@ -244,7 +244,7 @@ public class ChessInitialize {
 		
 	}
 	/**
-	 * ³õÊ¼ÏóµÄ×Å·¨Ô¤Éú³ÉÊı×é
+	 * åˆå§‹è±¡çš„ç€æ³•é¢„ç”Ÿæˆæ•°ç»„
 	 */
 	public void initElephantMove(){
 		int[] cnElephantMoveTab=new int[]{-0x22, -0x1e,+0x1e, +0x22}; 
@@ -254,11 +254,11 @@ public class ChessInitialize {
 				int z=0;
 				int[] _tElephantMoveTab=cnElephantMoveTab;
 				int[] _tElephantLegTab=cnElephantLegTab;
-				//ºÚÏóµ½´ï³şºº±ß½çÖØÖÃÆä×Å·¨±í²»ÔÊĞíµØºÓ
+				//é»‘è±¡åˆ°è¾¾æ¥šæ±‰è¾¹ç•Œé‡ç½®å…¶ç€æ³•è¡¨ä¸å…è®¸åœ°æ²³
 				if(site/16==7 || site/16==6){  
 					 _tElephantMoveTab=new int[]{-0x22, -0x1e}; 
 					 _tElephantLegTab=new int[]{-0x11, -0xf};
-				 //ºìÏóµ½´ï³şºº±ß½çÖØÖÃÆä×Å·¨±í²»ÔÊĞíµØºÓ					 
+				 //çº¢è±¡åˆ°è¾¾æ¥šæ±‰è¾¹ç•Œé‡ç½®å…¶ç€æ³•è¡¨ä¸å…è®¸åœ°æ²³					 
 				 }else if(site/16==8 || site/16==9){
 					 _tElephantMoveTab=new int[]{+0x1e, +0x22}; 
 					 _tElephantLegTab=new int[]{+0xf, +0x11};
@@ -280,7 +280,7 @@ public class ChessInitialize {
 						 if(ElephanLegBitBoards[siteTo90]==null){
 							 ElephanLegBitBoards[siteTo90]=new BitBoard();
 						 }
-						 //Ïó±»ÈûÑÛµÄÎ»ÆåÅÌ
+						 //è±¡è¢«å¡çœ¼çš„ä½æ£‹ç›˜
 						 ElephanLegBitBoards[siteTo90].assignXor(MaskChesses[_tElephantLeg_90]);
 						 z++;
 					 }
@@ -289,7 +289,7 @@ public class ChessInitialize {
 		}  
 	}
 	/**
-	 * ³õÊ¼±øµÄ×Å·¨Ô¤Éú³ÉÊı×é
+	 * åˆå§‹å…µçš„ç€æ³•é¢„ç”Ÿæˆæ•°ç»„
 	 */
 	private void initSoldier() { 
 		int[] _tSoldierMoveTab = null;
@@ -298,14 +298,14 @@ public class ChessInitialize {
 				if (isBoardTo255(site)) {
 					int z = 0;
 					if(i==BLACKPLAYSIGN){
-						//ºÚ·½±øÒÔ¾­¹ı½ç
+						//é»‘æ–¹å…µä»¥ç»è¿‡ç•Œ
 						if (site/16 >7) {
 							_tSoldierMoveTab=new int[]{+0x10,-0x01,+0x01};
 						}else{
 							_tSoldierMoveTab=new int[]{+0x10};
 						}
 					}else if(i==REDPLAYSIGN){
-						//ºì·½±øÒÔ¾­¹ı½ç						
+						//çº¢æ–¹å…µä»¥ç»è¿‡ç•Œ						
 						if(site/16<8){
 							_tSoldierMoveTab=new int[]{-0x10,-0x01,+0x01};
 						}else{
@@ -321,7 +321,7 @@ public class ChessInitialize {
 							if(SoldiersBitBoard[i][siteTo90]==null){
 								SoldiersBitBoard[i][siteTo90]=new BitBoard();
 							}
-							//±øËùÄÜ¹¥»÷µ½µÄÎ»ÆåÅÌ
+							//å…µæ‰€èƒ½æ”»å‡»åˆ°çš„ä½æ£‹ç›˜
 							SoldiersBitBoard[i][siteTo90].assignOr(MaskChesses[_tSoldier90]);
 							z++;
 						}
@@ -334,25 +334,25 @@ public class ChessInitialize {
 	/**
 	 *@author pengjiu 
 	 *@date:Sep 23, 2011 1:44:24 PM
-	 * ¹¦ÄÜ£º³µÅÚ³Ô×ÓÓë²»³Ô×Ó
-	 *@param moveEat Êı×é
-	 *@param direction ·½Ïò
-	 *@param handicapNum ÖĞ¼ä¼ä¸ôÆå×ÓÊı
-	 *@param isEat ÊÇ·ñ³Ô×Ó true false
+	 * åŠŸèƒ½ï¼šè½¦ç‚®åƒå­ä¸ä¸åƒå­
+	 *@param moveEat æ•°ç»„
+	 *@param direction æ–¹å‘
+	 *@param handicapNum ä¸­é—´é—´éš”æ£‹å­æ•°
+	 *@param isEat æ˜¯å¦åƒå­ true false
 	*/
 	private  void initChariotGunVariedMove(int [][][] moveEat,int direction,int handicapNum,boolean isEat){
 		int num=moveEat.length-1;
 		int sort=moveEat[0].length;
 		 for(int i=0;i<=num;i++){
-			 int site=1<<i;//ËùÔÚÎ»ÖÃ
+			 int site=1<<i;//æ‰€åœ¨ä½ç½®
 			 for(int j=0;j<=sort;j++){
 				 if(((j & site)>0)){
-					 if(isEat && j==site){ //³Ô×Ó×Ô¼º²»ÄÜËã½øÈ¥
+					 if(isEat && j==site){ //åƒå­è‡ªå·±ä¸èƒ½ç®—è¿›å»
 						 continue;
 					 }
 					 int isHandicap=0;
 					 int eatIndex=0;
-					 //Ïò×ó(ÉÏ)È¡Öµ
+					 //å‘å·¦(ä¸Š)å–å€¼
 					 for(int n=i+1;n<=num;n++){
 						int _tSite=1<<n;
 						if (isEat) {
@@ -381,7 +381,7 @@ public class ChessInitialize {
 						 }
 					 } 
 					 isHandicap=0; 
-					 //ÏòÓÒ(ÏÂ)È¡Öµ
+					 //å‘å³(ä¸‹)å–å€¼
 					 for(int n=i-1;n>=0;n--){
 						 int _tSite=1<<n;
 						 if (isEat) {
@@ -416,7 +416,7 @@ public class ChessInitialize {
 		 }
 	}
 	/*
-	 * Éú³É32Î»64Î» Î¨Ò»Ëæ»úÊı
+	 * ç”Ÿæˆ32ä½64ä½ å”¯ä¸€éšæœºæ•°
 	 */
 //	private void genBoardZobrist(){
 //		Random random = new Random();
@@ -452,17 +452,17 @@ public class ChessInitialize {
 	/**
 	 *@author pengjiu 
 	 *@date:Aug 26, 2011 5:09:07 PM
-	 * ¹¦ÄÜ£º Éú³ÉÂí and Ïó ²»±ğÍÈËùÄÜ¹¥»÷µ½µÄÎ»ÖÃ
-	 *@param attackBoard  Ô¤Éú³É¹¥»÷Î»ÖÃ
-	 *@param leg  ¹¥»÷Ê±µÄ±ğÍÈÎ»ÖÃ
-	 *@param attackBoardBit ×îÖÕ·µ»ØµÄÊı¾İ
-	 *@param type 0 ÎªÂí  1ÎªÏó
+	 * åŠŸèƒ½ï¼š ç”Ÿæˆé©¬ and è±¡ ä¸åˆ«è…¿æ‰€èƒ½æ”»å‡»åˆ°çš„ä½ç½®
+	 *@param attackBoard  é¢„ç”Ÿæˆæ”»å‡»ä½ç½®
+	 *@param leg  æ”»å‡»æ—¶çš„åˆ«è…¿ä½ç½®
+	 *@param attackBoardBit æœ€ç»ˆè¿”å›çš„æ•°æ®
+	 *@param type 0 ä¸ºé©¬  1ä¸ºè±¡
 	*/
 	private  void preBitBoardAttack(int[][] attackBoard,int[][]leg,BitBoard[][] attackBoardBit,int type){ 
 		for(int i=0;i<ChessConstant.BOARDSIZE90;i++){ 
-			//ËùÓĞ±ğÍÈÈ¥ÖØ¸´ºóµÄÊı×é
+			//æ‰€æœ‰åˆ«è…¿å»é‡å¤åçš„æ•°ç»„
 			int[] legSite=removeRepeatArray(leg[i]);
-			//µÃµ½´Ë±ğÍÈµÄËùÓĞ×éºÏÇé¿ö KnightBitBoardOfAttackLimit
+			//å¾—åˆ°æ­¤åˆ«è…¿çš„æ‰€æœ‰ç»„åˆæƒ…å†µ KnightBitBoardOfAttackLimit
 			int[][] legSiteComb=getAllLegCombByLeg(legSite);
 			for(int k=0;k<legSiteComb.length;k++){
 				 if(legSiteComb[k][0]==ChessConstant.NOTHING){
@@ -474,40 +474,40 @@ public class ChessInitialize {
 				 for(int n=0;n<legTemp.length && legTemp[n]!=ChessConstant.NOTHING;n++){
 					 boolean isExists=false;
 					 for(int j=0;j<legSiteComb[k].length&&legSiteComb[k][j]!=ChessConstant.NOTHING;j++){
-						 //°Ñ×éºÏÖĞÔÚlegTemp´æÔÚµÄ
+						 //æŠŠç»„åˆä¸­åœ¨legTempå­˜åœ¨çš„
 						  if(legTemp[n]==legSiteComb[k][j]){
 							  isExists=true;break;
 						  }
 					 }
-					 //ÉèÖÃ±ğÍÈ
+					 //è®¾ç½®åˆ«è…¿
 					 if(!isExists){ 
 						 if(attackBoard[i][n]!=ChessConstant.NOTHING){
 							 siteLegBit.assignOr(MaskChesses[legTemp[n]]); 
 						 }
 					 }
-					 //ÉèÖÃ²»±ğÍÈÄÜ×ßµ½µÄÎ»ÖÃ
-					 if(isExists){//ÔÚ×éºÏÖĞ²»´æÔÚ Ğ´ÈëÎ»ÆåÅÌ
+					 //è®¾ç½®ä¸åˆ«è…¿èƒ½èµ°åˆ°çš„ä½ç½®
+					 if(isExists){//åœ¨ç»„åˆä¸­ä¸å­˜åœ¨ å†™å…¥ä½æ£‹ç›˜
 						 if(attackBoard[i][n]!=ChessConstant.NOTHING){
 							 siteAttBit.assignXor(MaskChesses[attackBoard[i][n]]);
 						 }
 					 }
 				 }
-				 if(type==0){ //Âí
+				 if(type==0){ //é©¬
 //					 if(!attackBoardBit[i][siteLegBit.checkSumOfKnight()].isEmpty()){
-//						 System.out.println("==========================Âí===========================");
-//						 System.out.println(attackBoardBit[i][siteLegBit.checkSumOfKnight()]+" \n  Ô­Î»ÖÃ"+i+attackBoardBit[i][siteLegBit.checkSumOfKnight()].checkSumOfKnight()+" Æå×ÓÔÚ->"+i);
-//						 System.out.println(siteLegBit+" \n  ÏÖÔÚÎ»ÖÃ"+i+siteLegBit.checkSumOfKnight()+" Æå×ÓÔÚ->"+i);
+//						 System.out.println("==========================é©¬===========================");
+//						 System.out.println(attackBoardBit[i][siteLegBit.checkSumOfKnight()]+" \n  åŸä½ç½®"+i+attackBoardBit[i][siteLegBit.checkSumOfKnight()].checkSumOfKnight()+" æ£‹å­åœ¨->"+i);
+//						 System.out.println(siteLegBit+" \n  ç°åœ¨ä½ç½®"+i+siteLegBit.checkSumOfKnight()+" æ£‹å­åœ¨->"+i);
 //						 System.out.println("=====================================================");
 //					 }else {
 						 attackBoardBit[i][siteLegBit.checkSumOfKnight()]=siteAttBit;
-						 //ÂíµÄ»ú¶¯ĞÔ
+						 //é©¬çš„æœºåŠ¨æ€§
 						 KnightMobility[i][siteLegBit.checkSumOfKnight()]=siteAttBit.Count();
 //					 }
-				 }else{  //Ïó
+				 }else{  //è±¡
 //					 if(!attackBoardBit[i][siteLegBit.checkSumOfElephant()].isEmpty()){
-//						 System.out.println("========================Ïó=============================");
-//						 System.out.println(attackBoardBit[i][siteLegBit.checkSumOfElephant()]+" \n  Ô­Î»ÖÃ"+i+attackBoardBit[i][siteLegBit.checkSumOfElephant()].checkSumOfElephant()+" Æå×ÓÔÚ->"+i);
-//						 System.out.println(siteLegBit+" \n  ÏÖÔÚÎ»ÖÃ"+i+siteLegBit.checkSumOfElephant()+" Æå×ÓÔÚ->"+i);
+//						 System.out.println("========================è±¡=============================");
+//						 System.out.println(attackBoardBit[i][siteLegBit.checkSumOfElephant()]+" \n  åŸä½ç½®"+i+attackBoardBit[i][siteLegBit.checkSumOfElephant()].checkSumOfElephant()+" æ£‹å­åœ¨->"+i);
+//						 System.out.println(siteLegBit+" \n  ç°åœ¨ä½ç½®"+i+siteLegBit.checkSumOfElephant()+" æ£‹å­åœ¨->"+i);
 //						 System.out.println("=====================================================");
 //					 }else {
 						 attackBoardBit[i][siteLegBit.checkSumOfElephant()]=siteAttBit;
@@ -517,7 +517,7 @@ public class ChessInitialize {
 			}
 		}
 	}	
-	//Êı×éÖĞÈ¥³ıÖØ¸´Êı¾İ
+	//æ•°ç»„ä¸­å»é™¤é‡å¤æ•°æ®
 	private  int[] removeRepeatArray(int[] array){
 		int[] duplicate=new int[array.length];
 		for(int k=0;k<duplicate.length;k++){
@@ -539,7 +539,7 @@ public class ChessInitialize {
 		return duplicate;
 	}
 	/*
-	 * ËùÓĞ±ğÍÈµÄ×éºÏ
+	 * æ‰€æœ‰åˆ«è…¿çš„ç»„åˆ
 	 */
 	private  int[][] getAllLegCombByLeg(int legs[]){
 		int r[][]=new int[20][4];
@@ -564,10 +564,10 @@ public class ChessInitialize {
 	}
 	/**
 	 *@author pengjiu 
-	 * index : Êı×éÆğÊ¼Î»ÖÃ
-	 * a  : Êı×é
-	 * num : ´ÓÊı×éºóÃæÄÃÈ¡¼¸Î»
-	 * Ò»Ö±ÄÃÈ¡µ½Ö»Îª0ÎªÖ¹
+	 * index : æ•°ç»„èµ·å§‹ä½ç½®
+	 * a  : æ•°ç»„
+	 * num : ä»æ•°ç»„åé¢æ‹¿å–å‡ ä½
+	 * ä¸€ç›´æ‹¿å–åˆ°åªä¸º0ä¸ºæ­¢
 	 */
 	private  String[]  computCombination(int index,int[] a,int num){
 		String[] value=new String[10];
@@ -587,7 +587,7 @@ public class ChessInitialize {
 	/**
 	 *@author pengjiu 
 	 *@date:Sep 1, 2011 12:43:05 PM
-	 * ¹¦ÄÜ£º ³µÅÚ»ú¶¯ĞÔÄÜÔ¤Éú³É
+	 * åŠŸèƒ½ï¼š è½¦ç‚®æœºåŠ¨æ€§èƒ½é¢„ç”Ÿæˆ
 	 *@param moveSite
 	 *@param mobility
 	*/
@@ -603,23 +603,23 @@ public class ChessInitialize {
 		}
 	}
 	/** @author pengjiu 
-	 * @param moveSite ĞèÒª´ÓÖ®Ç°Ô¤Éú³É×Å·¨ÖĞ±éÀúËùÓĞ¿ÉĞĞ×Å·¨ÓÃÀ´Éú³ÉÎ»ÆåÅÌ
-	 * @param bitBoard Éú³Éºó¸³ÖµµÄÎ»ÆåÅÌ
-	 * @param type 0ĞĞ  1 ÁĞ
+	 * @param moveSite éœ€è¦ä»ä¹‹å‰é¢„ç”Ÿæˆç€æ³•ä¸­éå†æ‰€æœ‰å¯è¡Œç€æ³•ç”¨æ¥ç”Ÿæˆä½æ£‹ç›˜
+	 * @param bitBoard ç”Ÿæˆåèµ‹å€¼çš„ä½æ£‹ç›˜
+	 * @param type 0è¡Œ  1 åˆ—
 	 */
 	private void preGunAndChariotBitBoardAttack(int[][][] moveSite,BitBoard[][] bitBoard,int type){
 		
 		for(int i=0;i<BOARDSIZE90;i++){
 			int row = boardRow[i];
 			int col = boardCol[i];
-			//moveSite[rowOrCol][ĞĞorÁĞµÄ¶ş½øÖÆ×´Ì¬][ÄÜÒÆ¶¯µ½µÄÎ»ÖÃ]
+			//moveSite[rowOrCol][è¡Œoråˆ—çš„äºŒè¿›åˆ¶çŠ¶æ€][èƒ½ç§»åŠ¨åˆ°çš„ä½ç½®]
 			int rowOrCol=0; 
 			int[][] moveSiteTemp=null;
-			if(type==0){ //ĞĞ
+			if(type==0){ //è¡Œ
 				rowOrCol=row;
-				//ÒòÎªÒ»ĞĞÉÏÃæÒªÖªµÀËûËùÔÚµÄÎ»ÖÃËùÒÔ·ÅÈëµ±Ç°Æå×ÓËùÔÚµÄÒ»ĞĞÖĞµÄÄÄÒ»ÁĞ
+				//å› ä¸ºä¸€è¡Œä¸Šé¢è¦çŸ¥é“ä»–æ‰€åœ¨çš„ä½ç½®æ‰€ä»¥æ”¾å…¥å½“å‰æ£‹å­æ‰€åœ¨çš„ä¸€è¡Œä¸­çš„å“ªä¸€åˆ—
 				moveSiteTemp=moveSite[col];
-			}else{  //ÁĞ
+			}else{  //åˆ—
 				rowOrCol=col;
 				moveSiteTemp=moveSite[row];
 			}
@@ -627,9 +627,9 @@ public class ChessInitialize {
 				bitBoard[i][j]=new BitBoard();
 				for(int k=0;k<moveSiteTemp[j].length &&moveSiteTemp[j][k]!=NOTHING ;k++){
 					int site=0;
-					if(type==0){ //ĞĞ
+					if(type==0){ //è¡Œ
 						site=moveSiteTemp[j][k]+rowOrCol*9;
-					}else{  //ÁĞ
+					}else{  //åˆ—
 						site=moveSiteTemp[j][k]+rowOrCol;
 					}
 					bitBoard[i][j].assignXor(MaskChesses[site]);
@@ -641,7 +641,7 @@ public class ChessInitialize {
 	/**
 	 *@author pengjiu 
 	 *@date:Aug 29, 2011 12:17:14 PM
-	 * ¹¦ÄÜ£º ½«µÄÎ»ÆåÅÌÉú³É
+	 * åŠŸèƒ½ï¼š å°†çš„ä½æ£‹ç›˜ç”Ÿæˆ
 	 *@param bitBoard
 	*/
 	public void preBitBoardKingMove(BitBoard[] bitBoard){
@@ -715,7 +715,7 @@ public class ChessInitialize {
 	/**
 	 *@author pengjiu 
 	 *@date:Aug 29, 2011 12:25:50 PM
-	 * ¹¦ÄÜ£ºÊ¿Î»ÆåÅÌ
+	 * åŠŸèƒ½ï¼šå£«ä½æ£‹ç›˜
 	 *@param bitBoard
 	*/
 	public void preBitBoardGuardMove(BitBoard[] bitBoard){
@@ -763,7 +763,7 @@ public class ChessInitialize {
 		}
 	}
 	
-	/**³õÊ¼ÅÚÄÜ¹¥»÷µ½µÄÎ»ÖÃ
+	/**åˆå§‹ç‚®èƒ½æ”»å‡»åˆ°çš„ä½ç½®
 	 * @param moveEat
 	 * @param direction
 	 */
@@ -771,13 +771,13 @@ public class ChessInitialize {
 		int num=moveEat.length-1;
 		int sort=moveEat[0].length;
 		 for(int i=0;i<=num;i++){
-			 int site=1<<i;//ËùÔÚÎ»ÖÃ
+			 int site=1<<i;//æ‰€åœ¨ä½ç½®
 			 for(int j=0;j<=sort;j++){
 				 if(((j & site)>0) && j!=site){
 					 boolean isEat=false;
 					 boolean isHandicap=false;
 					 int eatIndex=0;
-					 //Ïò×ó(ÉÏ)È¡Öµ
+					 //å‘å·¦(ä¸Š)å–å€¼
 					 for(int n=i+1;n<=num;n++){
 						 int _tSite=1<<n;
 						 if(isEat){
@@ -800,7 +800,7 @@ public class ChessInitialize {
 					 } 
 					 isHandicap=false;
 					 isEat=false; 
-					 //ÏòÓÒ(ÏÂ)È¡Öµ
+					 //å‘å³(ä¸‹)å–å€¼
 					 for(int n=i-1;n>=0;n--){
 						 int _tSite=1<<n;
 						 if(isEat){

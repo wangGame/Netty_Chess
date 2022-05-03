@@ -1,13 +1,8 @@
 package kw.mulitplay.game.screen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-
-import java.io.FileInputStream;
-import java.io.InputStream;
 
 import kw.log.NLog;
 import kw.mulitplay.game.asset.Asset;

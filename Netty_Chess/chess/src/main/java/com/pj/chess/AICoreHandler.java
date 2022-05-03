@@ -22,7 +22,7 @@ import com.pj.chess.searchengine.SearchEngine;
 import com.pj.chess.zobrist.TranspositionTable;
 /**
  * @author pengjiu
- * µ÷¶ÈÀà£¬Ñ¡ÔñºÏÊÊ µÄAIÒıÇæ,ÆÀ¹Àº¯Êı
+ * è°ƒåº¦ç±»ï¼Œé€‰æ‹©åˆé€‚ çš„AIå¼•æ“,è¯„ä¼°å‡½æ•°
  *
  */
 public class AICoreHandler {
@@ -44,22 +44,22 @@ public class AICoreHandler {
 		long beginTime = System.currentTimeMillis();
 //		MoveNode moveNode= TranspositionTable.getTranZobristFen(1-moveHistory.play);
 //		if(moveNode!=null){
-//			//ÒòÎªÔÚ¼ÓÔØ¿ª¾Ö¿âÊ±´æÔÚÎ»ÖÃÓëÆå×Ó¶ÔÓ¦¹ØÏµbug ÔÚ¼ÓÔØÒÔºóÒª´ÓĞÂ»ñÈ¡Î»ÖÃÉÏµÄÆå×Ó¹ØÏµµ½
+//			//å› ä¸ºåœ¨åŠ è½½å¼€å±€åº“æ—¶å­˜åœ¨ä½ç½®ä¸æ£‹å­å¯¹åº”å…³ç³»bug åœ¨åŠ è½½ä»¥åè¦ä»æ–°è·å–ä½ç½®ä¸Šçš„æ£‹å­å…³ç³»åˆ°
 //			moveNode.destChess=chessParam.board[moveNode.destSite];
 //			moveNode.srcChess=chessParam.board[moveNode.srcSite];
 //			NodeLink nextLink=new NodeLink(1-moveHistory.play,moveNode,0,0L);
 //			moveHistory.setNextLink(nextLink);
-//			System.out.println("¿ª¾Ö¿âÃüÖĞ£¡£¡£¡£¡£¡£¡£¡£¡"); 
+//			System.out.println("å¼€å±€åº“å‘½ä¸­ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼"); 
 //		}else{
 			moveBegin();
 			mtdfV = seEngine.searchMove(-maxScore, maxScore, depth);
-			//Èç¹ûÊÇ²Â²â×Å·¨ ÖÃ»»±íºÍÀúÊ·±í ¶ÔÓÚÏÂ´ÎËÑË÷ÓĞÀû²»Çå³ı
+			//å¦‚æœæ˜¯çŒœæµ‹ç€æ³• ç½®æ¢è¡¨å’Œå†å²è¡¨ å¯¹äºä¸‹æ¬¡æœç´¢æœ‰åˆ©ä¸æ¸…é™¤
 			if(!isGuess){
 				moveEnd();	
 			}
 //		}
 		long endTime = System.currentTimeMillis();
-		System.out.println(" ºÄÊ±£º"+(endTime-beginTime)+"ºÁÃë\t ·ÖÊı:"+mtdfV+"\tÒ¶×Ó½Úµã£º"+seEngine.count);
+		System.out.println(" è€—æ—¶ï¼š"+(endTime-beginTime)+"æ¯«ç§’\t åˆ†æ•°:"+mtdfV+"\tå¶å­èŠ‚ç‚¹ï¼š"+seEngine.count);
 		if(timerMonitoring!=null)timerMonitoring.cancel();
 		 
 	}
@@ -83,10 +83,10 @@ public class AICoreHandler {
 			break;
 		case PRINCIPALVARIATIONTYPE:
 			if(moveHistory.play==REDPLAYSIGN){
-				//ºÚ·½
+				//é»‘æ–¹
 				se=  new PrincipalVariation(chessParamTemp,new EvaluateComputeTest(chessParamTemp), new TranspositionTable(),moveHistory);
 			}else{
-				//ºì·½
+				//çº¢æ–¹
 				se=  new PrincipalVariation(chessParamTemp,new EvaluateComputeOther(chessParamTemp), new TranspositionTable(),moveHistory);
 			}
 			break;
@@ -99,15 +99,15 @@ public class AICoreHandler {
 			evaluateCompute=new EvaluateComputeMiddleGame(chessParam);
 		}else if(phase==END_GAME){
 			evaluateCompute=new EvaluateComputeEndGame(chessParam);
-			depth++; //²Ğ¾Ö¶àËÑË÷Ò»²ã
+			depth++; //æ®‹å±€å¤šæœç´¢ä¸€å±‚
 		}
 		se=  new PrincipalVariation(chessParam,evaluateCompute, new TranspositionTable(),moveHistory);
 		return se;
 	}
-	private static final int MIDDLE_GAME=1; //ÖĞ¾Ö
-	private static final int END_GAME=2;    //²Ğ¾Ö
+	private static final int MIDDLE_GAME=1; //ä¸­å±€
+	private static final int END_GAME=2;    //æ®‹å±€
 	/*
-	 * ¾ÖÊÆ(ÖĞ¾Ö£¬²Ğ¾Ö)
+	 * å±€åŠ¿(ä¸­å±€ï¼Œæ®‹å±€)
 	 */
 	private int getPhase(){
 		int redChessNum=0,blackChessNum=0;
@@ -130,13 +130,13 @@ public class AICoreHandler {
 	}
 	
 	public void moveBegin(){	
-		//×äËæ×Å¹¥»÷×ÓÁ¦µÄ¼õÉÙËûµÄ¼ÛÖµÉÏÉı
+		//å’éšç€æ”»å‡»å­åŠ›çš„å‡å°‘ä»–çš„ä»·å€¼ä¸Šå‡
 		EvaluateCompute.chessBaseScore[27]=EvaluateCompute.chessBaseScore[28]=EvaluateCompute.chessBaseScore[29]=EvaluateCompute.chessBaseScore[30]=EvaluateCompute.chessBaseScore[31]=(EvaluateCompute.SOLDIERSCORE+(11-chessParam.getAttackChessesNum(BLACKPLAYSIGN))*8);                                                                                                                                                                                                     
 		EvaluateCompute.chessBaseScore[43]=EvaluateCompute.chessBaseScore[44]=EvaluateCompute.chessBaseScore[45]=EvaluateCompute.chessBaseScore[46]=EvaluateCompute.chessBaseScore[47]=(EvaluateCompute.SOLDIERSCORE+(11-chessParam.getAttackChessesNum(REDPLAYSIGN))*8);	
 		
-		/****µ±Æå×ÓÁ¿ÉÙÊ±ÂíµÄ¼ÛÖµÌáÉı*****/
+		/****å½“æ£‹å­é‡å°‘æ—¶é©¬çš„ä»·å€¼æå‡*****/
 		EvaluateCompute.chessBaseScore[36]=EvaluateCompute.chessBaseScore[35]=EvaluateCompute.chessBaseScore[20]=EvaluateCompute.chessBaseScore[19]=(EvaluateCompute.KNIGHTSCORE+(32-chessParam.getAllChessesNum())*6);
-		//ÅÚµÄ¼ÛÖµÏÂ½µ
+		//ç‚®çš„ä»·å€¼ä¸‹é™
 		EvaluateCompute.chessBaseScore[21]=EvaluateCompute.chessBaseScore[22]=EvaluateCompute.chessBaseScore[37]=EvaluateCompute.chessBaseScore[38]=(EvaluateCompute.GUNSCORE-(32-chessParam.getAllChessesNum())*6);
 		
 	}
@@ -146,14 +146,14 @@ public class AICoreHandler {
 					CHistoryHeuritic.cHistory[i][j]/=512;
 			} 
 		}
-		//ÉèÖÃÖÃ»»±í¹ıÆÚ
+		//è®¾ç½®ç½®æ¢è¡¨è¿‡æœŸ
 		TranspositionTable.cleanTranZobrist();
 	} 
 	public void setStop(){
 		if(seEngine!=null){
 			seEngine.isStop=true;
 		}
-		//Í£Ö¹Ê±¼ä¼à¿Ø
+		//åœæ­¢æ—¶é—´ç›‘æ§
 		if(timerMonitoring!=null){
 			timerMonitoring.cancel();
 		}

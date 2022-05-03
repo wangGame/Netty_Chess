@@ -19,7 +19,7 @@ public abstract class  EvaluateCompute {
 	public static int ELEPHANTSCORE=200;
 	public static int GUARDSCORE=200;
 	public static int SOLDIERSCORE=100;
-    //Æå×Ó»ù±¾·ÖÊı
+    //æ£‹å­åŸºæœ¬åˆ†æ•°
 	public static  final int[] chessBaseScore=new int[]{ 
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		KINGSCORE,CHARIOTSCORE,CHARIOTSCORE,KNIGHTSCORE,KNIGHTSCORE,GUNSCORE,GUNSCORE,ELEPHANTSCORE,ELEPHANTSCORE,GUARDSCORE,GUARDSCORE,SOLDIERSCORE,SOLDIERSCORE,SOLDIERSCORE,SOLDIERSCORE,SOLDIERSCORE,
@@ -43,14 +43,14 @@ public abstract class  EvaluateCompute {
 		int row=chessParam.boardBitRow[boardRow[srcSite]];
 		int col=chessParam.boardBitCol[boardCol[srcSite]];
 		switch (chessRole) {
-		//³µÅÚ
+		//è½¦ç‚®
 		case REDCHARIOT:
 		case BLACKCHARIOT: 
 		case REDGUN:
 		case BLACKGUN:
 			mobility=ChariotAndGunMobilityRow[srcSite][row]+ChariotAndGunMobilityCol[srcSite][col];
 			 break;
-	    //Âí
+	    //é©¬
 		case REDKNIGHT:
 		case BLACKKNIGHT: 
 			BitBoard legBoard = BitBoard.assignAndToNew(KnightLegBitBoards[srcSite],chessParam.maskBoardChesses);
@@ -64,7 +64,7 @@ public abstract class  EvaluateCompute {
 			mobility= kingMove.Count();
 			break;
 		default :
-			System.out.println("Ã»ÓĞÕâ¸öÆå×Ó:"+srcSite);
+			System.out.println("æ²¡æœ‰è¿™ä¸ªæ£‹å­:"+srcSite);
 		} 
 		return mobility;
 	}
@@ -75,37 +75,37 @@ public abstract class  EvaluateCompute {
 		case BLACKCHARIOT:
 			int row=chessParam.boardBitRow[boardRow[srcSite]];
 			int col=chessParam.boardBitCol[boardCol[srcSite]];
-			//È¡³öĞĞÁĞÄÜ¹¥»÷µ½µÄÎ»ÖÃ
+			//å–å‡ºè¡Œåˆ—èƒ½æ”»å‡»åˆ°çš„ä½ç½®
 			bitBoard=BitBoard.assignXorToNew(ChariotBitBoardOfAttackRow[srcSite][row], ChariotBitBoardOfAttackCol[srcSite][col]);			
 			bitBoard.assignXor(BitBoard.assignXorToNew(MoveChariotOrGunBitBoardRow[srcSite][row], MoveChariotOrGunBitBoardCol[srcSite][col]));
 			break;
 		case REDKNIGHT:
 		case BLACKKNIGHT:
-			//È¡³ö±»±ğÂíÍÈµÄÎ»ÖÃ
+			//å–å‡ºè¢«åˆ«é©¬è…¿çš„ä½ç½®
 			BitBoard legBoard = BitBoard.assignAndToNew(KnightLegBitBoards[srcSite],chessParam.maskBoardChesses);
-			//ÄÜ×ßµ½µÄÎ»ÖÃ
+			//èƒ½èµ°åˆ°çš„ä½ç½®
 			bitBoard=new BitBoard(KnightBitBoardOfAttackLimit[srcSite][legBoard.checkSumOfKnight()]);
 			break;
 		case REDGUN:
 		case BLACKGUN:
 			row=chessParam.boardBitRow[boardRow[srcSite]];
 			col=chessParam.boardBitCol[boardCol[srcSite]];
-			//È¡³öĞĞÁĞÄÜ¹¥»÷µ½µÄÎ»ÖÃ
+			//å–å‡ºè¡Œåˆ—èƒ½æ”»å‡»åˆ°çš„ä½ç½®
 			bitBoard=BitBoard.assignXorToNew(GunBitBoardOfAttackRow[srcSite][row], GunBitBoardOfAttackCol[srcSite][col]);
-			//ÄÜ×ßµ½µÄÎ»ÖÃ
+			//èƒ½èµ°åˆ°çš„ä½ç½®
 //			bitBoard=BitBoard.assignXorToNew(MoveChariotOrGunBitBoardRow[srcSite][row], MoveChariotOrGunBitBoardCol[srcSite][col]);
-			//ÅÚÎ±¹¥»÷Î»ÖÃ
+			//ç‚®ä¼ªæ”»å‡»ä½ç½®
 			bitBoard.assignXor(BitBoard.assignXorToNew(GunBitBoardOfFakeAttackRow[srcSite][row], GunBitBoardOfFakeAttackCol[srcSite][col]));
 			break;
 		case REDELEPHANT:
 		case BLACKELEPHANT:
-			//È¡³ö±»ÈûÏóÑÛµÄÎ»ÖÃ
+			//å–å‡ºè¢«å¡è±¡çœ¼çš„ä½ç½®
 			legBoard=BitBoard.assignAndToNew(ElephanLegBitBoards[srcSite],chessParam.maskBoardChesses);
 			bitBoard=new BitBoard(ElephanBitBoardOfAttackLimit[srcSite][legBoard.checkSumOfElephant()]);
 			break;
 		case REDKING:
 		case BLACKKING:
-			//½«ÄÜ×ßµ½µÄÎ»ÖÃ
+			//å°†èƒ½èµ°åˆ°çš„ä½ç½®
 			bitBoard=new BitBoard(KingBitBoard[srcSite]);
 			break;
 		case REDGUARD:
@@ -117,14 +117,14 @@ public abstract class  EvaluateCompute {
 			bitBoard=new BitBoard(SoldiersBitBoard[play][srcSite]);
 			break;
 		default :
-			System.out.println("Ã»ÓĞÕâ¸öÆå×Ó:"+srcSite);
+			System.out.println("æ²¡æœ‰è¿™ä¸ªæ£‹å­:"+srcSite);
 		}
 		return bitBoard;
 	}
 	 
 	/**
 	 *@author pengjiu  
-	 * ¹¦ÄÜ£º¿ÕÍ·ÅÚ 
+	 * åŠŸèƒ½ï¼šç©ºå¤´ç‚® 
 	*/
 	protected int exposedCannon(int play,int oppkingSite,int row,int col){ 
 		BitBoard bitBoard = BitBoard.assignXorToNew( ChariotBitBoardOfAttackRow[oppkingSite][row], ChariotBitBoardOfAttackCol[oppkingSite][col]);
@@ -136,7 +136,7 @@ public abstract class  EvaluateCompute {
 	}
 	/**
 	 *@author pengjiu  
-	 * ¹¦ÄÜ£º³Áµ×ÅÚ
+	 * åŠŸèƒ½ï¼šæ²‰åº•ç‚®
 	*/
 	protected int bottomCannon(int play,int oppkingSite,int row,int col){ 
 		BitBoard bitBoard = BitBoard.assignXorToNew( GunBitBoardOfMoreRestAttackRow[oppkingSite][row], GunBitBoardOfMoreRestAttackCol[oppkingSite][col]);
@@ -148,7 +148,7 @@ public abstract class  EvaluateCompute {
 	}
 	/**
 	 *@author pengjiu  
-	 * ¹¦ÄÜ£º¸ô×Ó³µ
+	 * åŠŸèƒ½ï¼šéš”å­è½¦
 	*/
 	protected int restChariot(int play,int oppkingSite,int row,int col){ 
 		BitBoard bitBoard = BitBoard.assignXorToNew( GunBitBoardOfAttackRow[oppkingSite][row], GunBitBoardOfAttackCol[oppkingSite][col]);
@@ -177,25 +177,25 @@ public abstract class  EvaluateCompute {
 		defensePartition[BLACKPLAYSIGN][MIDSITE] = partitionScore[BLACKPLAYSIGN][3];
 
 	}
-	//¹¥»÷ÇøÓò·ÖÊı
+	//æ”»å‡»åŒºåŸŸåˆ†æ•°
     static  final int[] attackChessPartitionScore=new int[]{ 
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		0,4,4,4,4,4,4,3,3,3,3,2,2,2,2,2,
 		0,4,4,4,4,4,4,3,3,3,3,2,2,2,2,2
 	}; 
-	//·ÀÊØÇøÓò·ÖÊı
+	//é˜²å®ˆåŒºåŸŸåˆ†æ•°
     static  final int[] defenseChessPartitionScore=new int[]{ 
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		0,4,4,4,4,4,4,3,3,3,3,2,2,2,2,2,
 		0,4,4,4,4,4,4,3,3,3,3,2,2,2,2,2
 	}; 
     /**
-     * ¶¯Ì¬µ÷Õû¹¥»÷ÇøÓò·ÖÊı
+     * åŠ¨æ€è°ƒæ•´æ”»å‡»åŒºåŸŸåˆ†æ•°
      */
     int redElephantNum ,redGuardNum,blackElephantNum,blackGuardNum,redGun,redKnight,blackGun,blackKnight;
-    //µ¥Ê¿»òµ¥Ïó¼ÛÖµÏÂ½µ
+    //å•å£«æˆ–å•è±¡ä»·å€¼ä¸‹é™
     private static final int[] guarAndElephantNumScore=new int[]{0,2,3};
-	 //¶ÔÊÖ'Ê¿'ÊıÁ¿¾ö¶¨ÅÚÓëÂíµÄÇøÓò¼ÛÖµ
+	 //å¯¹æ‰‹'å£«'æ•°é‡å†³å®šç‚®ä¸é©¬çš„åŒºåŸŸä»·å€¼
     private static final int[] gunNumScoreDependGuard =new int[]{2,3,4};
     private static final int[] knightNumScoreDependGuard =new int[]{5,5,4};
     public  void dynamicCMPChessPartitionScore(){ 
@@ -203,7 +203,7 @@ public abstract class  EvaluateCompute {
 		 redElephantNum = chessParam.getChessesNum(REDPLAYSIGN,ChessConstant.ELEPHANT); 		 
 		 blackGuardNum = chessParam.getChessesNum(BLACKPLAYSIGN,ChessConstant.GUARD);
 		 blackElephantNum = chessParam.getChessesNum(BLACKPLAYSIGN,ChessConstant.ELEPHANT);
-		 //µ¥Ê¿»òµ¥Ïó¼ÛÖµÏÂ½µ
+		 //å•å£«æˆ–å•è±¡ä»·å€¼ä¸‹é™
 		 defenseChessPartitionScore[23]=defenseChessPartitionScore[24]=guarAndElephantNumScore[blackElephantNum];
 		 defenseChessPartitionScore[25]=defenseChessPartitionScore[26]=guarAndElephantNumScore[blackGuardNum];
 		 
@@ -214,29 +214,29 @@ public abstract class  EvaluateCompute {
 //		 blackKnight=(5-redGuardNum);
 //		 redGun=(blackGuardNum*2)+1; 
 //		 redKnight=(5-blackGuardNum);
-		 //¶¯Ì¬¸Ä±äÅÚÓëÂíµÄ¹¥»÷¼ÛÖµ
+		 //åŠ¨æ€æ”¹å˜ç‚®ä¸é©¬çš„æ”»å‡»ä»·å€¼
 		 attackChessPartitionScore[21]=attackChessPartitionScore[22]=gunNumScoreDependGuard[redGuardNum];  
 		 attackChessPartitionScore[19]=attackChessPartitionScore[20]=knightNumScoreDependGuard[redGuardNum];
 		 attackChessPartitionScore[37]=attackChessPartitionScore[38]=gunNumScoreDependGuard[blackGuardNum];
 		 attackChessPartitionScore[35]=attackChessPartitionScore[36]=knightNumScoreDependGuard[blackGuardNum];
     }
-//	public static final int KING=7;    //Íõ
-//	public static final int CHARIOT=6; //³µ
-//	public static final int KNIGHT=5; //Âí
-//	public static final int GUN=4; //ÅÚ
-//	public static final int ELEPHANT=3; //Ïó
-//	public static final int GUARD=2; //Ê¿
-//	public static final int SOLDIER=1; //±ø
+//	public static final int KING=7;    //ç‹
+//	public static final int CHARIOT=6; //è½¦
+//	public static final int KNIGHT=5; //é©¬
+//	public static final int GUN=4; //ç‚®
+//	public static final int ELEPHANT=3; //è±¡
+//	public static final int GUARD=2; //å£«
+//	public static final int SOLDIER=1; //å…µ
     
 
-	/**ÇøÓò·ÖÊı
+	/**åŒºåŸŸåˆ†æ•°
 	 * @param site
 	 * @param chess
 	 * @param partitionScore
 	 */
 	public void compPartitionScore(int play,int site,int chess,int[] partitionScore){
 		int parSiteTemp=chessRolePartitionSite[chessRoles[chess]][site];
-		if(play==REDPLAYSIGN){ //ºì
+		if(play==REDPLAYSIGN){ //çº¢
 			switch(parSiteTemp){
 			case 1:
 				partitionScore[parSiteTemp]+=attackChessPartitionScore[chess];
@@ -283,7 +283,7 @@ public abstract class  EvaluateCompute {
 				partitionScore[4]+=defenseChessPartitionScore[chess];
 				break;				
 			} 
-		}else{ //ºÚ
+		}else{ //é»‘
 			switch(parSiteTemp){
 			case 1:
 				partitionScore[parSiteTemp]+=defenseChessPartitionScore[chess];
@@ -333,7 +333,7 @@ public abstract class  EvaluateCompute {
 		}
 		
 	}
- static int[] ChariotPartitionSite=new int[]{ //³µ
+ static int[] ChariotPartitionSite=new int[]{ //è½¦
 		      1  ,1  ,1  ,31 ,3 , 32,2  ,2  ,2    
 			 ,1  ,1  ,1  ,31 ,33, 32,2  ,2  ,2  
 			 ,1  ,1  ,1  ,31 ,33, 32,2  ,2  ,2  
@@ -346,7 +346,7 @@ public abstract class  EvaluateCompute {
 			 ,4  ,4  ,4  ,64,66,65,5  ,5  ,5  
 			 ,4  ,4  ,4  ,64,6 ,65,5  ,5  ,5   
   };
-	static int[] KnightPartitionSite=new int[]{ //Âí
+	static int[] KnightPartitionSite=new int[]{ //é©¬
 	      1  ,1  ,1  ,0  ,0 ,0 ,2  ,2  ,2    
 		 ,1  ,1  ,1  ,31,33 ,32,2  ,2  ,2  
 		 ,1  ,1  ,1  ,31,33 ,32,2  ,2  ,2  
@@ -359,7 +359,7 @@ public abstract class  EvaluateCompute {
 		 ,4  ,4  ,4  ,64,66,65,5  ,5  ,5  
 		 ,4  ,4  ,4  ,0 ,0 ,0 ,5  ,5  ,5   
 };
-static int[] GunPartitionSite=new int[]{ //ÅÚ
+static int[] GunPartitionSite=new int[]{ //ç‚®
 	      1  ,1  ,1  ,0 ,0 ,0 ,2 ,2  ,2    
 		 ,1  ,1  ,1  ,0 ,0 ,0 ,2 ,2  ,2  
 		 ,1  ,1  ,1  ,0 ,3 ,0 ,2 ,2  ,2  
@@ -372,7 +372,7 @@ static int[] GunPartitionSite=new int[]{ //ÅÚ
 		 ,4  ,4  ,4  ,0  ,0  ,0 ,5  ,5  ,5  
 		 ,4  ,4  ,4  ,0  ,0  ,0 ,5  ,5  ,5   
 };
-static int[] SoldierPartitionSite=new int[]{ //×ä
+static int[] SoldierPartitionSite=new int[]{ //å’
       0  ,0  ,0  ,3  ,3 ,3  ,0  ,0  ,0    
 	 ,0  ,0  ,0  ,3  ,3 ,3  ,0  ,0  ,0  
 	 ,0  ,0  ,0  ,3  ,3 ,3  ,0  ,0  ,0  
@@ -385,7 +385,7 @@ static int[] SoldierPartitionSite=new int[]{ //×ä
 	 ,0  ,0  ,0  ,6  ,6  ,6  ,0  ,0  ,0  
 	 ,0  ,0  ,0  ,6  ,6  ,6  ,0  ,0  ,0     
 };
-static int[] DefensePartitionSite=new int[]{ //ÏóÊ¿
+static int[] DefensePartitionSite=new int[]{ //è±¡å£«
       1  ,1  ,1  ,31 ,33,32 ,2  ,2  ,2    
 	 ,1  ,1  ,1  ,31 ,33,32 ,2  ,2  ,2  
 	 ,1  ,1  ,1  ,31 ,33,32 ,2  ,2  ,2  
@@ -398,7 +398,7 @@ static int[] DefensePartitionSite=new int[]{ //ÏóÊ¿
 	 ,4  ,4  ,4  ,64 ,66 ,65 ,5  ,5  ,5  
 	 ,4  ,4  , 4 ,64 ,66 ,65 ,5  ,5  ,5   
 };
-static int[]KingPartitionSite=new int[]{ //Íõ
+static int[]KingPartitionSite=new int[]{ //ç‹
 	  0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  
 	 ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  
 	 ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  

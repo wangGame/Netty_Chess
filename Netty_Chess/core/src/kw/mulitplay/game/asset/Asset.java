@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import java.util.HashMap;
-
 import kw.log.NLog;
 import kw.mulitplay.game.ChessGame;
 

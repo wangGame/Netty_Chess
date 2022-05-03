@@ -8,7 +8,6 @@ import java.util.concurrent.LinkedBlockingDeque;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import kw.log.NLog;
-import kw.mulitplay.game.config.LevelConfig;
 import kw.mulitplay.game.message.base.Message;
 import kw.mulitplay.game.message.type.MessageType;
 
@@ -23,16 +22,16 @@ public class NNMessage {
             case MessageType.pipei:
                 //匹配  我们先连接服务器   连接之后   服务器会进行匹配
 //                匹配就是  对方是谁
-                LevelConfig.currentStatus = LevelConfig.pipeiSuccess;
+//                LevelConfig.currentStatus = LevelConfig.pipeiSuccess;
                 String uuid = ((PipeiMessage) (msg)).getTargetName();
                 System.out.println("-------------------------pipei"+uuid);
-                LevelConfig.userUUID1 = uuid;
-                LevelConfig.play = ((PipeiMessage)(msg)).getPlay();
-                LevelConfig.currentStatus = LevelConfig.startGame;
+//                LevelConfig.userUUID1 = uuid;
+//                LevelConfig.play = ((PipeiMessage)(msg)).getPlay();
+//                LevelConfig.currentStatus = LevelConfig.startGame;
                 break;
             case MessageType.level:
 //                离开
-                LevelConfig.currentStatus = LevelConfig.level;
+//                LevelConfig.currentStatus = LevelConfig.level;
                 ctx.close();
                 break;
             case MessageType.move:
@@ -41,7 +40,7 @@ public class NNMessage {
                 break;
             case MessageType.renshu:
 //                认输
-                LevelConfig.currentStatus = LevelConfig.success;
+//                LevelConfig.currentStatus = LevelConfig.success;
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + type);

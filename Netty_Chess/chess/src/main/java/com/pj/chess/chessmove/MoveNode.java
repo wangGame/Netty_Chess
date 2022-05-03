@@ -31,13 +31,13 @@ public class MoveNode implements java.io.Serializable{
 		this.srcChess=srcChess;
 		this.score=score;
 	}
-	//ÊÇ·ñÓĞ³Ô×Ó
+	//æ˜¯å¦æœ‰åƒå­
 	public boolean isEatChess(){
 		return destChess!=ChessConstant.NOTHING;
 	}
 	public String toString(){
 		StringBuilder sb=new StringBuilder()
-		.append("\tÔ­Î»ÖÃ:"+boardRow[srcSite]+"ĞĞ"+boardCol[srcSite]+"ÁĞ  Ô­Æå×Ó£º"+chessName[srcChess] +"\tÄ¿±êÎ»ÖÃ£º"+boardRow[destSite]+"ĞĞ  "+boardCol[destSite] +"ÁĞ   Ä¿±êÆå×Ó£º"+(destChess!=ChessConstant.NOTHING?chessName[destChess]:"ÎŞ \t"));
+		.append("\tåŸä½ç½®:"+boardRow[srcSite]+"è¡Œ"+boardCol[srcSite]+"åˆ—  åŸæ£‹å­ï¼š"+chessName[srcChess] +"\tç›®æ ‡ä½ç½®ï¼š"+boardRow[destSite]+"è¡Œ  "+boardCol[destSite] +"åˆ—   ç›®æ ‡æ£‹å­ï¼š"+(destChess!=ChessConstant.NOTHING?chessName[destChess]:"æ—  \t"));
 		return sb.toString();
 		
 	}

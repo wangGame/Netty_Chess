@@ -12,35 +12,35 @@ import com.pj.chess.Tools;
 
 /**
  * @author pengjiu
- * Îª·ÀÖ¹¶àÏß³ÌÏÂ£¬Ò»Ğ©ËùĞèÒªµÄ²ÎÊı±äÁ¿Í¬²½ÎÊÌâ
+ * ä¸ºé˜²æ­¢å¤šçº¿ç¨‹ä¸‹ï¼Œä¸€äº›æ‰€éœ€è¦çš„å‚æ•°å˜é‡åŒæ­¥é—®é¢˜
  */
 public class ChessParam {
-	public  int[] board;	 // ÆåÅÌ->Æå×Ó
+	public  int[] board;	 // æ£‹ç›˜->æ£‹å­
 
-	public  int[] allChess; //Æå×Ó->ÆåÅÌ
+	public  int[] allChess; //æ£‹å­->æ£‹ç›˜
 	
 	public int[] baseScore=new int[2];
-//	public int redBaseScore=0;  //ºì·½·ÖÊı
+//	public int redBaseScore=0;  //çº¢æ–¹åˆ†æ•°
 	
-//	public int blackBaseScore=0; //ºÚ·½·ÖÊı
+//	public int blackBaseScore=0; //é»‘æ–¹åˆ†æ•°
 	
-	public int[] boardBitRow; //Î»ÆåÅÌ  ĞĞ
+	public int[] boardBitRow; //ä½æ£‹ç›˜  è¡Œ
 	
-	public int[] boardBitCol; //Î»ÆåÅÌ  ÁĞ
+	public int[] boardBitCol; //ä½æ£‹ç›˜  åˆ—
 	
-	private int[] boardRemainChess; //Ê£ÓàÆå×ÓÊıÁ¿
+	private int[] boardRemainChess; //å‰©ä½™æ£‹å­æ•°é‡
 	
-	//ËùÓĞÆå×ÓÎ»ÆåÅÌ
+	//æ‰€æœ‰æ£‹å­ä½æ£‹ç›˜
 	public BitBoard maskBoardChesses;
-	//¸÷×ÔµÄÎ»ÆåÅÌ
+	//å„è‡ªçš„ä½æ£‹ç›˜
 	public BitBoard[] maskBoardPersonalChesses;
-	//¸÷×Ô°´½ÇÉ«·ÖÀàµÄÎ»ÆåÅÌ[½ÇÉ«]
+	//å„è‡ªæŒ‰è§’è‰²åˆ†ç±»çš„ä½æ£‹ç›˜[è§’è‰²]
 	public BitBoard[] maskBoardPersonalRoleChesses;
 	
-	//[Íæ¼Ò][0¹¥»÷Æå×ÓÊıÁ¿  1·ÀÓùÆå×ÓÊıÁ¿]
+	//[ç©å®¶][0æ”»å‡»æ£‹å­æ•°é‡  1é˜²å¾¡æ£‹å­æ•°é‡]
 	private int[][] attackAndDefenseChesses=new int[2][2];  
 	
-    //Ã¿¸öÆå×Ó¶ÔÓ¦attackAndDefenseChesses µÄÏÂ±ê±í
+    //æ¯ä¸ªæ£‹å­å¯¹åº”attackAndDefenseChesses çš„ä¸‹æ ‡è¡¨
 	public static  final int[] indexOfAttackAndDefense=new int[]{0,
 		0,1,1,0,0,0,1,
 		0,1,1,0,0,0,1
@@ -60,58 +60,58 @@ public class ChessParam {
 		this.copyToSelf(param);
 	}
 	public void copyToSelf(ChessParam param){
-		//Æå×Ócopy
+		//æ£‹å­copy
 		int[] allChessTemp = param.allChess;
 		this.allChess=new int[allChessTemp.length];
 		for(int i=0;i<allChessTemp.length;i++){
 			this.allChess[i]=allChessTemp[i];
 		}
-		//ÆåÅÌcopy
+		//æ£‹ç›˜copy
 		int[] boardTemp = param.board;
 		this.board=new int[boardTemp.length];
 		for(int i=0;i<boardTemp.length;i++){
 			this.board[i]=boardTemp[i];
 		}
-		//Î»ÆåÅÌĞĞ
+		//ä½æ£‹ç›˜è¡Œ
 		int[] boardBitRowTemp = param.boardBitRow;
 		this.boardBitRow=new int[boardBitRowTemp.length];
 		for(int i=0;i<boardBitRowTemp.length;i++){
 			this.boardBitRow[i]=boardBitRowTemp[i];
 		} 
-		//Î»ºáÏòÁĞ
+		//ä½æ¨ªå‘åˆ—
 		int[] boardBitColTemp = param.boardBitCol;
 		this.boardBitCol=new int[boardBitColTemp.length];
 		for(int i=0;i<boardBitColTemp.length;i++){
 			this.boardBitCol[i]=boardBitColTemp[i];
 		} 
-		//Æå×ÓÊıÁ¿
+		//æ£‹å­æ•°é‡
 		int[] boardRemainChessTemp = param.boardRemainChess;
 		this.boardRemainChess=new int[boardRemainChessTemp.length];
 		for(int i=0;i<boardRemainChessTemp.length;i++){
 			this.boardRemainChess[i]=boardRemainChessTemp[i];
 		} 
-		// ¹¥»÷ĞÔÆå×ÓºÍ·ÀÓùĞÔÆå×ÓÊıÁ¿
+		// æ”»å‡»æ€§æ£‹å­å’Œé˜²å¾¡æ€§æ£‹å­æ•°é‡
 		int[][] attackAndDefenseChessesTemp = param.attackAndDefenseChesses;
 		for(int i=0;i<attackAndDefenseChessesTemp.length;i++){
 			for(int j=0;j<attackAndDefenseChessesTemp[i].length;j++){
 				this.attackAndDefenseChesses[i][j]=attackAndDefenseChessesTemp[i][j];
 			}
 		} 
-		//ËùÓĞ×ÓÁ¦µÄÎ»ÆåÅÌ
+		//æ‰€æœ‰å­åŠ›çš„ä½æ£‹ç›˜
 		this.maskBoardChesses = new BitBoard(param.maskBoardChesses);
 		
 		this.maskBoardPersonalChesses=new BitBoard[param.maskBoardPersonalChesses.length];
-		//¸÷·½×ÓÁ¦µÄÎ»ÆåÅÌ
+		//å„æ–¹å­åŠ›çš„ä½æ£‹ç›˜
 		this.maskBoardPersonalChesses[ChessConstant.REDPLAYSIGN] =  new BitBoard(param.maskBoardPersonalChesses[ChessConstant.REDPLAYSIGN]);
 		this.maskBoardPersonalChesses[ChessConstant.BLACKPLAYSIGN] =  new BitBoard(param.maskBoardPersonalChesses[ChessConstant.BLACKPLAYSIGN]);
-		//¸÷·½×ÓÁ¦°´½ÇÉ«·ÖÀà
+		//å„æ–¹å­åŠ›æŒ‰è§’è‰²åˆ†ç±»
 		maskBoardPersonalRoleChesses=new BitBoard[param.maskBoardPersonalRoleChesses.length];
 		for(int i=0;i<param.maskBoardPersonalRoleChesses.length;i++){
 			this.maskBoardPersonalRoleChesses[i]=new BitBoard(param.maskBoardPersonalRoleChesses[i]);
 		}
 		
 		
-		//·ÖÊı
+		//åˆ†æ•°
 		this.baseScore[ChessConstant.REDPLAYSIGN] = param.baseScore[ChessConstant.REDPLAYSIGN];
 		this.baseScore[ChessConstant.BLACKPLAYSIGN] = param.baseScore[ChessConstant.BLACKPLAYSIGN];
 		
@@ -126,16 +126,16 @@ public class ChessParam {
 		return boardRemainChess[getRoleIndexByPlayRole(play, chessRole)];
 	}
 	/**
-	 * @param chessRole Æå×Ó½ÇÉ«
-	 *  ¼õÉÙÆå×ÓÊıÁ¿
+	 * @param chessRole æ£‹å­è§’è‰²
+	 *  å‡å°‘æ£‹å­æ•°é‡
 	 */
 	public void reduceChessesNum(int chessRole){
 		boardRemainChess[chessRole]--;
 		attackAndDefenseChesses[getPlayByChessRole(chessRole)][indexOfAttackAndDefense[chessRole]]--;
 	}
 	/**
-	 * @param chessRole ¹ñ×Ó½ÇÉ«
-	 * Ôö¼ÓÆå×ÓÊıÁ¿
+	 * @param chessRole æŸœå­è§’è‰²
+	 * å¢åŠ æ£‹å­æ•°é‡
 	 */
 	public void increaseChessesNum(int chessRole){
 		boardRemainChess[chessRole]++;
@@ -143,7 +143,7 @@ public class ChessParam {
 		attackAndDefenseChesses[play][indexOfAttackAndDefense[chessRole]]++;
 	}
 	/**
-	 * @return ËùÓĞÆå×ÓÊıÁ¿
+	 * @return æ‰€æœ‰æ£‹å­æ•°é‡
 	 */
 	public int getAllChessesNum(){
 		int num=0;
@@ -152,11 +152,11 @@ public class ChessParam {
 		}
 		return num;
 	}
-	//ËùÓĞ¹¥»÷Æå×ÓÊıÁ¿
+	//æ‰€æœ‰æ”»å‡»æ£‹å­æ•°é‡
 	public int getAttackChessesNum(int play){
 		return attackAndDefenseChesses[play][0];
 	}
-	//ËùÓĞ·ÀÓùÆå×ÓÊıÁ¿
+	//æ‰€æœ‰é˜²å¾¡æ£‹å­æ•°é‡
 	public int getDefenseChessesNum(int play){
 		return attackAndDefenseChesses[play][1];
 	}

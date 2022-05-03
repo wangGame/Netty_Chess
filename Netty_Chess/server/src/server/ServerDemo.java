@@ -19,7 +19,6 @@ public class ServerDemo{
                     .childHandler(new ChannelInitializer<NioSocketChannel>() {
                         @Override
                         protected void initChannel(NioSocketChannel nioSocketChannel) throws Exception {
-                            System.out.println("---------------------");
                             nioSocketChannel.pipeline().addLast(new MessageToMessage());
                             nioSocketChannel.pipeline().addLast(new ServerHandler());
                         }
