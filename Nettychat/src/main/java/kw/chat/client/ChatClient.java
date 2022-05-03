@@ -42,6 +42,7 @@ public class ChatClient {
                                 // 用来触发特殊事件
                                 @Override
                                 public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception{
+//                                    super.userEventTriggered();
                                     IdleStateEvent event = (IdleStateEvent) evt;
                                     // 触发了写空闲事件
                                     if (event.state() == IdleState.WRITER_IDLE) {

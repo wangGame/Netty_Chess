@@ -17,15 +17,16 @@ public class LoadingScreen extends BaseScreen {
     public void show() {
         super.show();
 
-        InputStream is = null;
-        try {
-            is = new FileInputStream(Gdx.files.internal("book.dat").file());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        Position.loadBook(is);
-        GAmeView view = new GAmeView();
-        stage.addActor(view);
+
+//        InputStream is = null;
+//        try {
+//            is = new FileInputStream(Gdx.files.internal("book.dat").file());
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        Position.loadBook(is);
+//        GAmeView view = new GAmeView();
+//        stage.addActor(view);
 
 //        ChessBoardMain2 main2 = new ChessBoardMain2();
 //        stage.addActor(main2);
@@ -51,9 +52,9 @@ public class LoadingScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-//        time+=delta;
-//        if (time > 3){
-//            setScreen(new MainScreen());
-//        }
+        time+=delta;
+        if (time > 3){
+            setScreen(new MainScreen());
+        }
     }
 }
