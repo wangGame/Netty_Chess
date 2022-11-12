@@ -1,12 +1,19 @@
 package kw.mulitplay.game.asset;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import kw.log.NLog;
 import kw.mulitplay.game.ChessGame;
+import kw.mulitplay.xqwlight.Position;
 
 public class Asset {
     public static Batch batch;
@@ -22,6 +29,15 @@ public class Asset {
             asset = new Asset();
         }
         return asset;
+    }
+
+    public void loadAsset(){
+        FileHandle fileInputStream = Gdx.files.internal("book.dat");
+        try {
+            Position.loadBook(new FileInputStream(fileInputStream.file()));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private Asset(){

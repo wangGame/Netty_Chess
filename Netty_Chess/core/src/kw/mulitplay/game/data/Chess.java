@@ -90,4 +90,5 @@ public class Chess extends Group {
         this.posY = yy;
         setPosition(xx * Config.chessSize, yy * Config.chessSize);
     }
+
 }

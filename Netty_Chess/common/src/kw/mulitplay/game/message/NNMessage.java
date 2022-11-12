@@ -56,6 +56,5 @@ public class NNMessage {
 
     public static void move(MoveMessage message){
         NLog.i("send player option ",message.toString());
-        channel.writeAndFlush(message);
     }
 }

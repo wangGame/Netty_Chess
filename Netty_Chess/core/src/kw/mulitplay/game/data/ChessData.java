@@ -2,14 +2,9 @@ package kw.mulitplay.game.data;
 
 public class ChessData {
     private int data[][];
+    private String str = "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR";
     public ChessData(){
         data = new int[9][10];
-        String str = "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR";
-//        for (int i = 0; i < data.length; i++) {
-//            for (int i1 = 0; i1 < data[0].length; i1++) {
-//                data[i][i1] = 1;
-//            }
-//        }
         String[] split = str.split("/");
         for (int i = 0; i < split.length; i++) {
             String s = split[i];
@@ -28,6 +23,10 @@ public class ChessData {
         }
     }
 
+    public String getStr() {
+        return "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1";
+    }
+
     public int[][] getData() {
         return data;
     }
@@ -35,4 +34,13 @@ public class ChessData {
     public static void main(String[] args) {
         ChessData data = new ChessData();
     }
+
+
+    public static final String[] PIECE_RES_CARTOON = {
+            "rk2", "ra2", "rb2",
+            "rn2", "rr2", "rc2",
+            "rp2", "bk2", "ba2",
+            "bb2", "bn2", "br2",
+            "bc2", "bp2", "selected2"
+    };
 }

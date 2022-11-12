@@ -1,5 +1,6 @@
 package kw.mulitplay.game.screen.view;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
+import kw.mulitplay.game.ai.AI;
 import kw.mulitplay.game.asset.Asset;
 import kw.mulitplay.game.config.Config;
 import kw.mulitplay.game.config.LevelConfig;
@@ -16,8 +18,10 @@ import kw.mulitplay.game.message.MoveMessage;
 import kw.mulitplay.game.message.NNMessage;
 import kw.mulitplay.game.message.base.Message;
 import kw.mulitplay.game.message.type.MessageType;
+import kw.mulitplay.game.move.GameMove;
 import kw.mulitplay.game.screen.GameLogic;
 import kw.mulitplay.game.screen.game.GameGuiZe;
+import kw.mulitplay.xqwlight.Position;
 
 public class GameView extends Group {
     private Image cursorRed;
@@ -25,6 +29,7 @@ public class GameView extends Group {
     private Group chessGroup;
     private Chess[][] chessObject = new Chess[9][10];
     private GameLogic logic;
+    private AI ai;
 
     public GameView(){
         sizeAndPos();
@@ -76,6 +81,8 @@ public class GameView extends Group {
         chessGroup.setOrigin(Align.center);
         chessGroup.setPosition(getWidth()/2,getHeight()/2,Align.center);
         ChessData data = new ChessData();
+        String str = data.getStr();
+        ai = new AI(str);
         int[][] chessData = data.getData();
         for (int i = 0; i < chessData.length; i++) {
             for (int i1 = 0; i1 < chessData[0].length; i1++) {
@@ -96,7 +103,7 @@ public class GameView extends Group {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                if (LevelConfig.play != LevelConfig.currentPlayer)return;
+//                if (LevelConfig.play != LevelConfig.currentPlayer)return;
                 int xx = (int) (x / Config.chessSize);
                 int yy = (int) (y / Config.chessSize);
                 setCursorPosVisible(LevelConfig.currentPlayer == LevelConfig.PLAYER1);
@@ -104,11 +111,16 @@ public class GameView extends Group {
                 if (LevelConfig.chessSelected!=null) {
                     int startX = LevelConfig.chessSelected.getPosX();
                     int startY = LevelConfig.chessSelected.getPosY();
-                    logic.playerMoveChess(xx,yy,startX,startY);
-                    MoveMessage message = new MoveMessage(xx,yy,startX,startY);
-                    NNMessage.move(message);
+//                    logic.playerMoveChess(xx,yy,startX,startY);
+                    int sq1 = Position.COORD_XY(startX + Position.FILE_LEFT, startY + Position.RANK_TOP);
+                    int sq = Position.COORD_XY(xx + Position.FILE_LEFT, yy + Position.RANK_TOP);
+
+
+                    setStatus();
                 }
-                setStatus();
+                GameMove ai = GameView.this.ai.ai();
+                logic.playerMoveChess(ai.getEndX(),ai.getEndY(),ai.getStartX(),ai.getStartY());
+
             }
         });
     }
@@ -118,6 +130,7 @@ public class GameView extends Group {
             setCursorPosgone();
         }
         LevelConfig.clickType = 3;
+
     }
 
 
@@ -157,4 +170,5 @@ public class GameView extends Group {
             }
         }
     }
+    private Image image = new Image(Asset.getInstance().getTexture("orange.png"));
 }
