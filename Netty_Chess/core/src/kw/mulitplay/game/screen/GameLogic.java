@@ -16,25 +16,30 @@ public class GameLogic {
         this.listener = listener;
     }
 
-    public void playerMoveChess(int xx, int yy, int startX, int startY) {
+    public void setSelected(int startX,int startY){
         LevelConfig.chessSelected = chessObject[startX][startY];
+    }
+
+    public boolean playerMoveChess(int xx, int yy, int startX, int startY) {
+        setSelected(startX,startY);
         if (LevelConfig.clickType == 3) {
-            moveChess(xx, yy, startX, startY);
+            return moveChess(xx, yy, startX, startY);
         } else if (LevelConfig.clickType==1){
-            eatChess(xx, yy, startX, startY);
+            return eatChess(xx, yy, startX, startY);
         }
+        return false;
     }
 
 
-    private void eatChess(int xx, int yy, int startX, int startY) {
+    private boolean eatChess(int xx, int yy, int startX, int startY) {
         if (gameGuiZe.canMove(startX,startY,xx,yy, LevelConfig.chessSelected.getQiziName())) {
             Chess chess = chessObject[xx][yy];
             if (chess != null) {
                 if (chess.getQiziName() == 'k'){
                     LevelConfig.currentStatus = LevelConfig.success;
-                    return;
+                    System.out.println("end ------------------");
+                    return false;
                 }
-
                 chess.remove();
             }
             chessObject[xx][yy] = null;
@@ -45,11 +50,13 @@ public class GameLogic {
             LevelConfig.chessSelected = null;
             LevelConfig.currentPlayer = LevelConfig.currentPlayer == LevelConfig.PLAYER0 ?
                     LevelConfig.PLAYER1 : LevelConfig.PLAYER0;
+            return true;
         }
         listener.setCursorPosgone();
+        return false;
     }
 
-    private void moveChess(int xx, int yy, int startX, int startY) {
+    private boolean moveChess(int xx, int yy, int startX, int startY) {
         if (gameGuiZe.canMove(startX,startY,xx,yy, LevelConfig.chessSelected.getQiziName())) {
             chessObject[startX][LevelConfig.chessSelected.getPosY()] = null;
             chessObject[xx][yy] = LevelConfig.chessSelected;
@@ -57,8 +64,10 @@ public class GameLogic {
             LevelConfig.chessSelected = null;
             LevelConfig.currentPlayer = LevelConfig.currentPlayer == LevelConfig.PLAYER0 ?
                     LevelConfig.PLAYER1 : LevelConfig.PLAYER0;
+            return true;
         }else {
             listener.setCursorPosgone();
+            return false;
         }
     }
 

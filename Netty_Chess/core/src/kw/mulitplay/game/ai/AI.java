@@ -2,6 +2,7 @@ package kw.mulitplay.game.ai;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
+import kw.mulitplay.game.config.LevelConfig;
 import kw.mulitplay.game.move.GameMove;
 import kw.mulitplay.game.screen.view.GameView;
 import kw.mulitplay.xqwlight.Position;
@@ -83,6 +84,7 @@ public class AI {
 
         GameMove gameView = new GameMove();
 
+        LevelConfig.clickType = 3;
         for (int i = 0; i < chessData.length; i++) {
             for (int i1 = 0; i1 < chessData[i].length; i1++) {
                 if (oldChessData[i][i1] == null && chessData[i][i1] == null)continue;
@@ -98,6 +100,9 @@ public class AI {
                     {
                         if (oldChessData[i][i1].getChess()!=chessData[i][i1].getChess()){
                             System.out.println(oldChessData[i][i1] +"  "+chessData[i][i1]);
+                            gameView.setEndX(oldChessData[i][i1].getPox());
+                            gameView.setEndY(oldChessData[i][i1].getPoy());
+                            LevelConfig.clickType = 1;
                         }
                     }
                 }
@@ -128,5 +133,13 @@ public class AI {
             }
         }
         System.out.println(xx+" -===============");
+    }
+
+    public boolean ccc(int mv){
+        if (!position.makeMove(mv)) {
+//            playSound(RESP_ILLEGAL);
+            return true;
+        }
+        return false;
     }
 }

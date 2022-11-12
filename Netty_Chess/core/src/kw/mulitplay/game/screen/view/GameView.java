@@ -108,18 +108,42 @@ public class GameView extends Group {
                 int yy = (int) (y / Config.chessSize);
                 setCursorPosVisible(LevelConfig.currentPlayer == LevelConfig.PLAYER1);
                 setCursorPos(xx,yy);
+                boolean success = false;
                 if (LevelConfig.chessSelected!=null) {
                     int startX = LevelConfig.chessSelected.getPosX();
                     int startY = LevelConfig.chessSelected.getPosY();
-//                    logic.playerMoveChess(xx,yy,startX,startY);
+//                    success = xx == startX && yy == startY;
+                    success = logic.playerMoveChess(xx, yy, startX, startY);
+
                     int sq1 = Position.COORD_XY(startX + Position.FILE_LEFT, startY + Position.RANK_TOP);
                     int sq = Position.COORD_XY(xx + Position.FILE_LEFT, yy + Position.RANK_TOP);
+                    Position position = ai.getPosition();
+                    int mv = Position.MOVE(sq1, sq);
+                    logic.setSelected(startX,startY);
 
 
                     setStatus();
+
+//                    LevelConfig.chessSelected = chessObject[startX][startY];
+                    if (!position.legalMove(mv)) {
+                        System.out.println("feifa");
+                        return;
+                    }else {
+                        if (!position.makeMove(mv)) {
+                            System.out.println("feifa");
+                            return;
+                        }
+                    }
+
+                    if (position.captured()) {
+                        position.setIrrev();
+                    }
+                    if (success) {
+                        ai.setChessData();
+                        GameMove ai = GameView.this.ai.ai();
+                        logic.playerMoveChess(ai.getEndX(), ai.getEndY(), ai.getStartX(), ai.getStartY());
+                    }
                 }
-                GameMove ai = GameView.this.ai.ai();
-                logic.playerMoveChess(ai.getEndX(),ai.getEndY(),ai.getStartX(),ai.getStartY());
 
             }
         });

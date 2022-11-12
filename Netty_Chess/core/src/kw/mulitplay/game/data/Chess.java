@@ -38,21 +38,13 @@ public class Chess extends Group {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (LevelConfig.play != LevelConfig.currentPlayer)return;
-
                 if (LevelConfig.currentPlayer == player) {
                     LevelConfig.clickType = 0;
                     super.clicked(event, x, y);
                     System.out.println("chess click");
                     LevelConfig.chessSelected = Chess.this;
-
-
-
-
                 }else {
                     LevelConfig.clickType = 1;
-
-
-
                 }
             }
         });
