@@ -1,10 +1,8 @@
 package kw.mulitplay.game.screen.view;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
@@ -20,12 +18,15 @@ import kw.mulitplay.game.message.base.Message;
 import kw.mulitplay.game.message.type.MessageType;
 import kw.mulitplay.game.move.GameMove;
 import kw.mulitplay.game.screen.GameLogic;
-import kw.mulitplay.game.screen.game.GameGuiZe;
 import kw.mulitplay.xqwlight.Position;
 
 public class GameView extends Group {
-    private Image cursorRed;
-    private Image cursorBlue;
+    private int compute;
+    private Image startCursorRed;
+    private Image endCursorRed;
+    private Image startCursorBlue;
+    private Image endCursorBlue;
+
     private Group chessGroup;
     private Chess[][] chessObject = new Chess[9][10];
     private GameLogic logic;
@@ -34,7 +35,7 @@ public class GameView extends Group {
     public GameView(){
         sizeAndPos();
         initView();
-        initChessEr();
+        initChessEveryQizi();
         addListener();
         logic = new GameLogic(chessObject,new Listener(){
             @Override
@@ -54,29 +55,33 @@ public class GameView extends Group {
     }
 
     public void initView(){
+        Image chessBgImage = new Image(Asset.getInstance().getTexture("qizi/board.jpg"));
+        addActor(chessBgImage);
+        chessBgImage.setPosition(getWidth()/2,getHeight()/2,Align.center);
+        chessBgImage.setOrigin(Align.center);
+        chessBgImage.setScale(1.5F);
+        startCursorRed = new Image(Asset.getInstance().getTexture("qizi/selected2.png"));
+        startCursorBlue = new Image(Asset.getInstance().getTexture("qizi/selected.png"));
+        endCursorRed = new Image(Asset.getInstance().getTexture("qizi/selected2.png"));
+        endCursorBlue = new Image(Asset.getInstance().getTexture("qizi/selected.png"));
+
+        setCursorPosgone();
         chessGroup = new Group();
+        addActor(chessGroup);
         if (LevelConfig.play == 0){
             chessGroup.setRotation(180);
         }
-        Image image = new Image(Asset.getInstance().getTexture("qizi/board.jpg"));
-        addActor(image);
-        image.setPosition(getWidth()/2,getHeight()/2,Align.center);
-        image.setOrigin(Align.center);
-        image.setScale(1.5F);
-        cursorRed = new Image(Asset.getInstance().getTexture("qizi/selected2.png"));
-        cursorBlue = new Image(Asset.getInstance().getTexture("qizi/selected.png"));
-        setCursorPosgone();
-        chessGroup.addActor(cursorBlue);
-        chessGroup.addActor(cursorRed);
-        cursorRed.setDebug(true);
-        cursorBlue.setDebug(true);
-        cursorBlue.setScale(1.5F);
-        cursorRed.setScale(1.5F);
+        chessGroup.addActor(startCursorBlue);
+        chessGroup.addActor(startCursorRed);
+        chessGroup.addActor(endCursorBlue);
+        chessGroup.addActor(endCursorRed);
+        startCursorBlue.setScale(1.5F);
+        startCursorRed.setScale(1.5F);
+        endCursorBlue.setScale(1.5f);
+        endCursorRed.setScale(1.5f);
     }
 
-    public void initChessEr(){
-        addActor(chessGroup);
-        chessGroup.setDebug(true);
+    public void initChessEveryQizi(){
         chessGroup.setSize(Config.chessSize*9,Config.chessSize*10);
         chessGroup.setOrigin(Align.center);
         chessGroup.setPosition(getWidth()/2,getHeight()/2,Align.center);
@@ -103,7 +108,6 @@ public class GameView extends Group {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-//                if (LevelConfig.play != LevelConfig.currentPlayer)return;
                 int xx = (int) (x / Config.chessSize);
                 int yy = (int) (y / Config.chessSize);
                 setCursorPosVisible(LevelConfig.currentPlayer == LevelConfig.PLAYER1);
@@ -112,19 +116,15 @@ public class GameView extends Group {
                 if (LevelConfig.chessSelected!=null) {
                     int startX = LevelConfig.chessSelected.getPosX();
                     int startY = LevelConfig.chessSelected.getPosY();
-//                    success = xx == startX && yy == startY;
-                    success = logic.playerMoveChess(xx, yy, startX, startY);
 
                     int sq1 = Position.COORD_XY(startX + Position.FILE_LEFT, startY + Position.RANK_TOP);
                     int sq = Position.COORD_XY(xx + Position.FILE_LEFT, yy + Position.RANK_TOP);
+
                     Position position = ai.getPosition();
                     int mv = Position.MOVE(sq1, sq);
                     logic.setSelected(startX,startY);
-
-
                     setStatus();
 
-//                    LevelConfig.chessSelected = chessObject[startX][startY];
                     if (!position.legalMove(mv)) {
                         System.out.println("feifa");
                         return;
@@ -134,43 +134,39 @@ public class GameView extends Group {
                             return;
                         }
                     }
+                    success = logic.playerMoveChess(xx, yy, startX, startY);
 
                     if (position.captured()) {
                         position.setIrrev();
                     }
-                    if (success) {
-                        ai.setChessData();
-                        GameMove ai = GameView.this.ai.ai();
-                        logic.playerMoveChess(ai.getEndX(), ai.getEndY(), ai.getStartX(), ai.getStartY());
-                    }
                 }
-
+                //用户操作是成功的
+                if (success) {
+                    compute = 1;
+                    time = 0;
+                }
             }
         });
     }
 
     private void setStatus() {
-        if (LevelConfig.chessSelected == null){
-            setCursorPosgone();
-        }
         LevelConfig.clickType = 3;
 
     }
 
-
     public void setCursorPos(int xx,int yy){
-        cursorRed.setPosition(xx*Config.chessSize,yy*Config.chessSize);
-        cursorBlue.setPosition(xx*Config.chessSize,yy*Config.chessSize);
+        startCursorRed.setPosition(xx*Config.chessSize,yy*Config.chessSize);
+        startCursorBlue.setPosition(xx*Config.chessSize,yy*Config.chessSize);
     }
 
     public void setCursorPosVisible(boolean isVisible){
-        cursorRed.setVisible(isVisible);
-        cursorBlue.setVisible(!isVisible);
+        startCursorRed.setVisible(isVisible);
+        startCursorBlue.setVisible(!isVisible);
     }
 
     public void setCursorPosgone(){
-        cursorRed.setVisible(false);
-        cursorBlue.setVisible(false);
+        startCursorRed.setVisible(false);
+        startCursorBlue.setVisible(false);
     }
 
 
@@ -178,6 +174,19 @@ public class GameView extends Group {
     public void act(float delta) {
         super.act(delta);
         update();
+        computeAi(delta);
+    }
+
+    private float time = 0;
+    public void computeAi(float delta){
+        if (compute == 0)return;
+        time+=delta;
+        if (time>3){
+            compute = 0;
+            ai.setChessData();
+            GameMove ai = GameView.this.ai.ai();
+            logic.playerMoveChess(ai.getEndX(), ai.getEndY(), ai.getStartX(), ai.getStartY());
+        }
     }
 
     public void update(){
@@ -194,5 +203,4 @@ public class GameView extends Group {
             }
         }
     }
-    private Image image = new Image(Asset.getInstance().getTexture("orange.png"));
 }

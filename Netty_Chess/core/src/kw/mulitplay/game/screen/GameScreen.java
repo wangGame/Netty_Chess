@@ -6,7 +6,7 @@ import kw.mulitplay.game.screen.base.BaseScreen;
 import kw.mulitplay.game.screen.view.GameView;
 
 public class GameScreen  extends BaseScreen {
-    private int currentStatus ;
+//    private int currentStatus ;
     private GameView gameView;
 
     @Override
